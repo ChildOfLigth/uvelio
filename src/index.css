@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+:root {
+  --color-primary: #372924;
+  --color-secondary: #C7B276;
+  --spare-color: #AA9188;
+  --color-for-present-text: #E1D6B7;
+  --standart-border-radius: 10px;
+}
+
+body {
+    background-color: var(--color-for-present-text);
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+button {
+    cursor: pointer;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
