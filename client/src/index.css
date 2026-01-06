@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --color-primary: rgb(55, 41, 36);
+  --color-secondary: rgb(199, 178, 118);
+  --spare-color: rgb(170, 145, 136);
+  --color-for-present-text: #e1d6b7;
+  --standart-border-radius: 10px;
+}
+
+body {
+  background-color: var(--color-for-present-text);
+  font-family: "IBM Plex Serif", serif;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+a:hover {
+  transition: color 0.4s;
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+main {
+  flex: 1;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+h1 {
+  font-size: calc(28 + (90 -28) * ((100vw - 320) / (1440 - 320)));
+}
