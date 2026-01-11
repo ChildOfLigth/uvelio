@@ -3,14 +3,14 @@
 
 :root {
   --color-primary: rgb(55, 41, 36);
-  --color-secondary: rgb(199, 178, 118);
+  --second-primary-с: rgb(199, 178, 118);
   --spare-color: rgb(170, 145, 136);
-  --color-for-present-text: #e1d6b7;
-  --standart-border-radius: 10px;
+  --third-primary-с: #e1d6b7;
+  --border-radius: 10px;
 }
 
 body {
-  background-color: var(--color-for-present-text);
+  background-color: var(--third-primary-c);
   font-family: "IBM Plex Serif", serif;
 }
 
@@ -22,8 +22,13 @@ body {
 
 a:hover {
   transition: color 0.4s;
-  color: var(--color-secondary);
+  color: var(--second-primary-с);
   cursor: pointer;
+}
+
+a,
+button {
+  user-select: none;
 }
 
 main {
@@ -33,8 +38,4 @@ main {
 button {
   cursor: pointer;
   border: none;
-}
-
-h1 {
-  font-size: calc(28 + (90 -28) * ((100vw - 320) / (1440 - 320)));
 }

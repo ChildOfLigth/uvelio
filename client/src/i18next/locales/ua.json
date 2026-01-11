@@ -1,0 +1,139 @@
+{
+  "header": {
+    "placeholderInput": "Введіть назву товару..",
+    "userAvtorization": {
+      "signIn": "Увійти",
+      "registration": "Реєстрація"
+    },
+    "navigateLinks": [
+      { "label": "Головна", "href": "/uvelio/" },
+      { "label": "Каталог", "href": "/uvelio/catalog/" },
+      { "label": "Акції", "href": "/uvelio/catalog/" },
+      { "label": "Наші Магазини", "href": "/uvelio/" },
+      { "label": "Пошук Продуктів", "href": "/uvelio/" },
+      { "label": "Безкоштовна Доставка", "href": "/uvelio/" },
+      { "label": "Оплата Частинами", "href": "/uvelio/" },
+      { "label": "Вакансії", "href": "/uvelio/" },
+      { "label": "Обране", "href": "/uvelio/" },
+      { "label": "Більше", "href": "/uvelio/" },
+      { "label": "Підтримка", "href": "/uvelio/" }
+    ]
+  },
+
+  "mainPage": {
+    "presentBlock": {
+      "title": "Більше блиску та яскравішого золота за чверть вартості",
+      "subtitle": "Екологічно відповідально та етично добуто",
+      "btnNavToCatalog": "Перейти до каталогу"
+    },
+    "navToCatalogWithFilter": {
+      "rings": "Каблучки",
+      "wedRings": "Обручки",
+      "withIsert": "Зі вставкою",
+      "withoutIsert": "Без вставки",
+      "filterBy": {
+        "gold": "Золото",
+        "silver": "Срібло"
+      }
+    },
+    "newArrivals": {
+      "title": "Нові надходження"
+    },
+    "advertisement": {
+      "ecoDiamonds": {
+        "title": "Лабораторні еко-діаманти",
+        "subtitle": "ваша етична розкіш і сяйво",
+        "textBtn": "Обрати"
+      },
+      "exlusive": {
+        "title": "Ексклюзив Uvelio",
+        "subtitle": "ваші ексклюзивні прикраси",
+        "textBtn": "Обрати"
+      }
+    },
+    "category": {
+      "title": "Категорії",
+      "earrings": "Сережки",
+      "chains": "Ланцюжки",
+      "bracelets": "Браслети",
+      "necklaces": "Намиста",
+      "pendants": "Підвіски",
+      "crosses": "Хрестики",
+      "brooches": "Брошки"
+    }
+  },
+
+  "footer": {
+    "communicationMethods": {
+      "descText": "Зворотний дзвінок",
+
+      "hotline": {
+        "title": "Гаряча лінія",
+        "days": "Щодня",
+        "startTime": "10:00",
+        "endTime": "19:00"
+      },
+      "callCenter": {
+        "title": "Кол-центр",
+        "days": "Щодня",
+        "startTime": "10:00",
+        "endTime": "19:00"
+      }
+    },
+    "siteNavigation": {
+      "category": {
+        "title": "Категорії",
+        "links": [
+          { "href": "/uvelio/catalog:rings", "text": "Каблучки" },
+          { "href": "/uvelio/catalog:jewelry", "text": "Ювелірні вироби" },
+          { "href": "/uvelio/catalog:earrings", "text": "Сережки" },
+          { "href": "/uvelio/catalog:chains", "text": "Ланцюжки" },
+          { "href": "/uvelio/catalog:pendants", "text": "Підвіски" },
+          { "href": "/uvelio/catalog:bracelets", "text": "Браслети" },
+          { "href": "/uvelio/catalog:brooches", "text": "Брошки" },
+          { "href": "/uvelio/catalog:watches", "text": "Годинники" },
+          { "href": "/uvelio/catalog:cufflinks", "text": "Запонки" },
+          {
+            "href": "/uvelio/catalog:tie-clips",
+            "text": "Затискачі для краватки"
+          },
+          { "href": "/uvelio/catalog:crosses", "text": "Хрестики" },
+          { "href": "/uvelio/catalog:table-silver", "text": "Столове срібло" },
+          { "href": "/uvelio/catalog:sale", "text": "Розпродаж" },
+          {
+            "href": "/uvelio/catalog:gift-certificates",
+            "text": "Подарункові сертифікати"
+          },
+          { "href": "/uvelio/catalog:icons", "text": "Ікони" }
+        ]
+      },
+
+      "aboutUs": {
+        "title": "Про нас",
+        "links": [
+          "Блог",
+          "Контакти",
+          "Франчайзинг",
+          "Політика конфіденційності",
+          "Користувацька угода",
+          "Питання та відповіді",
+          "Програма лояльності від Uvelio"
+        ]
+      },
+
+      "offers": {
+        "title": "Пропозиції",
+        "links": [
+          "Пропозиції",
+          "Акції",
+          "Набори",
+          "Колекції",
+          "Безкоштовна доставка",
+          "Фірмова упаковка",
+          "Електронні сертифікати",
+          "Безкоштовне бронювання в магазині"
+        ]
+      }
+    }
+  }
+}

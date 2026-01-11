@@ -1,26 +1,45 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { SETTING_RETURN_VAL } from "../../../globalVariables";
 import uvelioLogo from "@imgs/icons/uvelio.svg";
 import HeaderOnSmallSizes from "./HeaderOnSmallSizes";
+import ButtonForChangeLang from "../ButtonComponent/ButtonForChangeLang.jsx";
+import AuthButton from "../ButtonComponent/AuthButton.jsx";
 
 export default function Header() {
-  const headerOnSmallSizes = window.innerWidth <= 650;
+  const { t } = useTranslation();
+  const [headerOnSmallSizes, setHederOnSmallSizes] = useState(
+    window.innerWidth <= 750
+  );
+  const linksByHeader = [
+    ...t("header.navigateLinks", SETTING_RETURN_VAL),
+  ].slice(0, -1);
+  const supportLink = [...t("header.navigateLinks", SETTING_RETURN_VAL)].at(-1);
+
+  useEffect(() => {
+    const handleResize = () => setHederOnSmallSizes(window.innerWidth <= 750);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [window.innerWidth]);
 
   return (
     <>
-      <header className="bg-transparent w-full h-20 flex items-center gap-5 justify-center">
+      <header className="bg-(--third-primary-с) sticky top-0 w-full h-auto flex flex-col items-center justify-center z-50">
         {!headerOnSmallSizes ? (
-          <div className="flex items-center justify-between w-[93%] h-[90%] max-[860px]:gap-5">
-            <img src={uvelioLogo} alt="Uvelio logo" className="w-36 h-full" />
+          <div className="flex items-center justify-between w-[93%] py-3 h-24 max-[860px]:gap-5">
+            <img src={uvelioLogo} alt="Uvelio logo" className="w-36" />
 
-            <div className="flex items-center gap-4 justify-end w-4/5 h-[70%] min-h-10">
+            <div className="flex items-center gap-4 justify-end w-4/5 h-[70%]">
               <form
                 action="/uvelio/catalog:filter"
-                className="flex items-center justify-between bg-white w-[78.8%] h-full rounded-(--standart-border-radius) pl-5 pr-5"
+                className="flex items-center justify-between bg-white w-[78.8%] h-full rounded-(--border-radius) px-5"
               >
                 <input
                   type="text"
-                  placeholder="Enter the product name"
-                  className="w-[95%] h-full text-base outline-none"
+                  placeholder={t("header.placeholderInput")}
+                  className="w-[95%] py-3 text-base outline-none"
                   name="search_product"
                 />
 
@@ -41,19 +60,40 @@ export default function Header() {
                 </button>
               </form>
 
-              <div className="flex items-center w-[17%] min-w-37.5 h-full gap-5 max-md:gap-2.5">
-                
-
-                <button className="bg-(--color-primary) w-[51%] h-full customButtons animationButton">
-                  <span className="bg-(--color-secondary)"></span>
-                  <p className="text-white text-lg z-20">Sign in</p>
-                </button>
+              <div className="flex items-center w-[17%] min-w-50 h-full gap-5 max-md:gap-2.5">
+                <ButtonForChangeLang />
+                <AuthButton />
               </div>
             </div>
           </div>
         ) : (
           <HeaderOnSmallSizes />
         )}
+
+        <div className="flex items-center bg-(--color-primary) w-full h-11.25 text-[17px] font-normal overflow-x-scroll [scrollbar-width:none] max-xl:px-8">
+          <div className="flex items-center justify-start w-[91.7%] max-w-340 h-[95%] m-auto max-xl:min-w-max">
+            <nav className="flex items-center justify-between w-full h-full text-white text-[17px] gap-5 max-md:text-base">
+              <div className="flex items-center justify-start gap-5 whitespace-nowrap">
+                {linksByHeader.map((link, ind) => (
+                  <Link
+                    to={link.href}
+                    key={ind}
+                    className="flex items-center h-full leading-none"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+
+              <Link
+                to={supportLink.href}
+                className="text-(--second-primary-с)/50 flex items-center h-full leading-none"
+              >
+                {supportLink.label}
+              </Link>
+            </nav>
+          </div>
+        </div>
       </header>
       <Outlet />
     </>

@@ -1,0 +1,144 @@
+{
+  "header": {
+    "placeholderInput": "Entrez le nom du produit...",
+    "userAvtorization": {
+      "signIn": "Se connecter",
+      "registration": "Inscription"
+    },
+    "navigateLinks": [
+      { "label": "Accueil", "href": "/uvelio/" },
+      { "label": "Catalogue", "href": "/uvelio/catalog/" },
+      { "label": "Promotions", "href": "/uvelio/catalog/" },
+      { "label": "Nos Magasins", "href": "/uvelio/" },
+      { "label": "Recherche de Produits", "href": "/uvelio/" },
+      { "label": "Livraison Gratuite", "href": "/uvelio/" },
+      { "label": "Paiement en Plusieurs Fois", "href": "/uvelio/" },
+      { "label": "Offres d'Emploi", "href": "/uvelio/" },
+      { "label": "Favoris", "href": "/uvelio/" },
+      { "label": "Plus", "href": "/uvelio/" },
+      { "label": "Assistance", "href": "/uvelio/" }
+    ]
+  },
+
+  "mainPage": {
+    "presentBlock": {
+      "title": "Obtenez de l'or plus pur et plus brillant à 1/4 du prix",
+      "subtitle": "Respectueux de l'environnement et issu de sources éthiques",
+      "btnNavToCatalog": "Aller au catalogue"
+    },
+    "navToCatalogWithFilter": {
+      "rings": "Bagues",
+      "wedRings": "Alliances",
+      "withIsert": "Avec pierre",
+      "withoutIsert": "Sans pierre",
+      "filterBy": {
+        "gold": "Or",
+        "silver": "Argent"
+      }
+    },
+    "newArrivals": {
+      "title": "Nouveautés"
+    },
+
+    "advertisement": {
+      "ecoDiamonds": {
+        "title": "Éco-Diamants de laboratoire",
+        "subtitle": "Votre luxe éthique et étincelant",
+        "textBtn": "Choisir"
+      },
+
+      "exlusive": {
+        "title": "Uvelio Exclusif",
+        "subtitle": "Vos bijoux exclusifs",
+        "textBtn": "Choisir"
+      }
+    },
+
+    "category": {
+      "title": "Catégorie",
+      "earrings": "Boucles d'oreilles",
+      "chains": "Chaînes",
+      "bracelets": "Bracelets",
+      "necklaces": "Colliers",
+      "pendants": "Pendentifs",
+      "crosses": "Croix",
+      "brooches": "Broches"
+    }
+  },
+
+  "footer": {
+    "communicationMethods": {
+      "descText": "Rappel",
+      "hotline": {
+        "title": "Hotline",
+        "days": "Tous les jours",
+        "startTime": "10:00",
+        "endTime": "19:00"
+      },
+      "callCenter": {
+        "title": "Centre d'appel",
+        "days": "Tous les jours",
+        "startTime": "10:00",
+        "endTime": "19:00"
+      }
+    },
+
+    "siteNavigation": {
+      "category": {
+        "title": "Catégories",
+        "links": [
+          { "href": "/uvelio/catalog:rings", "text": "Bagues" },
+          { "href": "/uvelio/catalog:jewelry", "text": "Bijoux" },
+          { "href": "/uvelio/catalog:earrings", "text": "Boucles d’oreilles" },
+          { "href": "/uvelio/catalog:chains", "text": "Chaînes" },
+          { "href": "/uvelio/catalog:pendants", "text": "Pendentifs" },
+          { "href": "/uvelio/catalog:bracelets", "text": "Bracelets" },
+          { "href": "/uvelio/catalog:brooches", "text": "Broches" },
+          { "href": "/uvelio/catalog:watches", "text": "Montres" },
+          {
+            "href": "/uvelio/catalog:cufflinks",
+            "text": "Boutons de manchette"
+          },
+          { "href": "/uvelio/catalog:tie-clips", "text": "Pinces à cravate" },
+          { "href": "/uvelio/catalog:crosses", "text": "Croix" },
+          {
+            "href": "/uvelio/catalog:table-silver",
+            "text": "Argenterie de table"
+          },
+          { "href": "/uvelio/catalog:sale", "text": "Soldes" },
+          {
+            "href": "/uvelio/catalog:gift-certificates",
+            "text": "Chèques-cadeaux"
+          },
+          { "href": "/uvelio/catalog:icons", "text": "Icônes" }
+        ]
+      },
+      "aboutUs": {
+        "title": "À propos de nous",
+        "links": [
+          "Blog",
+          "Contacts",
+          "Franchise",
+          "Politique de confidentialité",
+          "Conditions d’utilisation",
+          "Questions et réponses",
+          "Programme de fidélité Uvelio"
+        ]
+      },
+
+      "offers": {
+        "title": "Offres",
+        "links": [
+          "Offres",
+          "Promotions",
+          "Ensembles",
+          "Collections",
+          "Livraison gratuite",
+          "Emballage de marque",
+          "Certificats électroniques",
+          "Réservation gratuite en magasin"
+        ]
+      }
+    }
+  }
+}

@@ -1,5 +1,7 @@
+import { useParams } from "react-router-dom";
+
 export function ProductsCatalog() {
-    return (
-        <h1>Catalog</h1>
-    )
+  const { filter } = useParams();
+
+  return <h1>Catalog filter: {filter}</h1>;
 }

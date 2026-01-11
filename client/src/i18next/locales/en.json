@@ -1,0 +1,140 @@
+{
+  "header": {
+    "placeholderInput": "Enter the product name..",
+    "userAvtorization": {
+      "signIn": "Sign in",
+      "registration": "Registration"
+    },
+    "navigateLinks": [
+      { "label": "Home", "href": "/uvelio/" },
+      { "label": "Catalog", "href": "/uvelio/catalog/" },
+      { "label": "Promotions", "href": "/uvelio/catalog/" },
+      { "label": "Our Stores", "href": "/uvelio/" },
+      { "label": "Product Search", "href": "/uvelio/" },
+      { "label": "Free Shipping", "href": "/uvelio/" },
+      { "label": "Installment Payment", "href": "/uvelio/" },
+      { "label": "Job Vacancies", "href": "/uvelio/" },
+      { "label": "Favorites", "href": "/uvelio/" },
+      { "label": "More", "href": "/uvelio/" },
+      { "label": "Support", "href": "/uvelio/" }
+    ]
+  },
+
+  "mainPage": {
+    "presentBlock": {
+      "title": "Get a begger, brighter gold at 1/4 the cost",
+      "subtitle": "Environmentally Concious and Ethically Sourced",
+      "btnNavToCatalog": "Go to catalog"
+    },
+    "navToCatalogWithFilter": {
+      "rings": "Rings",
+      "wedRings": "Wedding rings",
+      "withIsert": "With isert",
+      "withoutIsert": "Without isert",
+      "filterBy": {
+        "gold": "Gold",
+        "silver": "Silver"
+      }
+    },
+    "newArrivals": {
+      "title": "New Arrivals"
+    },
+
+    "advertisement": {
+      "ecoDiamonds": {
+        "title": "Laboratory Eco-Diamonds",
+        "subtitle": "your ethical luxury and sparkle",
+        "textBtn": "Choose"
+      },
+
+      "exlusive": {
+        "title": "Uvelio Exclusive",
+        "subtitle": "your exclusive jewelry",
+        "textBtn": "Choose"
+      }
+    },
+
+    "category": {
+      "title": "Category",
+      "earrings": "Earrings",
+      "chains": "Chains",
+      "bracelets": "Bracelets",
+      "necklaces": "Necklaces",
+      "pendants": "Pendants",
+      "crosses": "Crosses",
+      "brooches": "Brooches"
+    }
+  },
+
+  "footer": {
+    "communicationMethods": {
+      "descText": "Callback",
+
+      "hotline": {
+        "title": "Hotline",
+        "days": "Daily",
+        "startTime": "10:00 AM",
+        "endTime": "7:00 PM"
+      },
+      "callCenter": {
+        "title": "Call center",
+        "days": "Daily",
+        "startTime": "10:00 AM",
+        "endTime": "7:00 PM"
+      }
+    },
+
+    "siteNavigation": {
+      "category": {
+        "title": "Categories",
+        "links": [
+          { "href": "/uvelio/catalog:rings", "text": "Rings" },
+          { "href": "/uvelio/catalog:jewelry", "text": "Jewelry" },
+          { "href": "/uvelio/catalog:earrings", "text": "Earrings" },
+          { "href": "/uvelio/catalog:chains", "text": "Chains" },
+          { "href": "/uvelio/catalog:pendants", "text": "Pendants" },
+          { "href": "/uvelio/catalog:bracelets", "text": "Bracelets" },
+          { "href": "/uvelio/catalog:brooches", "text": "Brooches" },
+          { "href": "/uvelio/catalog:watches", "text": "Watches" },
+          { "href": "/uvelio/catalog:cufflinks", "text": "Cufflinks" },
+          { "href": "/uvelio/catalog:tie-clips", "text": "Tie clips" },
+          { "href": "/uvelio/catalog:crosses", "text": "Crosses" },
+          { "href": "/uvelio/catalog:table-silver", "text": "Table silver" },
+          { "href": "/uvelio/catalog:sale", "text": "Sale" },
+          {
+            "href": "/uvelio/catalog:gift-certificates",
+            "text": "Gift certificates"
+          },
+          { "href": "/uvelio/catalog:icons", "text": "Icons" }
+        ]
+      },
+
+      "aboutUs": {
+        "title": "About us",
+        "links": [
+          "Blog",
+          "Contacts",
+          "Franchising",
+          "Privacy policy",
+          "User agreement",
+          "Questions and Answers",
+          "Loyalty program from Uvelio"
+        ]
+      },
+
+      "offers": {
+        "title": "Offers",
+        "links": [
+          "Offers",
+          "Promotions",
+          "Sets",
+          "Collections",
+          "Free shipping",
+          "Branded packaging",
+          "Electronic certificates",
+          "Free in-store booking"
+        ]
+      }
+    }
+  }
+}

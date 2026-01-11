@@ -1,12 +1,31 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { SETTING_RETURN_VAL } from "../../globalVariables";
 import facebookIcon from "@imgs/icons/socialMedia/facebook.svg";
 import instagramIcon from "@imgs/icons/socialMedia/instagram.svg";
 import linkedinIcon from "@imgs/icons/socialMedia/linkedin.svg";
 import Xicon from "@imgs/icons/socialMedia/XIcon.svg";
 import youtubeIcon from "@imgs/icons/socialMedia/youtube.svg";
 import uvelioLogo from "@imgs/icons/uvelio.svg";
+import NavToCatalog from "./NavToCatalog";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
+  const catalogLinksWithFilter = [
+    ...t("footer.siteNavigation.category.links", SETTING_RETURN_VAL),
+  ];
+  const aboutUsLinks = [
+    ...t("footer.siteNavigation.aboutUs.links", SETTING_RETURN_VAL),
+  ];
+  const offersLink = [
+    ...t("footer.siteNavigation.offers.links", SETTING_RETURN_VAL),
+  ];
+
+  const createLinks = (arrayLinks, href) => {
+    return arrayLinks.map((link, ind) => <Link to={href} key={ind}>{link}</Link>);
+  };
+
   return (
     <>
       <Outlet />
@@ -22,7 +41,9 @@ export default function Footer() {
               <address className="text-2xl mb-2 max-[460px]:text-base">
                 0 456 213 380
               </address>
-              <p className="text-[14px] text-(--color-secondary)">Callback</p>
+              <p className="text-[14px] text-(--second-primary-с)">
+                {t("footer.communicationMethods.descText")}
+              </p>
             </div>
 
             <div
@@ -30,20 +51,30 @@ export default function Footer() {
             max-lg:flex-row max-lg:w-1/2 max-lg:max-w-none max-md:w-3/4 max-[370px]:flex-col!"
             >
               <div className="flex flex-col text-left w-2/5 max-xl:w-full max-lg:w-1/2 max-[400px]:w-full!">
-                <h4>Hotline</h4>
-                <p>Daily</p>
+                <h4>{t("footer.communicationMethods.hotline.title")}</h4>
+                <p>{t("footer.communicationMethods.hotline.days")}</p>
                 <div className="w-full">
-                  <time dateTime="10:00">10:00 AM</time> –{" "}
-                  <time dateTime="17:00">7:00 PM</time>
+                  <time dateTime="10:00">
+                    {t("footer.communicationMethods.hotline.startTime")}
+                  </time>{" "}
+                  –{" "}
+                  <time dateTime="19:00">
+                    {t("footer.communicationMethods.hotline.endTime")}
+                  </time>
                 </div>
               </div>
 
               <div className="flex flex-col text-left w-2/5 max-xl:w-full max-lg:w-1/2 max-[400px]:w-full!">
-                <h4>Call center</h4>
-                <p>Daily</p>
+                <h4>{t("footer.communicationMethods.callCenter.title")}</h4>
+                <p>{t("footer.communicationMethods.callCenter.days")}</p>
                 <div className="w-full">
-                  <time dateTime="10:00">10:00 AM</time> –{" "}
-                  <time dateTime="17:00">7:00 PM</time>
+                  <time dateTime="10:00">
+                    {t("footer.communicationMethods.callCenter.startTime")}
+                  </time>{" "}
+                  –{" "}
+                  <time dateTime="19:00">
+                    {t("footer.communicationMethods.callCenter.endTime")}
+                  </time>
                 </div>
               </div>
             </div>
@@ -51,107 +82,36 @@ export default function Footer() {
 
           <div className="w-2/3 max-w-300 flex items-start justify-between gap-12 max-lg:w-full max-md:flex-wrap max-sm:gap-7 max-[470px]:text-sm max-[380px]:flex-col">
             <nav className="w-2/5 flex flex-col justify-start max-[380px]:w-full">
-              <h4 className="uppercase text-lg font-medium mb-5">Categories</h4>
+              <h4 className="uppercase text-lg font-medium mb-5">
+                {t("footer.siteNavigation.category.title")}
+              </h4>
+
               <ul className="w-full max-h-72 list-none inline-flex flex-wrap flex-col gap-2">
-                <li>
-                  <a href="#">Rings</a>
-                </li>
-                <li>
-                  <a href="#">Cufflinks</a>
-                </li>
-                <li>
-                  <a href="#">Jewelry</a>
-                </li>
-                <li>
-                  <a href="#">Tie clips</a>
-                </li>
-                <li>
-                  <a href="#">Earrings</a>
-                </li>
-                <li>
-                  <a href="#">Crosses</a>
-                </li>
-                <li>
-                  <a href="#">Chains</a>
-                </li>
-                <li>
-                  <a href="#">Table silver</a>
-                </li>
-                <li>
-                  <a href="#">Pendants</a>
-                </li>
-                <li>
-                  <a href="#">Sale</a>
-                </li>
-                <li>
-                  <a href="#">Bracelets</a>
-                </li>
-                <li>
-                  <a href="#">Gift certificates</a>
-                </li>
-                <li>
-                  <a href="#">Brooches</a>
-                </li>
-                <li>
-                  <a href="#">Icons</a>
-                </li>
-                <li>
-                  <a href="#">Watches</a>
-                </li>
+                {catalogLinksWithFilter.map((link, ind) => (
+                  <li key={link.href}>
+                    <NavToCatalog href={link.href} key={ind}>
+                      {link.text}
+                    </NavToCatalog>
+                  </li>
+                ))}
               </ul>
             </nav>
 
             <nav className="w-1/3 flex flex-col justify-start max-[380px]:w-full">
-              <h4 className="uppercase text-lg font-medium mb-5">About us</h4>
+              <h4 className="uppercase text-lg font-medium mb-5">
+                {t("footer.siteNavigation.aboutUs.title")}
+              </h4>
               <ul className="w-full list-none inline-flex flex-col justify-start gap-2">
-                <li>
-                  <a href="#">Blog</a>
-                </li>
-                <li>
-                  <a href="#">Contacts</a>
-                </li>
-                <li>
-                  <a href="#">Franchising</a>
-                </li>
-                <li>
-                  <a href="#">Privacy policy</a>
-                </li>
-                <li>
-                  <a href="#">User agreement</a>
-                </li>
-                <li>
-                  <a href="#">Questions and Answers</a>
-                </li>
-                <li>
-                  <a href="#">Loyalty program from Uvelio</a>
-                </li>
+                {createLinks(aboutUsLinks, "/uvelio/about-us")}
               </ul>
             </nav>
 
             <nav className="w-1/3 flex flex-col justify-start max-sm:w-2/5 max-[380px]:w-full">
-              <h4 className="uppercase text-lg font-medium mb-5">Offers</h4>
+              <h4 className="uppercase text-lg font-medium mb-5">
+                {t("footer.siteNavigation.offers.title")}
+              </h4>
               <ul className="w-full list-none inline-flex flex-col justify-start gap-2">
-                <li>
-                  <a href="#">Promotions</a>
-                </li>
-                <li>
-                  <a href="#">Sets</a>
-                </li>
-                <li>
-                  <a href="#">Collections</a>
-                </li>
-                <li>
-                  <a href="#">Free shipping</a>
-                </li>
-                <li>
-                  <a href="#">Branded packaging</a>
-                </li>
-                <li>
-                  <a href="#">Electronic certificates</a>
-                </li>
-                <li>
-                  <a href="#">Free in-store booking</a>
-                </li>
+                {createLinks(offersLink, "/uvelio/")}
               </ul>
             </nav>
           </div>
@@ -175,10 +135,22 @@ export default function Footer() {
             </div>
 
             <div className="w-1/3 flex gap-3 justify-end max-lg:justify-start">
-              <img src={facebookIcon} alt="facebook icon" className="cursor-pointer"/>
-              <img src={instagramIcon} alt="instagram icon" className="cursor-pointer"/>
-              <img src={linkedinIcon} alt="linkedin icon"className="cursor-pointer" />
-              <img src={Xicon} alt="X icon" className="cursor-pointer"/>
+              <img
+                src={facebookIcon}
+                alt="facebook icon"
+                className="cursor-pointer"
+              />
+              <img
+                src={instagramIcon}
+                alt="instagram icon"
+                className="cursor-pointer"
+              />
+              <img
+                src={linkedinIcon}
+                alt="linkedin icon"
+                className="cursor-pointer"
+              />
+              <img src={Xicon} alt="X icon" className="cursor-pointer" />
               <img src={youtubeIcon} alt="youtube icon" />
             </div>
           </div>

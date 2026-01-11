@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "@ui/Header/Header.jsx";
 import Footer from "@ui/Footer.jsx";
-import { Main } from "@pages/Main.jsx";
+import Main from "@pages/Main.jsx";
 import { AboutUs } from "@pages/AboutUs.jsx";
 import { ProductsCatalog } from "@pages/ProductsCatalog.jsx";
 import { ProductPage } from "@pages/ProductPage.jsx";
