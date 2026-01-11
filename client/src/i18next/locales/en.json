@@ -30,11 +30,11 @@
       "rings": "Rings",
       "wedRings": "Wedding rings",
       "withIsert": "With isert",
-      "withoutIsert": "Without isert",
-      "filterBy": {
-        "gold": "Gold",
-        "silver": "Silver"
-      }
+      "withoutIsert": "Without isert"
+    },
+    "filterCatalogBy": {
+      "gold": "Gold",
+      "silver": "Silver"
     },
     "newArrivals": {
       "title": "New Arrivals"

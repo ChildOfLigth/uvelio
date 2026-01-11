@@ -30,11 +30,11 @@
       "rings": "Каблучки",
       "wedRings": "Обручки",
       "withIsert": "Зі вставкою",
-      "withoutIsert": "Без вставки",
-      "filterBy": {
-        "gold": "Золото",
-        "silver": "Срібло"
-      }
+      "withoutIsert": "Без вставки"
+    },
+    "filterCatalogBy": {
+      "gold": "Золото",
+      "silver": "Срібло"
     },
     "newArrivals": {
       "title": "Нові надходження"

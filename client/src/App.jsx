@@ -7,6 +7,7 @@ import { ProductsCatalog } from "@pages/ProductsCatalog.jsx";
 import { ProductPage } from "@pages/ProductPage.jsx";
 import { NotFound } from "@pages/NotFound.jsx";
 import "./assets/styles/custom-classes.scss";
+import "./assets/styles/globalStyles.scss";
 
 function App() {
   return (

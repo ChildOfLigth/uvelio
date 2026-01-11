@@ -30,11 +30,11 @@
       "rings": "Bagues",
       "wedRings": "Alliances",
       "withIsert": "Avec pierre",
-      "withoutIsert": "Sans pierre",
-      "filterBy": {
-        "gold": "Or",
-        "silver": "Argent"
-      }
+      "withoutIsert": "Sans pierre"
+    },
+    "filterCatalogBy": {
+      "gold": "Or",
+      "silver": "Argent"
     },
     "newArrivals": {
       "title": "Nouveautés"

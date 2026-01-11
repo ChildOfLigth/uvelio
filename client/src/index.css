@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 :root {
   --color-primary: rgb(55, 41, 36);
@@ -10,7 +10,7 @@
 }
 
 body {
-  background-color: var(--third-primary-c);
+  background-color: var(--third-primary-с);
   font-family: "IBM Plex Serif", serif;
 }
 
@@ -20,19 +20,13 @@ body {
   flex-direction: column;
 }
 
-a:hover {
-  transition: color 0.4s;
-  color: var(--second-primary-с);
-  cursor: pointer;
+main {
+  flex: 1;
 }
 
 a,
 button {
   user-select: none;
-}
-
-main {
-  flex: 1;
 }
 
 button {

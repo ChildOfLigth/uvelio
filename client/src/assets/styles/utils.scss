@@ -1,0 +1,16 @@
+@use 'sass:math';
+
+@function adaptiveSize($minPx, $maxPx, $minVw: 320, $maxVw: 1440, $rootPx: 16) {
+  $minRem: math.div($minPx, $rootPx);
+  $maxRem: math.div($maxPx, $rootPx);
+
+  $slopePxPerVw: math.div($maxPx - $minPx, $maxVw - $minVw) * 100;
+
+  $interceptPx: $minPx - math.div($minVw * $slopePxPerVw, 100);
+
+  @return clamp(
+    #{$minRem}rem,
+    calc(#{$interceptPx}px + #{$slopePxPerVw}vw),
+    #{$maxRem}rem
+  );
+}

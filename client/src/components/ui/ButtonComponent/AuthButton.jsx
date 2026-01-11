@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 
 export default function AuthButton() {
   const { t, i18n } = useTranslation();
-  console.log(i18n.language);
 
   return (
     <button className="bg-(--color-primary) w-[51%] h-full customButtons animationButton">
