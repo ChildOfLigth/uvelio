@@ -1,6 +1,47 @@
 import { userAccountsDB } from "../../database/initDB.js";
+import { loginUser, userRegistration } from "../services/userAccountsService.js";
 
-export const getOneUser = async (req, res) => {
+const userRegistrationController = async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+
+        const user = await userRegistration({ username, email, password });
+        res.status(201).json(user);
+
+    } catch (err) {
+        if (err.message.includes('UNIQUE')) {
+            return res.status(400).json({ message: 'Email already exists' });
+        }
+
+        res.status(500).json({ error: err.message });
+    }
+};
+
+const loginController = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+
+        const user = await loginUser({ email, password });
+        res.json(user);
+
+    } catch (err) {
+        if (err.message === 'User not found' || err.message === 'Invalid password') {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        res.status(500).json({ error: err.message });
+    }
+};
+
+const getOneUserController = async (req, res) => {
     const { id } = req.params;
 
     const sql = "SELECT * FROM userAccounts WHERE id = ?";
@@ -18,28 +59,7 @@ export const getOneUser = async (req, res) => {
     });
 };
 
-export const addUser = async (req, res) => {
-    const { username, email, password } = req.body;
-
-    const sql = `
-        INSERT INTO userAccounts (username, email, password)
-        VALUES (?, ?, ?)
-    `;
-
-    userAccountsDB.run(sql, [username, email, password], function (err) {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-
-        res.status(201).json({
-            id: this.lastID,
-            username,
-            email
-        });
-    });
-};
-
-export const deleteUser = async (req, res) => {
+const deleteUserController = async (req, res) => {
     const { id } = req.params;
 
     const sql = "DELETE FROM userAccounts WHERE id = ?";
@@ -56,3 +76,5 @@ export const deleteUser = async (req, res) => {
         res.json({ deleted: true });
     });
 };
+
+export { userRegistrationController, loginController, getOneUserController, deleteUserController };

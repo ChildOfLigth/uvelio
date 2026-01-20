@@ -15,6 +15,7 @@ const throwError = (err) => {
     console.log('Database successfully open');
   }
 };
+
 const productsDbPath = path.join(__dirname, 'products.db');
 const userAccountsDbPath = path.join(__dirname, 'userAccounts.db');
 
@@ -30,6 +31,7 @@ function initDB() {
         price NUMERIC NOT NULL,
         weight NUMERIC,
         assessment NUMERIC NOT NULL,
+        reviews TEXT,
         style TEXT NOT NULL,
         material TEXT NOT NULL,
         hallmark TEXT NOT NULL,

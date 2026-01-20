@@ -1,4 +1,4 @@
-import { getAllData, getOneValue } from '../services/productService.js';
+import { getAllData, getOneValue } from '../services/productsService.js';
 
 export const getAllProductsController = async (req, res) => {
     try {

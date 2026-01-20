@@ -1,4 +1,4 @@
-import productsDB from '../../database/productsDB.js';
+import productsDB from '../../database/initDB.js';
 
 export function getAllData() {
     return new Promise((resolve, reject) => {
