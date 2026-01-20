@@ -70,9 +70,9 @@ export default function Header() {
           <HeaderOnSmallSizes />
         )}
 
-        <div className="flex items-center bg-(--color-primary) w-full h-11.25 text-[17px] font-normal overflow-x-scroll [scrollbar-width:none] max-xl:px-8">
+        <div className="flex items-center bg-(--color-primary) w-full h-11.25 font-normal overflow-x-scroll [scrollbar-width:none] max-xl:px-8">
           <div className="flex items-center justify-start w-[91.7%] max-w-340 h-[95%] m-auto max-xl:min-w-max">
-            <nav className="flex items-center justify-between w-full h-full text-white text-[17px] gap-5 max-md:text-base">
+            <nav className="flex items-center justify-between w-full h-full text-white gap-5 max-md:text-base">
               <div className="flex items-center justify-start gap-5 whitespace-nowrap">
                 {linksByHeader.map((link, ind) => (
                   <Link

@@ -123,7 +123,7 @@ export default function Footer() {
               className="w-3/5 max-w-200 min-w-192.5 flex items-center justify-start gap-8 text-white 
             text-base font-normal max-lg:max-w-none max-md:flex-col max-md:gap-4 max-md:items-start "
             >
-              <p className="inline-block w-1/3">
+              <p className="inline-block w-1/3 text-base!">
                 © 2025 Uvelio. All rights reserved.
               </p>
 
