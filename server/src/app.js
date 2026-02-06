@@ -9,7 +9,7 @@ app.use(express.json());
 
 initDB();
 
-app.use('/users', userAccountsRoute);
+app.use('/userAcount', userAccountsRoute);
 app.use('/products', productsRoute);
 
 app.get('/', (req, res) => {

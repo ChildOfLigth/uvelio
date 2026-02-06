@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { SETTING_RETURN_VAL } from "../../../globalVariables";
+import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables";
 import uvelioLogo from "@imgs/icons/uvelio.svg";
 import HeaderOnSmallSizes from "./HeaderOnSmallSizes";
 import ButtonForChangeLang from "../ButtonComponent/ButtonForChangeLang.jsx";
@@ -13,9 +13,9 @@ export default function Header() {
     window.innerWidth <= 750
   );
   const linksByHeader = [
-    ...t("header.navigateLinks", SETTING_RETURN_VAL),
+    ...t("header.navigateLinks", RETURN_TRANSLATE_FUNC_TYPE),
   ].slice(0, -1);
-  const supportLink = [...t("header.navigateLinks", SETTING_RETURN_VAL)].at(-1);
+  const supportLink = [...t("header.navigateLinks", RETURN_TRANSLATE_FUNC_TYPE)].at(-1);
 
   useEffect(() => {
     const handleResize = () => setHederOnSmallSizes(window.innerWidth <= 750);

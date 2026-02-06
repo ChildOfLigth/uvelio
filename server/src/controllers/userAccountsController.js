@@ -59,22 +59,4 @@ const getOneUserController = async (req, res) => {
     });
 };
 
-const deleteUserController = async (req, res) => {
-    const { id } = req.params;
-
-    const sql = "DELETE FROM userAccounts WHERE id = ?";
-
-    userAccountsDB.run(sql, [id], function (err) {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-
-        if (this.changes === 0) {
-            return res.status(404).json({ deleted: false });
-        }
-
-        res.json({ deleted: true });
-    });
-};
-
-export { userRegistrationController, loginController, getOneUserController, deleteUserController };
+export { userRegistrationController, loginController, getOneUserController };

@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { SETTING_RETURN_VAL } from "../../globalVariables";
+import { RETURN_TRANSLATE_FUNC_TYPE } from "../../globalVariables";
 import facebookIcon from "@imgs/icons/socialMedia/facebook.svg";
 import instagramIcon from "@imgs/icons/socialMedia/instagram.svg";
 import linkedinIcon from "@imgs/icons/socialMedia/linkedin.svg";
@@ -13,13 +13,13 @@ export default function Footer() {
   const { t } = useTranslation();
 
   const catalogLinksWithFilter = [
-    ...t("footer.siteNavigation.category.links", SETTING_RETURN_VAL),
+    ...t("footer.siteNavigation.category.links", RETURN_TRANSLATE_FUNC_TYPE),
   ];
   const aboutUsLinks = [
-    ...t("footer.siteNavigation.aboutUs.links", SETTING_RETURN_VAL),
+    ...t("footer.siteNavigation.aboutUs.links", RETURN_TRANSLATE_FUNC_TYPE),
   ];
   const offersLink = [
-    ...t("footer.siteNavigation.offers.links", SETTING_RETURN_VAL),
+    ...t("footer.siteNavigation.offers.links", RETURN_TRANSLATE_FUNC_TYPE),
   ];
 
   const createLinks = (arrayLinks, href) => {
@@ -42,7 +42,7 @@ export default function Footer() {
                 0 456 213 380
               </address>
               <p className="text-[14px] text-(--second-primary-с)">
-                {t("footer.communicationMethods.descText")}
+                {t("footer.communicationMethods.description")}
               </p>
             </div>
 

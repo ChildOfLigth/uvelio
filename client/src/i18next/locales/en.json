@@ -66,9 +66,67 @@
     }
   },
 
+  "aboutUs": {
+    "heroBlock": {
+      "title": "About us",
+      "subtitle": "Uvelio - a national jewelry network",
+      "descriptionBlock": {
+        "title": "Company establishment",
+        "description": "Founded in 1998, Uvelio opened its first store at 13 Khreshchatyk Street. By 2003, jewelry supermarkets emerged in Prague’s shopping centers, showcasing a variety of brands and independent artisans offering exquisite pieces. Over its 25 years, Uvelio has established itself as a national brand, with over 226 stores nationwide, including 12 exclusive locations featuring the UVELIO COLLECTIONS."
+      }
+    },
+    "ourGoal": {
+      "title": "Our goal",
+      "description": "Make jewelry shopping accessible for every client and gather decorations for any occasion or celebration in your life, whether in stores or on smartphones."
+    },
+    "uvelioCollectionsBlock": {
+      "title": "Uvelio collections",
+      "description": "We have developed limited collections of jewelry and opened the Uvelio Collections area in 10 stores.",
+      "list": [
+        "Prague: OC Chodov, Palladium, Nový Smíchov, OC Letňany, 21 Václavské náměstí",
+        "Ostrava: Shopping Center “City Center”",
+        "Brno: Shopping Center Velký Špalíček",
+        "Plzeň: 61 Cathedral Street",
+        "Prague: Shopping Center “Karavan”",
+        "Liberec: Shopping Center “Lidová Plaza”",
+        "Hradec Králové: Shopping Center “Podalany”"
+      ],
+
+      "summaryText": "The stores featuring the Uvelio Collections showcase 17 exclusive collections of gold jewelry. They are designed to highlight every facet of a woman’s character and style in every moment and situation."
+    },
+    "companyToday": {
+      "title": "Uvelio today",
+      "description": "Uvelio — a comfortable format for jewelry shopping both offline and online.",
+      "listOfBenefits": [
+        "Brand stores across the country",
+        "Convenient online store",
+        "Mobile app on every smartphone",
+        "Unique loyalty program",
+        "Exclusive jewelry collections",
+        "Bonuses and discounts for new and regular customers",
+        "International shipping"
+      ],
+      "summaryText": "Uvelio simplifies the process of selecting and buying jewelry, making it a delightful experience. The brand’s stores cater to those who enjoy jewelry shopping, the dazzling displays. For those who prefer a quick shopping experience, the modern online store and app offer a seamless one-click option. Location: Prague, Vinohradská 45 Phone: +420 123 456 789",
+      "benefitsBlock": {
+        "topPart": [
+          {"count": "20+", "desc": "Thousands of decorations on the site"},
+          {"count": "226+", "desc": "Stores all over Czech Republic"},
+          {"count": "36+", "desc": "Exclusive collections"}
+        ],
+        "bottomPart": [
+          {"desc": "Beneficial loyalty program", "iconUrl": "@imgs/icons/beneficial.svg"},
+          {"desc": "Stylish branded packaging", "iconUrl": "@imgs/icons/stylishPacking.svg"},
+          {"desc": "Own production and design", "iconUrl": "@imgs/icons/designRingIcon.svg"},
+          {"desc": "Jewelry on credit or installment", "iconUrl": "@imgs/icons/creditOrInstallment.svg"},
+          {"desc": "Website and mobile app", "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg"}
+        ]
+      }
+    }
+  },
+
   "footer": {
     "communicationMethods": {
-      "descText": "Callback",
+      "description": "Callback",
 
       "hotline": {
         "title": "Hotline",

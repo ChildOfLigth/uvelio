@@ -61,10 +61,10 @@ async function loginUser({ email, password }) {
 };
 
 
-function getOneUser(id) {
+function getOneUser(jwt) {
     return Promise((resolve, reject) => {
         const sqlComand = "SELECT * FROM userAccounts WHERE id = ?";
-        userAccountsDB.get(sqlComand, [id]), (err, row) => {
+        userAccountsDB.get(sqlComand, [jwt]), (err, row) => {
             if (err) {
                 reject(err);
             } else {
@@ -74,22 +74,4 @@ function getOneUser(id) {
     })
 };
 
-function deleteUser(id) {
-    return new Promise((resolve, reject) => {
-        const sql = `DELETE FROM userAccounts WHERE id = ?`;
-
-        userAccountsDB.run(sql, [id], (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (this.changes === 0) {
-                    resolve({ deleted: false });
-                } else {
-                    resolve({ deleted: true });
-                }
-            }
-        })
-    });
-};
-
-export { userRegistration, loginUser, getOneUser, deleteUser }
+export { userRegistration, loginUser, getOneUser }

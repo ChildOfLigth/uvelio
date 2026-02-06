@@ -66,9 +66,66 @@
     }
   },
 
+  "aboutUs": {
+    "heroBlock": {
+      "title": "À propos de nous",
+      "subtitle": "Uvelio — un réseau national de bijouteries",
+      "descriptionBlock": {
+        "title": "Création de l’entreprise",
+        "description": "Fondée en 1998, Uvelio a ouvert sa première boutique au 13 rue Khreshchatyk. Dès 2003, des supermarchés de bijouterie ont vu le jour dans les centres commerciaux de Prague, présentant une variété de marques ainsi que des artisans indépendants proposant des pièces raffinées. En plus de 25 ans, Uvelio s’est imposée comme une marque nationale avec plus de 226 magasins à travers le pays, dont 12 emplacements exclusifs dédiés aux UVELIO COLLECTIONS."
+      }
+    },
+    "ourGoal": {
+      "title": "Notre objectif",
+      "description": "Rendre l’achat de bijoux accessible à chaque client et rassembler des parures pour chaque occasion ou célébration de votre vie, que ce soit en magasin ou sur smartphone."
+    },
+    "uvelioCollectionsBlock": {
+      "title": "Collections Uvelio",
+      "description": "Nous avons développé des collections de bijoux en édition limitée et ouvert l’espace Uvelio Collections dans 10 magasins.",
+      "list": [
+        "Prague : OC Chodov, Palladium, Nový Smíchov, OC Letňany, 21 place Venceslas",
+        "Ostrava : centre commercial « City Center »",
+        "Brno : centre commercial Velký Špalíček",
+        "Plzeň : 61 rue de la Cathédrale",
+        "Prague : centre commercial « Karavan »",
+        "Liberec : centre commercial « Lidová Plaza »",
+        "Hradec Králové : centre commercial « Podalany »"
+      ],
+      "summaryText": "Les boutiques proposant les collections Uvelio présentent 17 collections exclusives de bijoux en or. Elles sont conçues pour mettre en valeur chaque facette du caractère et du style féminin, en toute circonstance."
+    },
+    "companyToday": {
+      "title": "Uvelio aujourd’hui",
+      "description": "Uvelio — un format confortable pour l’achat de bijoux, en ligne comme en magasin.",
+      "listOfBenefits": [
+        "Boutiques de marque dans tout le pays",
+        "Boutique en ligne pratique",
+        "Application mobile sur chaque smartphone",
+        "Programme de fidélité unique",
+        "Collections de bijoux exclusives",
+        "Bonus et réductions pour les nouveaux et fidèles clients",
+        "Livraison internationale"
+      ],
+      "summaryText": "Uvelio simplifie le processus de sélection et d’achat de bijoux, le rendant agréable et intuitif. Les boutiques de la marque s’adressent à ceux qui apprécient le shopping de bijoux et les vitrines scintillantes. Pour les amateurs d’achats rapides, la boutique en ligne moderne et l’application offrent une expérience fluide en un clic. Adresse : Prague, Vinohradská 45 Téléphone : +420 123 456 789",
+      "benefitsBlock": {
+        "topPart": [
+          { "count": "20+", "desc": "Des milliers de bijoux sur le site" },
+          { "count": "226+", "desc": "Magasins dans toute la République tchèque" },
+          { "count": "36+", "desc": "Collections exclusives" }
+        ],
+        "bottomPart": [
+          { "desc": "Programme de fidélité avantageux", "iconUrl": "@imgs/icons/beneficial.svg" },
+          { "desc": "Emballage de marque élégant", "iconUrl": "@imgs/icons/stylishPacking.svg" },
+          { "desc": "Production et design internes", "iconUrl": "@imgs/icons/designRingIcon.svg" },
+          { "desc": "Bijoux à crédit ou en plusieurs fois", "iconUrl": "@imgs/icons/creditOrInstallment.svg" },
+          { "desc": "Site web et application mobile", "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg" }
+        ]
+      }
+    }
+  },
+
   "footer": {
     "communicationMethods": {
-      "descText": "Rappel",
+      "description": "Rappel",
       "hotline": {
         "title": "Hotline",
         "days": "Tous les jours",
