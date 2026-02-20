@@ -3,22 +3,28 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables";
 import uvelioLogo from "@imgs/icons/uvelio.svg";
-import HeaderOnSmallSizes from "./HeaderOnSmallSizes";
-import ButtonForChangeLang from "../ButtonComponent/ButtonForChangeLang.jsx";
+import MenuBurger from "./MenuBurger.jsx";
+import ChangeLang from "../ButtonComponent/ChangeLang.jsx";
 import AuthButton from "../ButtonComponent/AuthButton.jsx";
+import { useSelector } from "react-redux";
+import NavToUserPage from "../ButtonComponent/NavToUserPage.jsx";
 
 export default function Header() {
   const { t } = useTranslation();
+  const isAuth = useSelector((state) => state.userAccount.isAuth);
   const [headerOnSmallSizes, setHederOnSmallSizes] = useState(
-    window.innerWidth <= 750
+    window.innerWidth <= 768,
   );
+
   const linksByHeader = [
     ...t("header.navigateLinks", RETURN_TRANSLATE_FUNC_TYPE),
   ].slice(0, -1);
-  const supportLink = [...t("header.navigateLinks", RETURN_TRANSLATE_FUNC_TYPE)].at(-1);
+  const supportLink = [
+    ...t("header.navigateLinks", RETURN_TRANSLATE_FUNC_TYPE),
+  ].at(-1);
 
   useEffect(() => {
-    const handleResize = () => setHederOnSmallSizes(window.innerWidth <= 750);
+    const handleResize = () => setHederOnSmallSizes(window.innerWidth <= 768);
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
@@ -28,10 +34,10 @@ export default function Header() {
     <>
       <header className="bg-(--third-primary-с) sticky top-0 w-full h-auto flex flex-col items-center justify-center z-50">
         {!headerOnSmallSizes ? (
-          <div className="flex items-center justify-between w-[93%] py-3 h-24 max-[860px]:gap-5">
+          <div className="flex items-center justify-between w-[93%] py-3 h-18 lg:h-24 max-[860px]:gap-5">
             <img src={uvelioLogo} alt="Uvelio logo" className="w-36" />
 
-            <div className="flex items-center gap-4 justify-end w-4/5 h-[70%]">
+            <div className="flex items-center gap-4 justify-end w-4/5 h-[90%] lg:h-[70%]">
               <form
                 action="/uvelio/catalog:filter"
                 className="flex items-center justify-between bg-white w-[78.8%] h-full rounded-(--border-radius) px-5"
@@ -61,13 +67,13 @@ export default function Header() {
               </form>
 
               <div className="flex items-center w-[17%] min-w-50 h-full gap-5 max-md:gap-2.5">
-                <ButtonForChangeLang />
-                <AuthButton />
+                <ChangeLang />
+                {!isAuth ? <AuthButton /> : <NavToUserPage />}
               </div>
             </div>
           </div>
         ) : (
-          <HeaderOnSmallSizes />
+          <MenuBurger />
         )}
 
         <div className="flex items-center bg-(--color-primary) w-full h-11.25 font-normal overflow-x-scroll [scrollbar-width:none] max-xl:px-8">
@@ -78,7 +84,7 @@ export default function Header() {
                   <Link
                     to={link.href}
                     key={ind}
-                    className="flex items-center h-full leading-none"
+                    className="flex items-center h-full leading-none hover:text-(--secondary-primary-c)"
                   >
                     {link.label}
                   </Link>
@@ -87,7 +93,7 @@ export default function Header() {
 
               <Link
                 to={supportLink.href}
-                className="text-(--second-primary-с)/50 flex items-center h-full leading-none"
+                className="text-(--second-primary-с)/50 flex items-center h-full leading-none hover:text-(--secondary-primary-c)"
               >
                 {supportLink.label}
               </Link>
