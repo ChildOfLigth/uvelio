@@ -1,12 +1,14 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../globalVariables";
+
 import facebookIcon from "@imgs/icons/socialMedia/facebook.svg";
 import instagramIcon from "@imgs/icons/socialMedia/instagram.svg";
 import linkedinIcon from "@imgs/icons/socialMedia/linkedin.svg";
 import Xicon from "@imgs/icons/socialMedia/XIcon.svg";
 import youtubeIcon from "@imgs/icons/socialMedia/youtube.svg";
 import uvelioLogo from "@imgs/icons/uvelio.svg";
+
 import NavToCatalog from "./NavToCatalog";
 
 export default function Footer() {
@@ -22,17 +24,14 @@ export default function Footer() {
     ...t("footer.siteNavigation.offers.links", RETURN_TRANSLATE_FUNC_TYPE),
   ];
 
-  const createLinks = (arrayLinks, href) => {
-    return arrayLinks.map((link, ind) => <Link to={href} key={ind}>{link}</Link>);
-  };
-
   return (
     <>
       <Outlet />
+
       <footer className="flex flex-col bg-white w-full h-auto">
-        <div className="w-[90%] flex items-start pt-8 pb-10 ml-auto mr-auto max-lg:flex-col ">
-          <div className="w-1/3 flex flex-col items-start gap-8 text-(--color-primary) max-xl:w-1/4 max-lg:flex-row max-lg:w-3/4 max-lg:mb-5 max-md:w-full">
-            <div className="w-full flex flex-col justify-start max-lg:w-1/2">
+        <div className="w-[90%] flex flex-col pt-8 pb-10 ml-auto mr-auto gap-10 lg:flex-row">
+          <div className="w-full flex flex-col gap-8 text-(--color-primary) lg:w-1/4 xl:w-1/3">
+            <div className="w-full flex flex-col justify-start">
               <img
                 src={uvelioLogo}
                 className="w-40 mb-5"
@@ -46,17 +45,15 @@ export default function Footer() {
               </p>
             </div>
 
-            <div
-              className="max-w-150 flex items-center text-[14px] font-normal w-full max-xl:flex-col max-xl:items-start max-xl:gap-4 
-            max-lg:flex-row max-lg:w-1/2 max-lg:max-w-none max-md:w-3/4 max-[370px]:flex-col!"
-            >
-              <div className="flex flex-col text-left w-2/5 max-xl:w-full max-lg:w-1/2 max-[400px]:w-full!">
+            <div className="max-w-150 flex flex-col text-[14px] font-normal gap-6 sm:flex-row sm:gap-8">
+              <div className="flex flex-col text-left w-full sm:w-1/2">
                 <h4>{t("footer.communicationMethods.hotline.title")}</h4>
-                <p>{t("footer.communicationMethods.hotline.days")}</p>
+                <p className="text-(length:--base-p-size)">{t("footer.communicationMethods.hotline.days")}</p>
+
                 <div className="w-full">
                   <time dateTime="10:00">
                     {t("footer.communicationMethods.hotline.startTime")}
-                  </time>{" "}
+                  </time>
                   –{" "}
                   <time dateTime="19:00">
                     {t("footer.communicationMethods.hotline.endTime")}
@@ -64,13 +61,13 @@ export default function Footer() {
                 </div>
               </div>
 
-              <div className="flex flex-col text-left w-2/5 max-xl:w-full max-lg:w-1/2 max-[400px]:w-full!">
+              <div className="flex flex-col text-left w-full sm:w-1/2">
                 <h4>{t("footer.communicationMethods.callCenter.title")}</h4>
-                <p>{t("footer.communicationMethods.callCenter.days")}</p>
+                <p className="text-(length:--base-p-size)">{t("footer.communicationMethods.callCenter.days")}</p>
                 <div className="w-full">
                   <time dateTime="10:00">
                     {t("footer.communicationMethods.callCenter.startTime")}
-                  </time>{" "}
+                  </time>
                   –{" "}
                   <time dateTime="19:00">
                     {t("footer.communicationMethods.callCenter.endTime")}
@@ -80,13 +77,15 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="w-2/3 max-w-300 flex items-start justify-between gap-12 max-lg:w-full max-md:flex-wrap max-sm:gap-7 max-[470px]:text-sm max-[380px]:flex-col">
-            <nav className="w-2/5 flex flex-col justify-start max-[380px]:w-full">
+          <div className="w-2/3 h-auto max-w-300 flex items-start justify-between gap-12 flex-row max-lg:w-full max-md:flex-wrap 
+          max-sm:gap-7 max-[380px]:flex-col">
+
+            <nav className="w-5/6 flex flex-col justify-start [380px]:2/5">
               <h4 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.category.title")}
               </h4>
 
-              <ul className="w-full max-h-72 list-none inline-flex flex-wrap flex-col gap-2">
+              <ul className="w-full h-auto max-h-72 list-none flex flex-col flex-wrap gap-2">
                 {catalogLinksWithFilter.map((link, ind) => (
                   <li key={link.href}>
                     <NavToCatalog href={link.href} key={ind}>
@@ -97,21 +96,29 @@ export default function Footer() {
               </ul>
             </nav>
 
-            <nav className="w-1/3 flex flex-col justify-start max-[380px]:w-full">
+            <nav className="w-5/6 flex flex-col justify-start max-[380px]:2/5">
               <h4 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.aboutUs.title")}
               </h4>
-              <ul className="w-full list-none inline-flex flex-col justify-start gap-2">
-                {createLinks(aboutUsLinks, "/uvelio/about-us")}
+              <ul className="w-full list-none flex flex-col justify-start gap-2">
+                {aboutUsLinks.map((item, ind) => (
+                  <li key={ind}>
+                    <a href={item.href} className="wrap-anywhere">{item.text}</a>
+                  </li>
+                ))}
               </ul>
             </nav>
 
-            <nav className="w-1/3 flex flex-col justify-start max-sm:w-2/5 max-[380px]:w-full">
+            <nav className="w-5/6 flex flex-col justify-start max-[380px]:2/5">
               <h4 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.offers.title")}
               </h4>
-              <ul className="w-full list-none inline-flex flex-col justify-start gap-2">
-                {createLinks(offersLink, "/uvelio/")}
+              <ul className="w-full list-none flex flex-col justify-start gap-2">
+                {offersLink.map((item, ind) => (
+                  <li key={ind}>
+                    <a href="/uvelio/" className="wrap-anywhere">{item}</a>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
@@ -120,21 +127,21 @@ export default function Footer() {
         <div className="flex items-center justify-end h-1/3 bg-(--color-primary) py-5">
           <div className="w-[90%] flex items-center justify-between m-auto max-lg:flex-col max-lg:gap-5 max-lg:items-start">
             <div
-              className="w-3/5 max-w-200 min-w-192.5 flex items-center justify-start gap-8 text-white 
-            text-base font-normal max-lg:max-w-none max-md:flex-col max-md:gap-4 max-md:items-start "
+              className="w-5/6 max-w-none min-w-none md:w-3/5 md:max-w-200 md:min-w-192.5 flex items-start justify-start flex-col md:flex-row 
+              md:items-center gap-4 md:gap-8 text-white"
             >
-              <p className="inline-block w-1/3 text-base!">
+              <p className="w-full md:w-1/3 inline-block text-base">
                 © 2025 Uvelio. All rights reserved.
               </p>
 
-              <nav className="w-1/2 flex items-center justify-between decoration-1 underline max-[450px]:text-xs max-[450px]:items-start max-[450px]:justify-start max-[450px]:gap-2">
-                <a>Privacy Policy</a>
-                <a>Terms of Service</a>
-                <a>Cookie Settings</a>
+              <nav className="flex flex-row flex-wrap gap-3 sm:gap-6 underline decoration-1">
+                <a className="wrap-break-word">Privacy Policy</a>
+                <a className="wrap-break-word">Terms of Service</a>
+                <a className="wrap-break-word">Cookie Settings</a>
               </nav>
             </div>
 
-            <div className="w-1/3 flex gap-3 justify-end max-lg:justify-start">
+            <div className="w-1/3 flex gap-3 justify-start lg:justify-end">
               <img
                 src={facebookIcon}
                 alt="facebook icon"

@@ -9,7 +9,7 @@
       { "label": "Home", "href": "/uvelio/" },
       { "label": "Catalog", "href": "/uvelio/catalog/" },
       { "label": "Promotions", "href": "/uvelio/catalog/" },
-      { "label": "Our Stores", "href": "/uvelio/" },
+      { "label": "Our Stores", "href": "/uvelio/about-us" },
       { "label": "Product Search", "href": "/uvelio/" },
       { "label": "Free Shipping", "href": "/uvelio/" },
       { "label": "Installment Payment", "href": "/uvelio/" },
@@ -36,10 +36,7 @@
       "gold": "Gold",
       "silver": "Silver"
     },
-    "newArrivals": {
-      "title": "New Arrivals"
-    },
-
+    "newArrivalsTitle": "New Arrivals",
     "advertisement": {
       "ecoDiamonds": {
         "title": "Laboratory Eco-Diamonds",
@@ -48,7 +45,7 @@
       },
 
       "exlusive": {
-        "title": "Uvelio Exclusive",
+        "title": "Exclusive",
         "subtitle": "your exclusive jewelry",
         "textBtn": "Choose"
       }
@@ -56,13 +53,15 @@
 
     "category": {
       "title": "Category",
-      "earrings": "Earrings",
-      "chains": "Chains",
-      "bracelets": "Bracelets",
-      "necklaces": "Necklaces",
-      "pendants": "Pendants",
-      "crosses": "Crosses",
-      "brooches": "Brooches"
+      "filterLinks": {
+        "earrings": "Earrings",
+        "chains": "Chains",
+        "bracelets": "Bracelets",
+        "necklaces": "Necklaces",
+        "pendants": "Pendants",
+        "crosses": "Crosses",
+        "brooches": "Brooches"
+      }
     }
   },
 
@@ -109,16 +108,31 @@
       "summaryText": "Uvelio simplifies the process of selecting and buying jewelry, making it a delightful experience. The brand’s stores cater to those who enjoy jewelry shopping, the dazzling displays. For those who prefer a quick shopping experience, the modern online store and app offer a seamless one-click option. Location: Prague, Vinohradská 45 Phone: +420 123 456 789",
       "benefitsBlock": {
         "topPart": [
-          {"count": "20+", "desc": "Thousands of decorations on the site"},
-          {"count": "226+", "desc": "Stores all over Czech Republic"},
-          {"count": "36+", "desc": "Exclusive collections"}
+          { "count": "20+", "desc": "Thousands of decorations on the site" },
+          { "count": "226+", "desc": "Stores all over Czech Republic" },
+          { "count": "36+", "desc": "Exclusive collections" }
         ],
         "bottomPart": [
-          {"desc": "Beneficial loyalty program", "iconUrl": "@imgs/icons/beneficial.svg"},
-          {"desc": "Stylish branded packaging", "iconUrl": "@imgs/icons/stylishPacking.svg"},
-          {"desc": "Own production and design", "iconUrl": "@imgs/icons/designRingIcon.svg"},
-          {"desc": "Jewelry on credit or installment", "iconUrl": "@imgs/icons/creditOrInstallment.svg"},
-          {"desc": "Website and mobile app", "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg"}
+          {
+            "desc": "Beneficial loyalty program",
+            "iconUrl": "@imgs/icons/beneficial.svg"
+          },
+          {
+            "desc": "Stylish branded packaging",
+            "iconUrl": "@imgs/icons/stylishPacking.svg"
+          },
+          {
+            "desc": "Own production and design",
+            "iconUrl": "@imgs/icons/designRingIcon.svg"
+          },
+          {
+            "desc": "Jewelry on credit or installment",
+            "iconUrl": "@imgs/icons/creditOrInstallment.svg"
+          },
+          {
+            "desc": "Website and mobile app",
+            "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg"
+          }
         ]
       }
     }
@@ -170,13 +184,13 @@
       "aboutUs": {
         "title": "About us",
         "links": [
-          "Blog",
-          "Contacts",
-          "Franchising",
-          "Privacy policy",
-          "User agreement",
-          "Questions and Answers",
-          "Loyalty program from Uvelio"
+          { "text": "Blog", "href": "/uvelio/about-us" },
+          { "text": "Contacts", "href": "/uvelio/about-us" },
+          { "text": "Franchising", "href": "/uvelio/about-us" },
+          { "text": "Privacy policy", "href": "/uvelio/about-us" },
+          { "text": "User agreement", "href": "/uvelio/about-us" },
+          { "text": "Questions and Answers", "href": "/uvelio/about-us" },
+          { "text": "Loyalty program from Uvelio", "href": "/uvelio/about-us" }
         ]
       },
 

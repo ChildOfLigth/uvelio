@@ -36,9 +36,7 @@
       "gold": "Or",
       "silver": "Argent"
     },
-    "newArrivals": {
-      "title": "Nouveautés"
-    },
+    "newArrivalsTitle": "Nouveautés",
 
     "advertisement": {
       "ecoDiamonds": {
@@ -48,7 +46,7 @@
       },
 
       "exlusive": {
-        "title": "Uvelio Exclusif",
+        "title": "Exclusif",
         "subtitle": "Vos bijoux exclusifs",
         "textBtn": "Choisir"
       }
@@ -56,13 +54,15 @@
 
     "category": {
       "title": "Catégorie",
-      "earrings": "Boucles d'oreilles",
-      "chains": "Chaînes",
-      "bracelets": "Bracelets",
-      "necklaces": "Colliers",
-      "pendants": "Pendentifs",
-      "crosses": "Croix",
-      "brooches": "Broches"
+      "filterLinks": {
+        "earrings": "Boucles d’oreilles",
+        "chains": "Chaînes",
+        "bracelets": "Bracelets",
+        "necklaces": "Colliers",
+        "pendants": "Pendentifs",
+        "crosses": "Croix",
+        "brooches": "Broches"
+      }
     }
   },
 
@@ -109,15 +109,33 @@
       "benefitsBlock": {
         "topPart": [
           { "count": "20+", "desc": "Des milliers de bijoux sur le site" },
-          { "count": "226+", "desc": "Magasins dans toute la République tchèque" },
+          {
+            "count": "226+",
+            "desc": "Magasins dans toute la République tchèque"
+          },
           { "count": "36+", "desc": "Collections exclusives" }
         ],
         "bottomPart": [
-          { "desc": "Programme de fidélité avantageux", "iconUrl": "@imgs/icons/beneficial.svg" },
-          { "desc": "Emballage de marque élégant", "iconUrl": "@imgs/icons/stylishPacking.svg" },
-          { "desc": "Production et design internes", "iconUrl": "@imgs/icons/designRingIcon.svg" },
-          { "desc": "Bijoux à crédit ou en plusieurs fois", "iconUrl": "@imgs/icons/creditOrInstallment.svg" },
-          { "desc": "Site web et application mobile", "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg" }
+          {
+            "desc": "Programme de fidélité avantageux",
+            "iconUrl": "@imgs/icons/beneficial.svg"
+          },
+          {
+            "desc": "Emballage de marque élégant",
+            "iconUrl": "@imgs/icons/stylishPacking.svg"
+          },
+          {
+            "desc": "Production et design internes",
+            "iconUrl": "@imgs/icons/designRingIcon.svg"
+          },
+          {
+            "desc": "Bijoux à crédit ou en plusieurs fois",
+            "iconUrl": "@imgs/icons/creditOrInstallment.svg"
+          },
+          {
+            "desc": "Site web et application mobile",
+            "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg"
+          }
         ]
       }
     }
@@ -173,13 +191,16 @@
       "aboutUs": {
         "title": "À propos de nous",
         "links": [
-          "Blog",
-          "Contacts",
-          "Franchise",
-          "Politique de confidentialité",
-          "Conditions d’utilisation",
-          "Questions et réponses",
-          "Programme de fidélité Uvelio"
+          { "text": "Blog", "href": "/uvelio/about-us" },
+          { "text": "Contacts", "href": "/uvelio/about-us" },
+          { "text": "Franchise", "href": "/uvelio/about-us" },
+          {
+            "text": "Politique de confidentialité",
+            "href": "/uvelio/about-us"
+          },
+          { "text": "Contrat utilisateur", "href": "/uvelio/about-us" },
+          { "text": "Questions et réponses", "href": "/uvelio/about-us" },
+          { "text": "Programme de fidélité Uvelio", "href": "/uvelio/about-us" }
         ]
       },
 

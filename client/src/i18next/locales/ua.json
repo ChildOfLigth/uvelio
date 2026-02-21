@@ -36,9 +36,7 @@
       "gold": "Золото",
       "silver": "Срібло"
     },
-    "newArrivals": {
-      "title": "Нові надходження"
-    },
+    "newArrivalsTitle": "Нові надходження",
     "advertisement": {
       "ecoDiamonds": {
         "title": "Лабораторні еко-діаманти",
@@ -46,20 +44,22 @@
         "textBtn": "Обрати"
       },
       "exlusive": {
-        "title": "Ексклюзив Uvelio",
+        "title": "Ексклюзив",
         "subtitle": "ваші ексклюзивні прикраси",
         "textBtn": "Обрати"
       }
     },
     "category": {
       "title": "Категорії",
-      "earrings": "Сережки",
-      "chains": "Ланцюжки",
-      "bracelets": "Браслети",
-      "necklaces": "Намиста",
-      "pendants": "Підвіски",
-      "crosses": "Хрестики",
-      "brooches": "Брошки"
+      "filterLinks": {
+        "earrings": "Сережки",
+        "chains": "Ланцюжки",
+        "bracelets": "Браслети",
+        "necklaces": "Намиста",
+        "pendants": "Підвіски",
+        "crosses": "Хрестики",
+        "brooches": "Брошки"
+      }
     }
   },
 
@@ -111,15 +111,30 @@
           { "count": "36+", "desc": "Ексклюзивних колекцій" }
         ],
         "bottomPart": [
-          { "desc": "Вигідна програма лояльності", "iconUrl": "@imgs/icons/beneficial.svg" },
-          { "desc": "Стильне брендоване пакування", "iconUrl": "@imgs/icons/stylishPacking.svg" },
-          { "desc": "Власне виробництво та дизайн", "iconUrl": "@imgs/icons/designRingIcon.svg" },
-          { "desc": "Ювелірні вироби в кредит або розстрочку", "iconUrl": "@imgs/icons/creditOrInstallment.svg" },
-          { "desc": "Сайт та мобільний застосунок", "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg" }
+          {
+            "desc": "Вигідна програма лояльності",
+            "iconUrl": "@imgs/icons/beneficial.svg"
+          },
+          {
+            "desc": "Стильне брендоване пакування",
+            "iconUrl": "@imgs/icons/stylishPacking.svg"
+          },
+          {
+            "desc": "Власне виробництво та дизайн",
+            "iconUrl": "@imgs/icons/designRingIcon.svg"
+          },
+          {
+            "desc": "Ювелірні вироби в кредит або розстрочку",
+            "iconUrl": "@imgs/icons/creditOrInstallment.svg"
+          },
+          {
+            "desc": "Сайт та мобільний застосунок",
+            "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg"
+          }
         ]
       }
     }
-},
+  },
 
   "footer": {
     "communicationMethods": {
@@ -169,13 +184,13 @@
       "aboutUs": {
         "title": "Про нас",
         "links": [
-          "Блог",
-          "Контакти",
-          "Франчайзинг",
-          "Політика конфіденційності",
-          "Користувацька угода",
-          "Питання та відповіді",
-          "Програма лояльності від Uvelio"
+          { "text": "Блог", "href": "/uvelio/about-us" },
+          { "text": "Контакти", "href": "/uvelio/about-us" },
+          { "text": "Франшиза", "href": "/uvelio/about-us" },
+          { "text": "Політика конфіденційності", "href": "/uvelio/about-us" },
+          { "text": "Користувацька угода", "href": "/uvelio/about-us" },
+          { "text": "Питання та відповіді", "href": "/uvelio/about-us" },
+          { "text": "Програма лояльності Uvelio", "href": "/uvelio/about-us" }
         ]
       },
 

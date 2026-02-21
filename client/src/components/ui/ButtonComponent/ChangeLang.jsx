@@ -1,25 +1,33 @@
 import { useTranslation } from "react-i18next";
-import { ALL_TRANSLATION_OPTIONS } from "../../../globalVariables";
 import { useState } from "react";
 
-export default function ButtonForChangeLang() {
+const ALL_TRANSLATION_OPTIONS = [
+  { code: "en", fullName: "English" },
+  { code: "fr", fullName: "Français" },
+  { code: "ua", fullName: "Українська" },
+];
+
+export default function ChangeLang() {
   const { i18n } = useTranslation();
   const [dropdownMenuVisibility, setDropdownMenuVisibility] = useState(false);
 
   return (
-    <div className="flex items-center justify-center relative w-[39.8%] h-full ">
+    <div className="w-[39.8%] h-full flex items-center justify-center relative">
       <button
-        className="bg-white w-full h-full gap-1.5 customButtons animationButton changeFillToWhite relative"
+        className={`bg-white w-full min-w-14.5 h-full gap-1.5 customButtons animationButton changeFillToWhite relative`}
         onClick={() => setDropdownMenuVisibility(!dropdownMenuVisibility)}
       >
-        <span className={`bg-(--second-primary-с) ${dropdownMenuVisibility ? "left-0! w-full!" : ""}`}></span>
+        <span
+          className={`bg-(--second-primary-с) ${dropdownMenuVisibility ? "left-0! w-full!" : ""}`}
+        ></span>
+
         <svg
           width="17"
           height="17"
           viewBox="0 0 17 17"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={`w-4 aspect-square z-100 ${dropdownMenuVisibility && "fill-white"}`}
+          className={`w-4 aspect-square z-100 ${dropdownMenuVisibility && "activeSvg"}`}
         >
           <path
             fillRule="evenodd"
@@ -46,7 +54,7 @@ export default function ButtonForChangeLang() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={`w-3 aspect-square transition duration-300 ${
-            dropdownMenuVisibility ? "rotate-270 fill-white" : "rotate-90"
+            dropdownMenuVisibility ? "rotate-270 activeSvg" : "rotate-90"
           } z-100`}
         >
           <path
@@ -59,9 +67,8 @@ export default function ButtonForChangeLang() {
       </button>
 
       <div
-        className={`${
-          dropdownMenuVisibility ? "flex" : "hidden"
-        } items-center justify-center w-48 py-10 bg-white rounded-b-(--border-radius) absolute top-18.25`}
+        className={`w-48 py-10 ${dropdownMenuVisibility ? "flex" : "hidden"} items-center justify-center 
+        absolute top-20 md:top-14.5 lg:top-18.25 bg-white rounded-b-(--border-radius) shadow-md shadow-(color:--color-primary)/30`}
       >
         <ul className="w-[80%] h-full flex flex-col items-center justify-center m-auto gap-5">
           {ALL_TRANSLATION_OPTIONS.map((lang) => (
@@ -71,7 +78,8 @@ export default function ButtonForChangeLang() {
             >
               <button
                 onClick={() => i18n.changeLanguage(lang.code)}
-                className={`text-lg transition duration-300 hover:text-(--second-primary-с)`}
+                className={`text-lg transition duration-300 hover:text-(--second-primary-с) 
+                  ${i18n.language == lang.code && "text-(--second-primary-с) font-bold"}`}
               >
                 {lang.fullName}
               </button>

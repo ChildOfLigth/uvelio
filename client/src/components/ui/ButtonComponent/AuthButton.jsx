@@ -4,12 +4,10 @@ export default function AuthButton() {
   const { t, i18n } = useTranslation();
 
   return (
-    <button className="bg-(--color-primary) w-[51%] h-full customButtons animationButton">
+    <button className={`bg-(--color-primary) w-[51%] ${i18n.language == "fr" && "min-w-30"} h-full customButtons`}>
       <span className="bg-(--second-primary-с)"></span>
       <p
-        className={`text-white ${
-          i18n.language != "fr" ? "text-lg" : "text-sm min-w-[92.70px] max-sm:text-xs"
-        } -scale-z-200`}
+        className="text-white -scale-z-200"
       >
         {t("header.userAvtorization.signIn")}
       </p>

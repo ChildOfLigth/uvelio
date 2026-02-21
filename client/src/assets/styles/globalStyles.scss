@@ -2,7 +2,6 @@
 
 a:hover {
   transition: color 0.4s;
-  color: var(--second-primary-с);
   cursor: pointer;
 }
 
@@ -12,7 +11,7 @@ h1 {
 }
 
 h2 {
-  font-size: adaptiveSize(24, 48);
+  font-size: adaptiveSize(22, 48);
   line-height: normal;
 }
 
@@ -22,16 +21,9 @@ h4 {
 }
 
 p {
-  font-size: adaptiveSize(16, 24);
   line-height: var(--base-lh);
 }
 
 a {
   font-size: adaptiveSize(14, 17);
-}
-
-button {
-  p {
-    font-size: adaptiveSize(14, 17);
-  }
 }
