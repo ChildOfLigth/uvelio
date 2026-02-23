@@ -12,7 +12,7 @@ import uvelioLogo from "@imgs/icons/uvelio.svg";
 import NavToCatalog from "./NavToCatalog";
 
 export default function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const catalogLinksWithFilter = [
     ...t("footer.siteNavigation.category.links", RETURN_TRANSLATE_FUNC_TYPE),
@@ -37,7 +37,7 @@ export default function Footer() {
                 className="w-40 mb-5"
                 alt="Uvelio logotype"
               />
-              <address className="text-2xl mb-2 max-[460px]:text-base">
+              <address className="text-base [460px]:text-2xl [460px]:mb-2">
                 0 456 213 380
               </address>
               <p className="text-[14px] text-(--second-primary-с)">
@@ -77,46 +77,57 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="w-2/3 h-auto max-w-300 flex items-start justify-between gap-12 flex-row max-lg:w-full max-md:flex-wrap 
-          max-sm:gap-7 max-[380px]:flex-col">
-
-            <nav className="w-5/6 flex flex-col justify-start [380px]:2/5">
+          <div className="w-full max-w-300 lg:w-2/3 h-auto flex items-start justify-between flex-col sm:flex-row flex-wrap lg:flex-nowrap gap-7">
+            <nav className={`w-5/6 h-auto flex flex-col justify-start min-[380px]:w-auto ${i18n.language == "en" ? "min-[380px]:min-w-65.25" : ""}`}>
               <h4 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.category.title")}
               </h4>
 
-              <ul className="w-full h-auto max-h-72 list-none flex flex-col flex-wrap gap-2">
-                {catalogLinksWithFilter.map((link, ind) => (
-                  <li key={link.href}>
-                    <NavToCatalog href={link.href} key={ind}>
+              <div className={`w-full max-h-72 max-w-88.75 flex justify-between items-start
+              ${i18n.language != "en" ? "max-h-none flex-col min-[450px]:flex-row min-[450px]:gap-5" : ""} list-none`}>
+                <ul className="flex flex-col items-start gap-2">
+                  {catalogLinksWithFilter.slice(0, 8).map((link, ind) => (
+                  <li key={ind} className="flex items-center">
+                    <NavToCatalog filter={link.filter} styles={"text-[14px]"}>
                       {link.text}
                     </NavToCatalog>
                   </li>
                 ))}
-              </ul>
+                </ul>
+
+                <ul className="flex flex-col items-start gap-2">
+                  {catalogLinksWithFilter.slice(8).map((link, ind) => (
+                  <li key={ind} className="flex items-center">
+                    <NavToCatalog filter={link.filter} styles={"text-[14px]"}>
+                      {link.text}
+                    </NavToCatalog>
+                  </li>
+                ))}
+                </ul>
+              </div>
             </nav>
 
-            <nav className="w-5/6 flex flex-col justify-start max-[380px]:2/5">
+            <nav className="w-5/6 flex flex-col justify-start min-[380px]:w-auto">
               <h4 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.aboutUs.title")}
               </h4>
               <ul className="w-full list-none flex flex-col justify-start gap-2">
                 {aboutUsLinks.map((item, ind) => (
                   <li key={ind}>
-                    <a href={item.href} className="wrap-anywhere">{item.text}</a>
+                    <a href={item.href} className="wrap-anywhere text-[14px]">{item.text}</a>
                   </li>
                 ))}
               </ul>
             </nav>
 
-            <nav className="w-5/6 flex flex-col justify-start max-[380px]:2/5">
+            <nav className="w-5/6 flex flex-col justify-start min-[380px]:w-auto">
               <h4 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.offers.title")}
               </h4>
               <ul className="w-full list-none flex flex-col justify-start gap-2">
                 {offersLink.map((item, ind) => (
                   <li key={ind}>
-                    <a href="/uvelio/" className="wrap-anywhere">{item}</a>
+                    <a href="/uvelio/" className="wrap-anywhere text-[14px]">{item}</a>
                   </li>
                 ))}
               </ul>
