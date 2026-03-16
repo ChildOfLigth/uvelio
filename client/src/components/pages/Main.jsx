@@ -1,52 +1,51 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import decorateRing from "@imgs/decorateRingForPresentBlock.png";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import decorateRing from "@imgs/decorateRingForPresentBlock.webp";
 import weddingRing from "@imgs/weddingRing.webp";
 import classicRing from "@imgs/classicRing.webp";
 import ringWithInlay from "@imgs/ringWithInlay.webp";
 import ringWithoutInlay from "@imgs/ringWithoutInlay.webp";
-import laboratoryEcoDimond from "@imgs/laboratoryEcoDimond.png";
-import exclusiveJewelry from "@imgs/exclusiveJewelry.png";
+import laboratoryEcoDimond from "@imgs/laboratoryEcoDimond.webp";
+import exclusiveJewelry from "@imgs/exclusiveJewelry.webp";
 import uvelioIconWhiteColor from "@imgs/icons/uvelioWhiteColor.svg";
 import arrowIcoWhiteColor from "@imgs/icons/arrowIcoWhiteColor.svg";
+import earrings from "@imgs/categoryEarrings.webp";
+import chains from "@imgs/categoryChains.webp";
+import bracelets from "@imgs/categoryBracelets.webp";
+import necklaces from "@imgs/categoryNecklaces.webp";
+import pendants from "@imgs/categoryPendants.webp";
+import crosses from "@imgs/categoryCrosses.webp";
+import brooches from "@imgs/categoryBrooches.webp";
 import NavToCatalog from "@ui/NavToCatalog";
-import ProductCard from "@ui/ProductCard.jsx";
-import { getProducts } from "@redux/products/productsThunk";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Grid } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/grid";
-import "swiper/css/pagination";
-import SwiperNextBtn from "../ui/Swiper/SwiperNextBtn";
-import SwiperPrevBtn from "../ui/Swiper/SwiperPrevBth";
+import SwiperCatalog from "../ui/Swiper/SwiperCatalog";
 
 export default function Main() {
   const { t, i18n } = useTranslation();
-  const products = useSelector((state) => state.products.productsList).slice(
-    0,
-    8,
-  );
-  const dispatch = useDispatch();
-  const swiperRef = useRef(null);
+  const newArrivalsProduct = useSelector(
+    (state) => state.products.productsList,
+  ).slice(0, 8);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+  const cardsForFilterCategory = [
+    { imgsSrc: earrings, title: t("mainPage.category.filterLinks.earrings") },
+    { imgsSrc: chains, title: t("mainPage.category.filterLinks.chains") },
+    { imgsSrc: bracelets, title: t("mainPage.category.filterLinks.bracelets") },
+    { imgsSrc: necklaces, title: t("mainPage.category.filterLinks.necklaces") },
+    { imgsSrc: pendants, title: t("mainPage.category.filterLinks.pendants") },
+    { imgsSrc: crosses, title: t("mainPage.category.filterLinks.crosses") },
+    { imgsSrc: brooches, title: t("mainPage.category.filterLinks.brooches") },
+  ];
 
   return (
     <>
       <div
         className="flex items-center justify-center w-full bg-(--color-primary) overflow-hidden h-[60svh] md:h-[70svh] lg:h-[75svh] 
-      max-h-190  relative"
+      max-h-190 relative"
       >
         <div className="block md:hidden w-full h-full absolute bg-(--color-primary)/40 z-20"></div>
 
         <div className="flex items-center justify-center relative w-[90%] z-30 md:justify-start">
-          <div
-            className={`flex flex-col items-start justify-center gap-6 relative text-white w-full md:w-2/3 
-            ${i18n.language == "fr" ? "w-2/3" : "lg:w-1/2"}`}
-          >
+          <div className="flex flex-col items-start justify-center gap-6 relative text-white w-full md:w-2/3 lg:w-1/2">
             <h1
               className={`inline text-white font-medium ${i18n.language == "ua" ? "h1FszLangUa" : ""}`}
             >
@@ -57,12 +56,13 @@ export default function Main() {
               {t("mainPage.presentBlock.subtitle")}
             </p>
 
-            <button
-              className={`bg-(--second-primary-с) ${i18n.language == "ua" || i18n.language == "fr" ? "xs:w-auto" : "w-2/5 min-w-30.5 xl:w-1/4"} 
-            h-12.5 text-(--color-primary) text-(length:--text-sm) p-4.25 customButtons`}
+            <Link
+              to="/uvelio/catalog"
+              className={`bg-(--second-primary-с) ${i18n.language == "ua" ? "xs:w-auto" : "w-2/5 min-w-30.5 xl:w-1/4"} 
+            h-12.5 text-(--color-primary) text-(length:--text-sm) p-4.25 customButton`}
             >
               {t("mainPage.presentBlock.btnNavToCatalog")}
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -76,29 +76,29 @@ export default function Main() {
         />
       </div>
 
-      <div className="w-[93.2%] flex flex-col items-center justify-center mx-auto">
-        <section className="w-full max-w-388.75 flex items-center justify-center flex-col gap-[clamp(10px,6vw,45px)] my-[clamp(50px,10vw,150px)]">
+      <div className="w-[91.7%] max-w-420 flex flex-col items-center justify-center mx-auto">
+        <section className="w-full flex items-center justify-center flex-col gap-[clamp(1.25rem,calc(0.714rem+2.679vw),3.125rem)] my-[clamp(3.125rem,calc(1.696rem+7.143vw),8.125rem)]">
           <nav className="w-full grid grid-cols-2 gap-3 xl:flex xl:justify-center x:gap-5 xl:h-116">
             <NavToCatalog
-              to="/uvelio/catalog?category=rings"
+              filter="rings"
               styles="bg-white rounded-(--border-radius) pt-3 flex flex-col items-start justify-between gap-5 overflow-hidden
           col-span-1 xl:h-full xl:flex-[38%]"
             >
-              <h2 className="text-(--color-primary) mx-auto">
+              <h3 className="text-(--color-primary) mx-auto">
                 {t("mainPage.navToCatalogWithFilter.rings")}
-              </h2>
+              </h3>
 
               <img src={classicRing} alt="Ring" className="w-[80%] xl:w-full" />
             </NavToCatalog>
 
             <NavToCatalog
-              to="/uvelio/catalog?category=rings&type=wedding"
+              filter="rings?type=wedding"
               styles="bg-white rounded-(--border-radius) pt-3 flex flex-col items-start justify-between gap-5 overflow-hidden
           col-span-1 xl:h-full xl:flex-[33%]"
             >
-              <h2 className="text-(--color-primary) text-center mx-auto">
+              <h3 className="text-(--color-primary) text-center mx-auto">
                 {t("mainPage.navToCatalogWithFilter.wedRings")}
-              </h2>
+              </h3>
 
               <img
                 src={weddingRing}
@@ -107,9 +107,9 @@ export default function Main() {
               />
             </NavToCatalog>
 
-            <div className="flex flex-col items-center gap-3 col-span-2 xl:flex-[39%] md:flex-row xl:flex-col">
+            <div className="flex flex-col items-center gap-3 xl:gap-5 col-span-2 xl:flex-[39%] md:flex-row xl:flex-col">
               <NavToCatalog
-                to="/uvelio/catalog?category=rings&insert=true"
+                filter="rings?insert=true"
                 styles="bg-white w-full h-[48%] rounded-(--border-radius) flex items-center 
             justify-center pl-5 relative min-h-25 overflow-hidden min-[500px]:min-h-35 xl:pr-5 xl:pl-0 xl:justify-end"
               >
@@ -119,13 +119,13 @@ export default function Main() {
                   className="aspect-squere h-full absolute left-0 z-10"
                 />
 
-                <h2 className="text-(--color-primary) z-30">
+                <h3 className="text-(--color-primary) z-30">
                   {t("mainPage.navToCatalogWithFilter.withIsert")}
-                </h2>
+                </h3>
               </NavToCatalog>
 
               <NavToCatalog
-                to="/uvelio/catalog?category=rings&insert=false"
+                to="rings?insert=false"
                 styles="bg-white w-full h-[48%] rounded-(--border-radius) flex items-center 
             justify-center pl-5 relative min-h-25 overflow-hidden min-[500px]:min-h-35 xl:pr-5 xl:pl-0 xl:justify-end"
               >
@@ -135,71 +135,51 @@ export default function Main() {
                   className="w-45% h-full absolute left-0 z-10"
                 />
 
-                <h2 className="text-(--color-primary) z-30">
+                <h3 className="text-(--color-primary) z-30">
                   {t("mainPage.navToCatalogWithFilter.withoutIsert")}
-                </h2>
+                </h3>
               </NavToCatalog>
             </div>
           </nav>
 
           <div className="flex items-center justify-between w-[16%] min-w-52.75">
             <NavToCatalog
-              to="/uvelio/catalog?material=gold"
-              styles="bg-(--color-primary) flex items-center justify-center gap-2.5 w-[45%] p-4 rounded-(--border-radius) text-white"
+              to="?material=gold"
+              styles={`bg-(--color-primary) flex items-center justify-center gap-2.5 ${i18n.language == "ua" ? "w-auto" : "w-[45%]"} p-4 
+              rounded-(--border-radius) text-white`}
             >
-              Gold
+              {t("mainPage.filterCatalogByMaterial.gold")}
               <img src={arrowIcoWhiteColor} />
             </NavToCatalog>
 
             <NavToCatalog
-              to="/uvelio/catalog?material=silver"
-              styles="bg-(--color-primary) flex items-center justify-center gap-2.5 w-[45%] p-4 rounded-(--border-radius) text-white"
+              to="?material=silver"
+              styles={`bg-(--color-primary) flex items-center justify-center gap-2.5 ${i18n.language == "ua" ? "w-auto" : "w-[45%]"} p-4 
+              rounded-(--border-radius) text-white`}
             >
-              Silver
+              {t("mainPage.filterCatalogByMaterial.silver")}
               <img src={arrowIcoWhiteColor} />
             </NavToCatalog>
           </div>
         </section>
 
-        <section className="w-full flex flex-col items-start justify-center m-[clamp(30px,6vw,70px)]">
-          <h2>{t("mainPage.newArrivalsTitle")}</h2>
-
-          <div className="w-auto flex items-center justify-end ml-auto mb-4 gap-4">
-            <SwiperPrevBtn ref={swiperRef} />
-            <SwiperNextBtn ref={swiperRef} />
-          </div>
-
-          <Swiper
-            tag="ul"
-            className="w-full grid items-stretch"
-            slidesPerView={5}
-            spaceBetween={20}
-            modules={[Grid]}
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
-          >
-            {products.map((product) => (
-              <SwiperSlide key={product.id} tag="li">
-                <ProductCard
-                  imgSrc={JSON.parse(product.imgsLinks)[0]}
-                  name={product.name}
-                  price={product.price}
-                  sale={product.salePrice}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <section className="w-full max-w-420 flex flex-col items-start justify-center m-[clamp(30px,6vw,70px)]">
+          <SwiperCatalog
+            catalog={newArrivalsProduct}
+            titleSwiper={t("mainPage.newArrivalsTitle")}
+          />
         </section>
 
-        <section className="w-full max-w-420 flex flex-col md:flex-row gap-[clamp(5px,3vw,30px)] items-stretch justify-center text-white">
-          <div className="w-full md:w-[48%] flex justify-start items-center relative py-[clamp(30px,7vw,93.5px)] rounded-(--border-radius) overflow-hidden">
+        <section className="w-full flex flex-col md:flex-row gap-[clamp(5px,3vw,27px)] items-stretch justify-between text-white">
+          <div className="w-full md:w-[48.65%] flex justify-start items-center relative py-[clamp(30px,7vw,93.5px)] rounded-(--border-radius) overflow-hidden">
             <img
               src={laboratoryEcoDimond}
               className="w-full h-full object-cover absolute"
               alt="Jewelry with eco diamonds"
             />
 
-            <div className="w-5/6 pl-6 relative flex flex-col items-start justify-center">
-              <h2>{t("mainPage.advertisement.ecoDiamonds.title")}</h2>
+            <div className="w-5/6 pl-5 relative flex flex-col items-start justify-center">
+              <h3>{t("mainPage.advertisement.ecoDiamonds.title")}</h3>
               <p className="py-9 text-(length:--base-p-size)">
                 {t("mainPage.advertisement.ecoDiamonds.subtitle")}
               </p>
@@ -215,17 +195,17 @@ export default function Main() {
             </div>
           </div>
 
-          <div className="w-full md:w-[48%] flex justify-start items-center relative py-[clamp(30px,7vw,93.5px)] rounded-(--border-radius) overflow-hidden">
+          <div className="w-full md:w-[48.65%] flex justify-start items-center relative py-[clamp(30px,7vw,93.5px)] rounded-(--border-radius) overflow-hidden">
             <img
               src={exclusiveJewelry}
               className="w-full h-full object-cover absolute"
               alt="Exclusive jewerly"
             />
 
-            <div className="w-5/6 pl-6 relative flex flex-col items-start justify-center">
+            <div className="w-5/6 pl-5 relative flex flex-col items-start justify-center">
               <div className="w-1/2">
                 <img src={uvelioIconWhiteColor} className="w-full min-w-38" />
-                <h2>{t("mainPage.advertisement.exlusive.title")}</h2>
+                <h3>{t("mainPage.advertisement.exlusive.title")}</h3>
               </div>
 
               <p className="py-9 text-(length:--base-p-size)">
@@ -244,30 +224,31 @@ export default function Main() {
           </div>
         </section>
 
-        <section className="w-full flex flex-col items-start justify-center overflow-x-scroll [scrollbar-width:none] gap-[clamp(15px,5vw,40px)]">
+        <section className="w-full my-[clamp(1.875rem,calc(-0.089rem+9.821vw),8.75rem)] flex flex-col items-start justify-center gap-6">
           <h2>{t("mainPage.category.title")}</h2>
 
-          {/* <nav className="w-full flex items-stretch justify-start gap-[clamp(7px,4vw,17.3px)] overflow-x-scroll [scrollbar-width:none]">
-            {CATEGORY_CARDS_DATA.map((link, ind) => (
-              <div
-                key={ind}
-                className="flex flex-col items-center justify-center bg-white rounded-(--border-radius) overflow-x-scroll"
-              >
-                <img
-                  src={link.srcImg}
-                  alt={t(`${link.text}`)}
-                  className="w-full aspect-square object-contein"
-                />
-
+          <ul className="w-full flex justify-start mx-2 md:grid md:grid-cols-4 2xl:grid-cols-5 items-stretch gap-3 md:gap-4 overflow-x-scroll disableScrollbar">
+            {cardsForFilterCategory.map((item) => (
+              <li key={item.title}>
                 <NavToCatalog
-                  filter={link.filter}
-                  style="w-full bg-(--color-primary) flex items-center justify-center text-white py-10"
+                  filter={item.title}
+                  styles="w-50 md:w-full max-w-[320px] md:col-span-1 h-auto max-h-100.25 rounded-(--border-radius) bg-white flex flex-col items-center justify-center overflow-hidden"
                 >
-                  {t(`${link.text}`)}
+                  <img
+                    src={item.imgsSrc}
+                    alt={item.title}
+                    className="w-full h-[60%]"
+                  />
+
+                  <div className="w-full h-[40%] flex items-center justify-center bg-(--color-primary) py-[clamp(1.5625rem,calc(1.294rem+1.339vw),2.5rem)]">
+                    <p className="text-white text-base font-normal lg:text-xl md:font-bold uppercase text-center">
+                      {item.title}
+                    </p>
+                  </div>
                 </NavToCatalog>
-              </div>
+              </li>
             ))}
-          </nav> */}
+          </ul>
         </section>
       </div>
     </>
