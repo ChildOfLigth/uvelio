@@ -1,55 +1,49 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import usePriceByExchangeRate from "./usePriceByExchangeRate";
 
-export const useConvertionPrice = (currentPrice, exchangeRate = "usd") => {
+export default function useConvertionPrice(currentPrice) {
   const { i18n } = useTranslation();
   const [convertCurrentPrice, setConvertCurrentPrice] = useState(null);
-  const countryCode = useSelector((state) => state.userAccount.accountData.countryCode);
-
-  const getPrice = async () => {
-    try {
-      const res = await axios.get(
-        "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json",
-      );
-
-      const currentExchangeRate = res.data.usd[exchangeRate];
-      const priceAtCurrentRate = currentPrice * currentExchangeRate;
-
-      return priceAtCurrentRate.toFixed(2);
-    } catch (e) {
-        throw Error(e.message);
-    }
-  };
+  const priceByExchangeRate = usePriceByExchangeRate(currentPrice);
 
   const returnCountryCode = () => {
     switch (i18n.language) {
       case "ua":
-        return "uk-UA";
-      case "fr":
-        return "fr-FR";
+        return "uk-UA";;
       case "en":
         return "en-US";
       default:
         return "en-US";
-    }
+    };
   };
 
-  const formatPrice = async () => {
-    const price = await getPrice();
+  const returnCurrency = () => {
+    switch (i18n.language) {
+      case "ua":
+        return "UAH";
+      case "en":
+        return "USD";
+      default:
+        return "USD";
+    };
+  };
+
+  const formatPrice = () => {
+    const price = priceByExchangeRate;
     const priceWithCurrencySign = new Intl.NumberFormat(returnCountryCode(), {
       style: "currency",
-      currency: countryCode,
-      currencyDisplay: 'narrowSymbol'
+      currency: returnCurrency(),
+      currencyDisplay: "narrowSymbol",
     }).format(price);
-
+    
     setConvertCurrentPrice(priceWithCurrencySign);
   };
 
   useEffect(() => {
     formatPrice();
-  }, [currentPrice, exchangeRate]);
+  }, [currentPrice, priceByExchangeRate]);
 
   return convertCurrentPrice;
-};
+}

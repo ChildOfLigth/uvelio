@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -7,13 +8,18 @@
 
 :root {
   --color-primary: rgb(55, 41, 36);
-  --second-primary-с: rgb(199, 178, 118);
+  --second-primary-c: rgb(199, 178, 118);
   --spare-color: rgb(170, 145, 136);
-  --third-primary-с: #e1d6b7;
-  --border-radius: 10px;
+  --third-primary-с: #f0eadb;
+  --c-for-decorate-el: #aa9188;
+  --base-b-radius: 10px;
   --base-lh: 1.5;
   --base-p-size: clamp(1rem, calc(0.857rem + 0.714vw), 1.5rem);
   --text-sm: clamp(0.875rem, 0.821rem + 0.268vw, 1.062rem);
+  --main-content-block-w: 91.7%;
+  --btn-h: 50px;
+  --decorative-font-f: "Montserrat", sans-serif;
+  --py-fr-mobile: clamp(1.875rem, calc(0.714rem + 7.143vw), 5rem);
 }
 
 body {
@@ -38,5 +44,9 @@ button {
 
 button {
   cursor: pointer;
+}
+
+input,textarea:focus {
   border: none;
+  outline: none;
 }

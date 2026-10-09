@@ -40,14 +40,14 @@ export default function Footer() {
               <address className="text-base [460px]:text-2xl [460px]:mb-2">
                 0 456 213 380
               </address>
-              <p className="text-[14px] text-(--second-primary-с)">
+              <p className="text-[14px] text-(--second-primary-c)">
                 {t("footer.communicationMethods.description")}
               </p>
             </div>
 
             <div className="max-w-150 flex flex-col text-[14px] font-normal gap-6 sm:flex-row sm:gap-8">
               <div className="flex flex-col text-left w-full sm:w-1/2">
-                <h4>{t("footer.communicationMethods.hotline.title")}</h4>
+                <h5>{t("footer.communicationMethods.hotline.title")}</h5>
                 <p className="text-(length:--base-p-size)">{t("footer.communicationMethods.hotline.days")}</p>
 
                 <div className="w-full">
@@ -62,7 +62,7 @@ export default function Footer() {
               </div>
 
               <div className="flex flex-col text-left w-full sm:w-1/2">
-                <h4>{t("footer.communicationMethods.callCenter.title")}</h4>
+                <h5>{t("footer.communicationMethods.callCenter.title")}</h5>
                 <p className="text-(length:--base-p-size)">{t("footer.communicationMethods.callCenter.days")}</p>
                 <div className="w-full">
                   <time dateTime="10:00">
@@ -79,9 +79,9 @@ export default function Footer() {
 
           <div className="w-full max-w-300 lg:w-2/3 h-auto flex items-start justify-between flex-col sm:flex-row flex-wrap lg:flex-nowrap gap-7">
             <nav className={`w-5/6 h-auto flex flex-col justify-start min-[380px]:w-auto ${i18n.language == "en" ? "min-[380px]:min-w-65.25" : ""}`}>
-              <h4 className="uppercase text-lg font-medium mb-5">
+              <h5 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.category.title")}
-              </h4>
+              </h5>
 
               <div className={`w-full max-h-72 max-w-88.75 flex justify-between items-start
               ${i18n.language != "en" ? "max-h-none flex-col min-[450px]:flex-row min-[450px]:gap-5" : ""} list-none`}>
@@ -108,9 +108,9 @@ export default function Footer() {
             </nav>
 
             <nav className="w-5/6 flex flex-col justify-start min-[380px]:w-auto">
-              <h4 className="uppercase text-lg font-medium mb-5">
+              <h5 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.aboutUs.title")}
-              </h4>
+              </h5>
               <ul className="w-full list-none flex flex-col justify-start gap-2">
                 {aboutUsLinks.map((item, ind) => (
                   <li key={ind}>
@@ -121,9 +121,9 @@ export default function Footer() {
             </nav>
 
             <nav className="w-5/6 flex flex-col justify-start min-[380px]:w-auto">
-              <h4 className="uppercase text-lg font-medium mb-5">
+              <h5 className="uppercase text-lg font-medium mb-5">
                 {t("footer.siteNavigation.offers.title")}
-              </h4>
+              </h5>
               <ul className="w-full list-none flex flex-col justify-start gap-2">
                 {offersLink.map((item, ind) => (
                   <li key={ind}>

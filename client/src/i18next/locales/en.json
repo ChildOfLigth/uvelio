@@ -1,13 +1,13 @@
 {
   "header": {
-    "placeholderInput": "Enter the product name..",
+    "placeholderInput": "Product search..",
     "userAvtorization": {
       "signIn": "Sign in",
       "registration": "Registration"
     },
     "navigateLinks": [
       { "label": "Home", "href": "/uvelio/" },
-      { "label": "Catalog", "href": "/uvelio/catalog/" },
+      { "label": "Catalog", "href": "/uvelio/catalog/rings/" },
       { "label": "Promotions", "href": "/uvelio/catalog/" },
       { "label": "Our Stores", "href": "/uvelio/about-us" },
       { "label": "Product Search", "href": "/uvelio/" },
@@ -32,7 +32,7 @@
       "withIsert": "With isert",
       "withoutIsert": "Without isert"
     },
-    "filterCatalogBy": {
+    "filterCatalogByMaterial": {
       "gold": "Gold",
       "silver": "Silver"
     },
@@ -109,30 +109,15 @@
       "benefitsBlock": {
         "topPart": [
           { "count": "20+", "desc": "Thousands of decorations on the site" },
-          { "count": "226+", "desc": "Stores all over Czech Republic" },
+          { "count": "226+", "desc": "Stores throughout Europe" },
           { "count": "36+", "desc": "Exclusive collections" }
         ],
         "bottomPart": [
-          {
-            "desc": "Beneficial loyalty program",
-            "iconUrl": "@imgs/icons/beneficial.svg"
-          },
-          {
-            "desc": "Stylish branded packaging",
-            "iconUrl": "@imgs/icons/stylishPacking.svg"
-          },
-          {
-            "desc": "Own production and design",
-            "iconUrl": "@imgs/icons/designRingIcon.svg"
-          },
-          {
-            "desc": "Jewelry on credit or installment",
-            "iconUrl": "@imgs/icons/creditOrInstallment.svg"
-          },
-          {
-            "desc": "Website and mobile app",
-            "iconUrl": "@imgs/icons/modileAndDesctopIcon.svg"
-          }
+          "Beneficial loyalty program",
+          "Stylish branded packaging",
+          "Own production and design",
+          "Jewelry on credit or installment",
+          "Website and mobile app"
         ]
       }
     }
@@ -160,24 +145,21 @@
       "category": {
         "title": "Categories",
         "links": [
-          { "href": "/uvelio/catalog:rings", "text": "Rings" },
-          { "href": "/uvelio/catalog:jewelry", "text": "Jewelry" },
-          { "href": "/uvelio/catalog:earrings", "text": "Earrings" },
-          { "href": "/uvelio/catalog:chains", "text": "Chains" },
-          { "href": "/uvelio/catalog:pendants", "text": "Pendants" },
-          { "href": "/uvelio/catalog:bracelets", "text": "Bracelets" },
-          { "href": "/uvelio/catalog:brooches", "text": "Brooches" },
-          { "href": "/uvelio/catalog:watches", "text": "Watches" },
-          { "href": "/uvelio/catalog:cufflinks", "text": "Cufflinks" },
-          { "href": "/uvelio/catalog:tie-clips", "text": "Tie clips" },
-          { "href": "/uvelio/catalog:crosses", "text": "Crosses" },
-          { "href": "/uvelio/catalog:table-silver", "text": "Table silver" },
-          { "href": "/uvelio/catalog:sale", "text": "Sale" },
-          {
-            "href": "/uvelio/catalog:gift-certificates",
-            "text": "Gift certificates"
-          },
-          { "href": "/uvelio/catalog:icons", "text": "Icons" }
+          { "filter": "rings", "text": "Rings" },
+          { "filter": "jewelry_cords", "text": "Jewelry cords" },
+          { "filter": "earrings", "text": "Earrings" },
+          { "filter": "chains", "text": "Chains" },
+          { "filter": "pendants", "text": "Pendants" },
+          { "filter": "bracelets", "text": "Bracelets" },
+          { "filter": "brooches", "text": "Brooches" },
+          { "filter": "watches", "text": "Watches" },
+          { "filter": "cufflinks", "text": "Cufflinks" },
+          { "filter": "tie_clips", "text": "Tie clips" },
+          { "filter": "crosses", "text": "Crosses" },
+          { "filter": "table_silver", "text": "Table silver" },
+          { "filter": "sale", "text": "Sale" },
+          { "filter": "gift_certificates", "text": "Gift certificates" },
+          { "filter": "icons", "text": "Icons" }
         ]
       },
 
@@ -207,6 +189,563 @@
           "Free in-store booking"
         ]
       }
+    }
+  },
+
+  "form": {
+    "title": "in Uvelio",
+    "altDecoratePhoto": "Two rose gold rings with large oval emeralds and black filigree on a dark velvet stand",
+    "registrationPrompt": {
+      "baseText": "Don't have an account?",
+      "selectRegistr": "Sign up"
+    },
+    "loginPrompt": {
+      "baseText": "Already have an account?",
+      "selectRegistr": "Log in"
+    },
+
+    "registration": {
+      "presentPart": {
+        "title": "Registration",
+        "subtitle": "If you are not yet registered on our website, now is the perfect time to do so! Sign up and get access to all features."
+      },
+      "inputPlaceholders": {
+        "name": "Your name",
+        "surname": "Your surname",
+        "email": "Your email",
+        "password": "Create a password for your account",
+        "passwordCheck": "Repeat the password"
+      },
+      "endButton": "Sign up"
+    },
+
+    "login": {
+      "presentPart": {
+        "title": "Login",
+        "subtitle": "If you have already registered on our website, simply log in to your account."
+      },
+      "inputPlaceholders": {
+        "email": "Your email",
+        "password": "Your password"
+      },
+      "endButton": "Log in"
+    },
+
+    "errorMessages": {
+      "standartErrors": {
+        "shortPassword": "The password must be longer than 6 characters.",
+        "passwordsDontMatch": "The passwords don't match. Please try again.",
+        "serverError": "There was an error processing your request. Please try again later."
+      },
+
+      "registrationErrors": {
+        "userExists": "A user with this email already exists."
+      },
+
+      "loginErrors": {
+        "userDoesNotExist": "Email or password is incorrect"
+      }
+    }
+  },
+
+  "productPage": {
+    "reviewText": "review",
+    "productAvailability": {
+      "inStock": "In stock",
+      "notAvailable": "Not available"
+    },
+
+    "prodCode": "Product code",
+    "tryOn": "Try on",
+
+    "sizeSelectedBlock": {
+      "sizeSelected": "Size selected",
+      "findYourSize": "How to find out your size",
+      "size": "Size",
+      "weight": "Weight"
+    },
+
+    "buyBtnText": "Place an order",
+
+    "characteristicsBlock": {
+      "title": "Characteristics",
+      "mainCharacteristics": {
+        "weight": "g",
+        "hallmark": "fineness",
+        "colorMetal": "metal",
+        "withoutInlay": "Without inlay"
+      },
+      "extendedData": {
+        "basicData": {
+          "weight": "Product weight",
+          "material": "Metal type",
+          "hallmark": "Stamp",
+          "color_material": "Metal color",
+          "manufacturer": { "title": "Manufacturer", "value": "Uvelio" },
+          "type": "Type",
+          "inlay": "Inlay",
+          "who_to_gift": "Who to gift",
+          "for_whom": "For whom",
+          "style": "Style",
+          "num_of_stones": "Number of stones"
+        },
+        "rings": {
+          "size": "Size"
+        },
+        "earrings": {
+          "type_of_fastener": "Type of fastener"
+        },
+        "jewelry_cords": {
+          "size": "Size",
+          "chain_width": "Chain width"
+        },
+        "chains": {
+          "weaving_style": "Weaving style",
+          "size": "Size"
+        },
+        "bracelets": {
+          "size": "Size"
+        },
+        "necklaces": {
+          "weaving_style": "Weaving style",
+          "size": "Size"
+        },
+        "watches": {
+          "frame": "Frame",
+          "dial_color": "Dial color"
+        },
+        "crosses": {
+          "crucifix": "Crucifix"
+        }
+      }
+    },
+
+    "descBlock": "Description",
+
+    "reviews": {
+      "title": "Reviews",
+      "newReviewForm": {
+        "title": "Leave a review",
+        "formForCreatingReview": {
+          "name": "Name",
+          "email": "E-mail",
+          "messageReview": "Message (up to 2000 characters)",
+          "rating": "Rating",
+          "uploadPhoto": "Upload photo"
+        },
+        "sendReview": "Send review",
+        "agreementwithTerms": {
+          "baseText": "I have read and agree to the processing of",
+          "span": "Personal data"
+        }
+      },
+      "reviewBlock": {
+        "replyToReview": "Reply",
+        "responseFromManager": "Manager of Uvelio",
+        "months": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        "noReviews": "There are no reviews yet"
+      }
+    },
+
+    "relatedProducts": "Related Products"
+  },
+
+  "checkoutPage": {
+    "title": "Placing an order",
+
+    "form": {
+      "personalDataBlock": {
+        "titleBlock": {
+          "title": "Personal data",
+          "subTitle": "All fields must be filled in and the information must be accurate"
+        },
+        "placeholders": {
+          "name": "Enter your name",
+          "surname": "Enter your surname",
+          "phoneNumber": "Enter your phone numder",
+          "email": "Enter your email"
+        }
+      },
+
+      "deliveryLocation": {
+        "title": "Enter the name of the place where you live",
+        "placeholdres": {
+          "country": "For example Ukranian",
+          "city": "For example Kyiv"
+        }
+      },
+
+      "paymentMethodBlock": {
+        "title": "Payment method",
+
+        "methodsList": [
+          {
+            "baseText": "Payment by Visa/MasterCad",
+            "detailedDesc": "You can pay with Google Pay"
+          },
+          {
+            "baseText": "Payment upon receipt",
+            "detailedDesc": "You can pay for the goods upon receipt at the post office"
+          },
+          {
+            "baseText": "Chase installment payments",
+            "detailedDesc": "Installment payments for Chase customers up to 7 payments"
+          }
+        ]
+      },
+
+      "btnText": "Place an order"
+    },
+
+    "productData": {
+      "prodId": "Id",
+      "size": "Size",
+      "weight": "Weight",
+      "price": "Price"
+    }
+  },
+
+  "productsCatalog": {
+    "title": "Catalog of jewelry, ornaments, gifts, and souvenirs",
+
+    "filterByCategory": [
+      {
+        "rings": "Rings"
+      },
+      {
+        "jewelry_cords": "Jewelry cords"
+      },
+      {
+        "earrings": "Earrings"
+      },
+      {
+        "chains": "Chains"
+      },
+      {
+        "necklaces": "Necklaces"
+      },
+      {
+        "bracelets": "Bracelets"
+      },
+      {
+        "pendants": "Pendants"
+      },
+      {
+        "brooches": "Brooches"
+      },
+      {
+        "watches": "Watches"
+      },
+      {
+        "cufflinks": "Cufflinks"
+      },
+      {
+        "tie_clips": "Tie clips"
+      },
+      {
+        "crosses": "Crosses"
+      },
+      {
+        "table_silver": "Table silver"
+      },
+      {
+        "gift_certificates": "Gift certificates"
+      },
+      {
+        "icons": "Icons"
+      }
+    ],
+
+    "btnTextForMobileVersion": ["Filter", "Sort"],
+
+    "sidebar": {
+      "filterByPrice": {
+        "filterName": "Price, Dollar",
+        "btnText": "Apply"
+      },
+
+      "basicFilters": [
+        {
+          "name": "Type",
+          "key": "type",
+          "variants": {
+            "rings": [
+              "Wedding",
+              "Engagement",
+              "Everyday",
+              "Band",
+              "Heart",
+              "Signet"
+            ],
+            "earrings": [
+              "Everyday",
+              "Cuffs",
+              "Studs",
+              "Drop earrings",
+              "Heart"
+            ],
+            "necklaces": [
+              "Multi-tiered",
+              "Hard",
+              "Heart",
+              "Crowns",
+              "Standart"
+            ],
+            "chains": ["Standart"]
+          }
+        },
+        {
+          "name": "Style",
+          "key": "style",
+          "variants": {
+            "rings": [
+              "Classic",
+              "Modern",
+              "Minimalism",
+              "Cute",
+              "Romantic",
+              "Organic",
+              "Elegant",
+              "With ornament",
+              "Path"
+            ],
+            "jewelry_cords": [
+              "Diamond Cut",
+              "Curls",
+              "Ornament",
+              "Ukrainian symbolism",
+              "Minimalism"
+            ],
+            "necklaces": [
+              "Geometry",
+              "Animals",
+              "Path",
+              "Classic",
+              "Ukrainian symbolism",
+              "Minimalism"
+            ],
+            "earrings": [
+              "Classic",
+              "Modern",
+              "Minimalism",
+              "Cute",
+              "Romantic",
+              "Elegant",
+              "With ornament",
+              "Path"
+            ],
+            "chains": ["Classic", "Minimalism", "Diamond Cut"],
+            "table_silver": ["Religion", "Modern", "Curls"]
+          }
+        },
+        {
+          "name": "Material",
+          "key": "material",
+          "variants": ["Gold", "Silver"]
+        },
+        {
+          "name": "Color material",
+          "key": "color_material",
+          "variants": ["White", "Red", "Two-tone"]
+        },
+        {
+          "name": "For whom",
+          "key": "for_whom",
+          "variants": ["Woman", "Man", "Unisex"]
+        },
+        {
+          "name": "Inlay",
+          "key": "inlay",
+          "variants": {
+            "rings": [
+              "Eco-diamond",
+              "Diamond",
+              "Cubic zirconia",
+              "Emerald",
+              "Tesori Zirconia",
+              "Pomegranate",
+              "Enamel",
+              "Quartz",
+              "With insert",
+              "Not"
+            ],
+            "earrings": [
+              "Eco-diamond",
+              "Diamond",
+              "Cubic zirconia",
+              "Emerald",
+              "Tesori Zirconia",
+              "Pomegranate",
+              "Enamel",
+              "Quartz",
+              "Not"
+            ],
+            "jewelry_cords": ["Textile", "Rubber", "Silk", "Leather", "Not"],
+            "necklaces": ["Not", "Cubic zirconia", "Pomegranate"]
+          }
+        },
+        {
+          "name": "Num of stones",
+          "key": "num_of_stones",
+          "variants": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "10+"]
+        },
+        {
+          "name": "Who to gift",
+          "key": "who_to_gift",
+          "variants": [
+            "Girlfriend",
+            "Wife",
+            "Mother",
+            "Daughter",
+            "Friend",
+            "Bride",
+            "Groom",
+            "Husband",
+            "Son",
+            "Brother",
+            "Dad"
+          ]
+        },
+        {
+          "name": "Sale",
+          "key": "sale",
+          "variants": ["Yes"]
+        },
+        {
+          "name": "Exclusive",
+          "key": "exclusive",
+          "variants": ["Yes"]
+        }
+      ],
+      "additFiltsForSpecificCategories": {
+        "rings": [
+          {
+            "name": "Size",
+            "key": "size",
+            "variants": ["15", "16", "16.5", "17", "18"]
+          }
+        ],
+        "earrings": [
+          {
+            "name": "Type of fastener",
+            "key": "type_of_fastener",
+            "variants": [
+              "English",
+              "Italian",
+              "Push-back",
+              "Cuff pierced",
+              "Carnations"
+            ]
+          }
+        ],
+        "necklaces": [
+          {
+            "name": "Weaving style",
+            "key": "weaving_style",
+            "variants": ["Anchor", "Fancy", "Rigid", "Armored"]
+          },
+          {
+            "name": "Size",
+            "key": "size",
+            "variants": ["45", "50", "55", "60"]
+          }
+        ],
+        "jewelry_cords": [
+          {
+            "name": "Size",
+            "key": "size",
+            "variants": ["35", "40", "45", "50"]
+          },
+          {
+            "name": "Chain width",
+            "key": "chain_width",
+            "variants": ["2mm", "3mm", "3.5mm", "4mm"]
+          }
+        ],
+        "chains": [
+          {
+            "name": "Weaving style",
+            "key": "weaving_style",
+            "variants": ["Rigid", "Armored", "Bismarck"]
+          },
+          {
+            "name": "Chain width",
+            "key": "chain_width",
+            "variants": ["2mm", "3mm", "3.5mm", "4mm"]
+          }
+        ]
+      }
+    },
+
+    "sortProductList": {
+      "span": "Sort:",
+      "variants": ["Popularity", "Price: high to low", "Price: low to high"]
+    },
+
+    "emptyProductsList": "Nothing found for this request",
+    "loadMoreProds": "Load more"
+  },
+
+  "userPage": {
+    "titleWishList": "Wish list",
+    "titlePurchasedGoods": "Purchased goods",
+
+    "emptyList": {
+      "wishList": {
+        "title": "Wish list is empty",
+        "subText": "It’s empty here for now; if you see something you like, add the item to your wishlist—it might go on sale later.",
+        "textBtn": "Go to the catalog"
+      },
+      "purchasedGoods": {
+        "title": "Purchased goods list is empty",
+        "subText": "Your list of orders will appear here.",
+        "textBtn": "Go to the catalog"
+      }
+    }
+  },
+
+  "notFoundPage": {
+    "desc": "Page not found or under construction",
+    "navToMainPage": "Go to Main page"
+  },
+
+  "uiComponent": {
+    "productCard": {
+      "buyBtn": "Buy",
+      "getDiscount": "Get Discount"
+    }
+  },
+
+  "modalWindow": {
+    "forCheckoutPage": {
+      "title": "Issued!",
+      "text": "Your order has been placed. We will call you back before shipping to confirm all details. Thanks for your purchase!",
+      "btnText": "Confirm"
+    },
+
+    "forProductPage": {
+      "title": "Review sent",
+      "text": "We've submitted your review. We'll review it and respond to you within two days.",
+      "btnText": "Confirm"
+    },
+
+    "forRegistartion": {
+      "title": "Successfully",
+      "text": "You have successfully registered in the system. Welcome!",
+      "btnText": "Confirm"
     }
   }
 }

@@ -3,7 +3,6 @@ import { useState } from "react";
 
 const ALL_TRANSLATION_OPTIONS = [
   { code: "en", fullName: "English" },
-  { code: "fr", fullName: "Français" },
   { code: "ua", fullName: "Українська" },
 ];
 
@@ -14,11 +13,11 @@ export default function ChangeLang() {
   return (
     <div className="w-[39.8%] h-full flex items-center justify-center relative">
       <button
-        className={`bg-white w-full min-w-14.5 h-full gap-1.5 customButtons animationButton changeFillToWhite relative`}
+        className={`bg-white w-full min-w-14.5 h-full gap-1.5 customButton animationButton changeFillToWhite relative`}
         onClick={() => setDropdownMenuVisibility(!dropdownMenuVisibility)}
       >
         <span
-          className={`bg-(--second-primary-с) ${dropdownMenuVisibility ? "left-0! w-full!" : ""}`}
+          className={`bg-(--color-primary) md:bg-(--second-primary-c) ${dropdownMenuVisibility ? "left-0! w-full!" : ""}`}
         ></span>
 
         <svg
@@ -68,7 +67,7 @@ export default function ChangeLang() {
 
       <div
         className={`w-48 py-10 ${dropdownMenuVisibility ? "flex" : "hidden"} items-center justify-center 
-        absolute top-20 md:top-14.5 lg:top-18.25 bg-white rounded-b-(--border-radius) shadow-md shadow-(color:--color-primary)/30`}
+        absolute top-20 md:top-14.5 lg:top-18.25 bg-white rounded-b-(--base-b-radius) shadow-md shadow-(color:--color-primary)/30`}
       >
         <ul className="w-[80%] h-full flex flex-col items-center justify-center m-auto gap-5">
           {ALL_TRANSLATION_OPTIONS.map((lang) => (
@@ -78,8 +77,8 @@ export default function ChangeLang() {
             >
               <button
                 onClick={() => i18n.changeLanguage(lang.code)}
-                className={`text-lg transition duration-300 hover:text-(--second-primary-с) 
-                  ${i18n.language == lang.code && "text-(--second-primary-с) font-bold"}`}
+                className={`text-lg transition duration-300 hover:text-(--second-primary-c) 
+                  ${i18n.language == lang.code && "text-(--second-primary-c) font-bold"}`}
               >
                 {lang.fullName}
               </button>

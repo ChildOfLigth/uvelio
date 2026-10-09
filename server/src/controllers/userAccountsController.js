@@ -1,62 +1,196 @@
-import { userAccountsDB } from "../../database/initDB.js";
-import { loginUser, userRegistration } from "../services/userAccountsService.js";
+import {
+  userRegistration,
+  loginUser,
+  checkAuthStatus,
+  updateToken,
+  addProductToWishList,
+  removeProdToWihsList,
+  addProdToPurchasedGoods,
+} from "../services/userAccountsService.js";
 
-const userRegistrationController = async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
+async function userRegistrationController(req, res) {
+  try {
+    const { name, surname, email, password } = req.body;
+    const data = await userRegistration({ name, surname, email, password });
+    const userData = data.userData;
+    const accessToken = data.access;
+    const refreshToken = data.refresh;
 
-        if (!username || !email || !password) {
-            return res.status(400).json({ message: 'All fields are required' });
-        }
-
-        const user = await userRegistration({ username, email, password });
-        res.status(201).json(user);
-
-    } catch (err) {
-        if (err.message.includes('UNIQUE')) {
-            return res.status(400).json({ message: 'Email already exists' });
-        }
-
-        res.status(500).json({ error: err.message });
-    }
-};
-
-const loginController = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ message: 'Email and password are required' });
-        }
-
-        const user = await loginUser({ email, password });
-        res.json(user);
-
-    } catch (err) {
-        if (err.message === 'User not found' || err.message === 'Invalid password') {
-            return res.status(401).json({ message: 'Invalid email or password' });
-        }
-
-        res.status(500).json({ error: err.message });
-    }
-};
-
-const getOneUserController = async (req, res) => {
-    const { id } = req.params;
-
-    const sql = "SELECT * FROM userAccounts WHERE id = ?";
-
-    userAccountsDB.get(sql, [id], (err, row) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-
-        if (!row) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        res.json(row);
+    res.cookie("access_token", accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 15 * 60 * 1000,
+      path: "/",
     });
-};
 
-export { userRegistrationController, loginController, getOneUserController };
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      path: "/userAccount/update-token",
+    });
+
+    res.status(201).json(userData);
+  } catch (err) {
+    if (err.message.includes("already registered")) {
+      return res.status(409).json({
+        name: "conflict",
+        message: err.message,
+      });
+    }
+
+    res.status(500).json({
+      name: "server_error",
+      message: err.message,
+    });
+  }
+}
+
+async function loginController(req, res) {
+  try {
+    const { email, password } = req.body;
+    const data = await loginUser({ email, password });
+    const userData = data.userData;
+    const accessToken = data.access;
+    const refreshToken = data.refresh;
+
+    res.cookie("access_token", accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 15 * 60 * 1000,
+      path: "/",
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 20 * 24 * 60 * 60 * 1000,
+      path: "/userAccount/update-token",
+    });
+
+    res.status(200).json(userData);
+  } catch (err) {
+    if (
+      err.message === "User not found" ||
+      err.message === "Invalid password"
+    ) {
+      return res.status(401).json({
+        name: "invalid_data",
+        message: "User not found or incorrect data was received",
+      });
+    }
+    res.status(500).json({ name: "server_error" });
+  }
+}
+
+async function checkAuthStatusController(req, res) {
+  try {
+    const accessToken = req.cookies?.access_token;
+
+    const result = await checkAuthStatus(accessToken);
+
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(err.code || 500).json({
+      code: err.code || 500,
+      message: err.message,
+    });
+  }
+}
+
+async function refreshController(req, res) {
+  try {
+    const refreshTokenCookie = req.cookies.refresh_token;
+    const data = await updateToken(refreshTokenCookie);
+
+    res.cookie("access_token", data.accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 15 * 60 * 1000,
+      path: "/",
+    });
+
+    res.cookie("refresh_token", data.refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 20 * 24 * 60 * 60 * 1000,
+      path: "/userAccount/update-token",
+    });
+
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    res.clearCookie("access_token");
+    res.clearCookie("refresh_token");
+
+    return res.status(err.code).json(err.message);
+  }
+}
+
+async function addProductToWishListController(req, res) {
+  const { productId, userId } = req.body;
+
+  if (!productId || !userId) {
+    return res
+      .status(400)
+      .json({ message: "Product id or user id are required" });
+  }
+
+  try {
+    const updateWishList = await addProductToWishList(productId, userId);
+    res.status(200).json(updateWishList);
+  } catch (err) {
+    return res.status(err.code || 500).json(err.message);
+  }
+}
+
+async function removeProdToWihsListController(req, res) {
+  const { productId, userId } = req.body;
+
+  if (!productId || !userId) {
+    return res
+      .status(400)
+      .json({ message: "Product id or user id are required" });
+  };
+
+  try {
+    const updatedData = await removeProdToWihsList(productId, userId);
+    res.status(200).json(updatedData);
+  } catch (err) {
+    return res.status(500).json(err.name);
+  };
+}
+
+async function addProdToPurchasedGoodsController(req, res) {
+  const { productId, userId } = req.body;
+
+  if (productId == undefined || userId == undefined) {
+    return res
+      .status(400)
+      .json({ message: "Product id or user id are required" });
+  }
+
+  try {
+    const updatedData = await addProdToPurchasedGoods(productId, userId);
+    return res.status(200).json(updatedData);
+  } catch (err) {
+    return res.status(500).json(err.name);
+  }
+}
+
+export {
+  userRegistrationController,
+  loginController,
+  checkAuthStatusController,
+  refreshController,
+  addProductToWishListController,
+  removeProdToWihsListController,
+  addProdToPurchasedGoodsController,
+};

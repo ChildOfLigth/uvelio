@@ -11,11 +11,20 @@ h1 {
 }
 
 h2 {
+  font-size: adaptiveSize(30, 56);
+}
+
+h3 {
   font-size: adaptiveSize(22, 48);
   line-height: normal;
 }
 
 h4 {
+  font-size: adaptiveSize(18, 32);
+  line-height: normal;
+}
+
+h5 {
   font-size: adaptiveSize(14, 18);
   line-height: normal;
 }
@@ -24,6 +33,10 @@ p {
   line-height: var(--base-lh);
 }
 
-a {
-  font-size: adaptiveSize(14, 17);
+.swiper-slide {
+  height: auto;
+}
+
+.swiper-wrapper {
+  align-items: stretch;
 }

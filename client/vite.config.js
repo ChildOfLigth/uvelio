@@ -11,7 +11,11 @@ export default defineConfig({
       "@ui": path.resolve(__dirname, "src/components/ui"),
       "@imgs": path.resolve(__dirname, "src/assets/imgs"),
       "@redux": path.resolve(__dirname, "src/features"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
     },
+  },
+   define: {
+    'process.env': {}
   },
   plugins: [react(), tailwindcss()],
 });
