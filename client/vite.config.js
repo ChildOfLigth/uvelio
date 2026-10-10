@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
-  base: "/uvelio/",
+  base: "/",
   resolve: {
     alias: {
       "@pages": path.resolve(__dirname, "src/components/pages"),
