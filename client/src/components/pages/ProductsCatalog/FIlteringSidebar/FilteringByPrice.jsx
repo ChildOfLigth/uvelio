@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { setReplaceFilter } from "@redux/products/productsSlice.js";
-import axios from "axios";
 import spiner from "@imgs/icons/spiner.svg";
+import { BASE_API } from "../../../../globalVariables";
 
 export default function FilteringByPrice({ openSideBar }) {
   const { t } = useTranslation();
 
-  const { selectedFilters, selectedProductsCategory } = useSelector(
+  const { selectedProductsCategory } = useSelector(
     (state) => state.products,
   );
 
@@ -48,14 +48,11 @@ export default function FilteringByPrice({ openSideBar }) {
 
     const getPriceRange = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:3005/products/get-price-range",
-          {
-            params: {
-              selectedProductsCategory,
-            },
+        const res = await BASE_API.get("/products/get-price-range", {
+          params: {
+            selectedProductsCategory,
           },
-        );
+        });
 
         if (cancelled) return;
 

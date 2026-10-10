@@ -1,8 +1,7 @@
-import axios from "axios";
 import { useEffect, useState, useRef, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import AgreeWithTerms from "@ui/Form/AgreeWithTerms";
-import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables";
+import { BASE_API, RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables";
 import addElementIcon from "@imgs/icons/productPage/addElementIcon.svg";
 import emptyRatingStar from "@imgs/icons/productPage/ratingStarEmptyFill.svg";
 import ratingStar from "@imgs/icons/productPage/ratingStar.svg";
@@ -31,12 +30,9 @@ export default function ReviewBlock({
     async function gettingReviewsByProdId() {
       try {
         const productId = productData.id;
-        const res = await axios.get(
-          "http://localhost:3000/products/get-review",
-          {
-            params: { productId },
-          },
-        );
+        const res = await BASE_API.get("/products/get-review", {
+          params: { productId },
+        });
 
         const reviews = res.data;
 
