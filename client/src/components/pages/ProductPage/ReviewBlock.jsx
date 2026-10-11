@@ -201,7 +201,7 @@ export default function ReviewBlock({
 
   const onSubmit = (e) => {
     if (authStatus === false) {
-      navigate("/uvelio/auth-form");
+      navigate("/auth-form");
     } else {
       e.preventDefault();
       setVisibleModalWindow(true);

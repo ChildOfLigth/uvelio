@@ -6,7 +6,7 @@ export default function AuthButton() {
 
   return (
     <Link 
-    to="/uvelio/auth-form"
+    to="/auth-form"
     className="bg-(--color-primary) w-[51%] h-full customButton">
       <span className="bg-(--second-primary-c)"></span>
       <p

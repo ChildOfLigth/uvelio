@@ -97,7 +97,7 @@ export default function UserPage() {
           className="w-4/5 sm:w-1/2 h-(--btn-h) font-semibold rounded-(--base-b-radius) 
         bg-(--second-primary-c)/80 hover:bg-(--second-primary-c)/35
         mx-auto transition-colors duration-300"
-          onClick={() => naviagate("/uvelio/catalog/rings")}
+          onClick={() => naviagate("/catalog/rings")}
         >
           {textContent[typeList].textBtn}
         </button>

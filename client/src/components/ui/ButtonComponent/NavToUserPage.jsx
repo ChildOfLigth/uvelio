@@ -7,7 +7,7 @@ export default function NavToUserPage() {
 
   return (
     <Link
-      to={`/uvelio/user/:${id}`}
+      to={`/user/:${id}`}
       className="w-1/5 max-w-12.5 min-w-11.5 h-full flex items-center justify-center cursor-pointer"
     >
       <img src={userIco} alt="User" className="w-full aspect-square" />

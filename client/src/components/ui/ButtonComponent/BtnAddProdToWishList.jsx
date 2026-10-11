@@ -22,7 +22,7 @@ export default function BtnAddProdToWishList({
 
   const processingAddItemInWishList = () => {
     if (!isAuth) {
-      navigate("/uvelio/auth-form");
+      navigate("/auth-form");
       return;
     }
 

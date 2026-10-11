@@ -21,7 +21,7 @@ export default function FormSearchProduct() {
     dispatch(setReplaceFilter({ key: "name", value: query }));
 
     if (!location.pathname.includes("catalog")) {
-      navigate(`/uvelio/catalog?name=${query}`);
+      navigate(`/catalog?name=${query}`);
     } else {
       setSearchParams((searchParams) => {
         searchParams.set("name", query);

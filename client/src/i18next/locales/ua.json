@@ -6,17 +6,17 @@
       "registration": "Реєстрація"
     },
     "navigateLinks": [
-      { "label": "Головна", "href": "/uvelio/" },
-      { "label": "Каталог", "href": "/uvelio/catalog/rings/" },
-      { "label": "Акції", "href": "/uvelio/catalog/" },
-      { "label": "Наші магазини", "href": "/uvelio/about-us" },
-      { "label": "Пошук товарів", "href": "/uvelio/" },
-      { "label": "Безкоштовна доставка", "href": "/uvelio/" },
-      { "label": "Оплата частинами", "href": "/uvelio/" },
-      { "label": "Вакансії", "href": "/uvelio/" },
-      { "label": "Обране", "href": "/uvelio/" },
-      { "label": "Більше", "href": "/uvelio/" },
-      { "label": "Підтримка", "href": "/uvelio/" }
+      { "label": "Головна", "href": "/" },
+      { "label": "Каталог", "href": "/catalog/rings/" },
+      { "label": "Акції", "href": "/catalog/" },
+      { "label": "Наші магазини", "href": "/about-us" },
+      { "label": "Пошук товарів", "href": "/" },
+      { "label": "Безкоштовна доставка", "href": "/" },
+      { "label": "Оплата частинами", "href": "/" },
+      { "label": "Вакансії", "href": "/" },
+      { "label": "Обране", "href": "/" },
+      { "label": "Більше", "href": "/" },
+      { "label": "Підтримка", "href": "/" }
     ]
   },
 
@@ -160,15 +160,15 @@
       "aboutUs": {
         "title": "Про нас",
         "links": [
-          { "text": "Блог", "href": "/uvelio/about-us" },
-          { "text": "Контакти", "href": "/uvelio/about-us" },
-          { "text": "Франчайзинг", "href": "/uvelio/about-us" },
-          { "text": "Політика конфіденційності", "href": "/uvelio/about-us" },
-          { "text": "Користувальницька угода", "href": "/uvelio/about-us" },
-          { "text": "Питання та відповіді", "href": "/uvelio/about-us" },
+          { "text": "Блог", "href": "/about-us" },
+          { "text": "Контакти", "href": "/about-us" },
+          { "text": "Франчайзинг", "href": "/about-us" },
+          { "text": "Політика конфіденційності", "href": "/about-us" },
+          { "text": "Користувальницька угода", "href": "/about-us" },
+          { "text": "Питання та відповіді", "href": "/about-us" },
           {
             "text": "Програма лояльності від Uvelio",
-            "href": "/uvelio/about-us"
+            "href": "/about-us"
           }
         ]
       },

@@ -53,7 +53,7 @@ export default function ChangeCategory() {
   const handleSelectCategory = (key) => {
     dispatch(setSelectedProductsCategory(key));
     localStorage.setItem("selectedCategory", key);
-    navigate(`/uvelio/catalog/${key}`);
+    navigate(`/catalog/${key}`);
     dispatch(setClearAllFilters());
   };
 

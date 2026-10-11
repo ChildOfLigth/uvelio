@@ -4,7 +4,7 @@ export default function NavToCatalog({ children, filter, styles }) {
 
   return (
     <Link
-      to={`/uvelio/catalog/${filter}`}
+      to={`/catalog/${filter}`}
       className={`wrap-anywhere ${styles}`}
     >
       {children}

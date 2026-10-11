@@ -57,7 +57,7 @@ export default function ProductCard({ productData }) {
 
         <div className="w-full h-10 sm:h-12.5 flex items-center justify-center gap-1 my-1">
           <Link
-            to={`/uvelio/product/${id}`}
+            to={`/product/${id}`}
             className="w-[66%] sm:w-[77%] h-full sm:py-3.25 px-4.25 flex items-center justify-center text-center bg-(--color-primary) 
           rounded-(--base-b-radius) font-medium text-(length:--text-sm) 2xl:text-xl text-white"
             onClick={() => {

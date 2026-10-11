@@ -127,7 +127,7 @@ export default function Footer() {
               <ul className="w-full list-none flex flex-col justify-start gap-2">
                 {offersLink.map((item, ind) => (
                   <li key={ind}>
-                    <a href="/uvelio/" className="wrap-anywhere text-[14px]">{item}</a>
+                    <a href="/" className="wrap-anywhere text-[14px]">{item}</a>
                   </li>
                 ))}
               </ul>

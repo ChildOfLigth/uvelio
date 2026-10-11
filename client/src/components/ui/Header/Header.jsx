@@ -39,7 +39,7 @@ export default function Header() {
       <header className="bg-(--third-primary-с) sticky top-0 w-full h-auto flex flex-col items-center justify-center z-50">
         {!headerOnSmallSizes ? (
           <div className="flex items-center justify-between w-[93%] max-w-375 py-3 h-18 lg:h-24 max-[860px]:gap-5">
-            <button onClick={() => navigate("/uvelio/")}>
+            <button onClick={() => navigate("/")}>
               <img src={uvelioLogo} alt="Uvelio logo" className="w-36" />
             </button>
 

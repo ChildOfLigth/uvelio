@@ -336,7 +336,7 @@ export default function ProductPage() {
                     disabled={!productData.in_stock}
                     onClick={() => {
                       if (isAuth === true) {
-                        navigate("/uvelio/checkout", {
+                        navigate("/checkout", {
                           state: {
                             prodId: productData.id,
                             name: productData.name,

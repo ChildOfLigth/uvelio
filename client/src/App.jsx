@@ -60,10 +60,10 @@ function App() {
           <Header />
           <main>
             <Routes>
-              <Route path="/uvelio/" element={<Main />} />
-              <Route path="/uvelio/about-us" element={<AboutUs />} />
+              <Route path="/" element={<Main />} />
+              <Route path="/about-us" element={<AboutUs />} />
               <Route
-                path="/uvelio/catalog"
+                path="/catalog"
                 element={
                   <ProductsCatalog
                     totalNumOfProds={totalNumOfProds}
@@ -72,7 +72,7 @@ function App() {
                 }
               />
               <Route
-                path="/uvelio/catalog/:category"
+                path="/catalog/:category"
                 element={
                   <ProductsCatalog
                     totalNumOfProds={totalNumOfProds}
@@ -80,10 +80,10 @@ function App() {
                   />
                 }
               />
-              <Route path="/uvelio/product/:prodId" element={<ProductPage />} />
-              <Route path="/uvelio/checkout" element={<CheckoutPage />} />
-              <Route path="/uvelio/auth-form" element={<AuthForm />} />
-              <Route path="/uvelio/user/:userId" element={<UserPage />} />
+              <Route path="/product/:prodId" element={<ProductPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/auth-form" element={<AuthForm />} />
+              <Route path="/user/:userId" element={<UserPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

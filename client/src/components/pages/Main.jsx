@@ -77,7 +77,7 @@ export default function Main() {
             </p>
 
             <Link
-              to="/uvelio/catalog/rings"
+              to="/catalog/rings"
               className={`bg-(--second-primary-c) ${i18n.language == "ua" ? "xs:w-auto" : "w-2/5 min-w-30.5 xl:w-1/4"} 
             h-12.5 text-(--color-primary) text-(length:--text-sm) p-4.25 customButton`}
             >
