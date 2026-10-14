@@ -21,11 +21,6 @@ server/dist/
 .env.local
 .env.*.local
 
-# SQLite
-*.db
-*.sqlite
-*.sqlite3
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

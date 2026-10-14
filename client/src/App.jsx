@@ -18,6 +18,7 @@ import { checkAuthStatus } from "@redux/userAccount/accountThunk";
 import { updateToken } from "./features/userAccount/accountThunk";
 import { AuthContext } from "./components/context/AuthContext";
 import { setClearAllFilters } from "@redux/products/productsSlice.js";
+import ScrollToTop from "./components/ui/ScrollToTop";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
         <ModalWindContext.Provider
           value={{ visibleModalWindow, setVisibleModalWindow }}
         >
+          <ScrollToTop />
           <Header />
           <main>
             <Routes>

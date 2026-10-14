@@ -33,8 +33,6 @@ export default function FilteringByActualFilters({
 
   const searchReqForProdByName = filterParams.get("name");
 
-  useEffect(() => console.log(selectedFilters),[selectedFilters])
-
   useEffect(() => {
     const savedSelectedFilters = JSON.parse(
       localStorage.getItem("idSelectedFilters"),
