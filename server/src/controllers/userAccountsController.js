@@ -18,17 +18,19 @@ async function userRegistrationController(req, res) {
 
     res.cookie("access_token", accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
+      partitioned: true,
       maxAge: 15 * 60 * 1000,
       path: "/",
     });
 
-    res.cookie("refresh_token", refreshToken, {
+    res.cookie("refresh_token", data.refreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 30 * 24 * 60 * 60 * 1000,
+      secure: true,
+      sameSite: "none",
+      partitioned: true,
+      maxAge: 20 * 24 * 60 * 60 * 1000,
       path: "/userAccount/update-token",
     });
 
@@ -58,16 +60,18 @@ async function loginController(req, res) {
 
     res.cookie("access_token", accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
+      partitioned: true,
       maxAge: 15 * 60 * 1000,
       path: "/",
     });
 
-    res.cookie("refresh_token", refreshToken, {
+    res.cookie("refresh_token", data.refreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
+      partitioned: true,
       maxAge: 20 * 24 * 60 * 60 * 1000,
       path: "/userAccount/update-token",
     });
@@ -107,18 +111,20 @@ async function refreshController(req, res) {
     const refreshTokenCookie = req.cookies.refresh_token;
     const data = await updateToken(refreshTokenCookie);
 
-    res.cookie("access_token", data.accessToken, {
+    res.cookie("access_token", accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
+      partitioned: true,
       maxAge: 15 * 60 * 1000,
       path: "/",
     });
 
     res.cookie("refresh_token", data.refreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
+      partitioned: true,
       maxAge: 20 * 24 * 60 * 60 * 1000,
       path: "/userAccount/update-token",
     });
@@ -158,14 +164,14 @@ async function removeProdToWihsListController(req, res) {
     return res
       .status(400)
       .json({ message: "Product id or user id are required" });
-  };
+  }
 
   try {
     const updatedData = await removeProdToWihsList(productId, userId);
     res.status(200).json(updatedData);
   } catch (err) {
     return res.status(500).json(err.name);
-  };
+  }
 }
 
 async function addProdToPurchasedGoodsController(req, res) {
