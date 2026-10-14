@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../globalVariables";
 
@@ -114,7 +114,7 @@ export default function Footer() {
               <ul className="w-full list-none flex flex-col justify-start gap-2">
                 {aboutUsLinks.map((item, ind) => (
                   <li key={ind}>
-                    <a href={item.href} className="wrap-anywhere text-[14px]">{item.text}</a>
+                    <Link to={item.href} className="wrap-anywhere text-[14px]">{item.text}</Link>
                   </li>
                 ))}
               </ul>
