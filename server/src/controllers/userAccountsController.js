@@ -8,23 +8,6 @@ import {
   addProdToPurchasedGoods,
 } from "../services/userAccountsService.js";
 
-function addPartitioned(res) {
-  const cookies = res.getHeader("Set-Cookie");
-  if (!cookies) return;
-
-  if (Array.isArray(cookies)) {
-    res.setHeader(
-      "Set-Cookie",
-      cookies.map((c) => (c.includes("Partitioned") ? c : c + "; Partitioned")),
-    );
-  } else {
-    res.setHeader(
-      "Set-Cookie",
-      cookies.includes("Partitioned") ? cookies : cookies + "; Partitioned",
-    );
-  }
-}
-
 async function userRegistrationController(req, res) {
   try {
     const { name, surname, email, password } = req.body;
@@ -36,7 +19,7 @@ async function userRegistrationController(req, res) {
     res.cookie("access_token", accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 15 * 60 * 1000,
       path: "/",
     });
@@ -44,12 +27,10 @@ async function userRegistrationController(req, res) {
     res.cookie("refresh_token", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 20 * 24 * 60 * 60 * 1000,
       path: "/userAccount/update-token",
     });
-
-    addPartitioned(res);
 
     res.status(201).json(userData);
   } catch (err) {
@@ -78,7 +59,7 @@ async function loginController(req, res) {
     res.cookie("access_token", accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 15 * 60 * 1000,
       path: "/",
     });
@@ -86,12 +67,10 @@ async function loginController(req, res) {
     res.cookie("refresh_token", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 20 * 24 * 60 * 60 * 1000,
       path: "/userAccount/update-token",
     });
-
-    addPartitioned(res);
 
     res.status(200).json(userData);
   } catch (err) {
@@ -129,7 +108,7 @@ async function refreshController(req, res) {
     res.cookie("access_token", data.access, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 15 * 60 * 1000,
       path: "/",
     });
@@ -137,27 +116,17 @@ async function refreshController(req, res) {
     res.cookie("refresh_token", data.refresh, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 20 * 24 * 60 * 60 * 1000,
       path: "/userAccount/update-token",
     });
-
-    addPartitioned(res);
 
     return res.status(200).json({
       success: true,
     });
   } catch (err) {
-    res.clearCookie("access_token", {
-      path: "/",
-      secure: true,
-      sameSite: "none",
-    });
-    res.clearCookie("refresh_token", {
-      path: "/userAccount/update-token",
-      secure: true,
-      sameSite: "none",
-    });
+    res.clearCookie("access_token", { path: "/" });
+    res.clearCookie("refresh_token", { path: "/userAccount/update-token" });
 
     return res.status(err.code || 500).json({ message: err.message });
   }
