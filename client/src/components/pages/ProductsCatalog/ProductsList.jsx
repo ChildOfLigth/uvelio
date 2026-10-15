@@ -18,18 +18,12 @@ export default function ProductsList({
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const {
-    status,
-    endOfProdList,
-    totalLengthOfList,
-    selectedProductsCategory,
-  } = useSelector((state) => state.products);
+  const { status, endOfProdList, totalLengthOfList, selectedProductsCategory } =
+    useSelector((state) => state.products);
 
   const [activeProdsListPage, setActiveProdsListPage] = useState(0);
 
-  const totalNumOfPages = Math.ceil(
-    totalLengthOfList / PRODUCTS_PER_PAGE,
-  );
+  const totalNumOfPages = Math.ceil(totalLengthOfList / PRODUCTS_PER_PAGE);
 
   useEffect(() => {
     setActiveProdsListPage(0);
@@ -59,14 +53,14 @@ export default function ProductsList({
       {status === "loading" ? (
         <img
           src={loader}
-          className="absolute inset-0 m-auto w-20 h-20 z-10"
+          className="absolute inset-0 my-20 mx-auto w-20 h-20 z-10"
           alt="Loading"
         />
       ) : (
         <div className="relative w-full">
           {status === "rejected" || currentVisibleProdList.length === 0 ? (
-            <h2 className="font-bold text-(--color-primary)/40 text-center">
-              {t("productsCatalog.emptyProductsList")}
+            <h2 className="font-bold text-(--color-primary)/40 text-center my-20 mx-auto">
+              {t("productsCatalog.emptyProductsList")} 
             </h2>
           ) : (
             <div className="flex flex-col gap-[clamp(1.5625rem,calc(1.205rem+1.786vw),2.8125rem)] pb-[clamp(2.1875rem,calc(-0.715rem+11.905vw),10rem)]">
@@ -124,11 +118,10 @@ export default function ProductsList({
                     </button>
 
                     <ul className="w-5/6 flex items-center justify-center gap-5">
-                      {Array.from({ length: totalNumOfPages }).map(
-                        (_, ind) => (
-                          <li
-                            key={ind}
-                            className={`
+                      {Array.from({ length: totalNumOfPages }).map((_, ind) => (
+                        <li
+                          key={ind}
+                          className={`
                               w-[clamp(2.1875rem,calc(1.920rem+1.339vw),3.125rem)]
                               aspect-square
                               flex
@@ -146,17 +139,16 @@ export default function ProductsList({
                               hover:bg-(--second-primary-c)
                               hover:text-white
                             `}
+                        >
+                          <button
+                            onClick={() => handlePageChange(ind)}
+                            disabled={ind === activeProdsListPage}
+                            className="w-full h-full"
                           >
-                            <button
-                              onClick={() => handlePageChange(ind)}
-                              disabled={ind === activeProdsListPage}
-                              className="w-full h-full"
-                            >
-                              {ind + 1}
-                            </button>
-                          </li>
-                        ),
-                      )}
+                            {ind + 1}
+                          </button>
+                        </li>
+                      ))}
                     </ul>
                   </>
                 )}
