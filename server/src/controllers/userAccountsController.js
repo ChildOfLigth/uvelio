@@ -1,4 +1,4 @@
-import cookie from "cookie";
+import { serialize } from "cookie";
 import {
   userRegistration,
   loginUser,
@@ -18,7 +18,7 @@ async function userRegistrationController(req, res) {
     const refreshToken = data.refresh;
 
     res.setHeader("Set-Cookie", [
-      cookie.serialize("access_token", accessToken, {
+      serialize("access_token", accessToken, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
@@ -26,7 +26,7 @@ async function userRegistrationController(req, res) {
         maxAge: 15 * 60,
         path: "/",
       }),
-      cookie.serialize("refresh_token", refreshToken, {
+      serialize("refresh_token", refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
@@ -61,7 +61,7 @@ async function loginController(req, res) {
     const refreshToken = data.refresh;
 
     res.setHeader("Set-Cookie", [
-      cookie.serialize("access_token", accessToken, {
+      serialize("access_token", accessToken, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
@@ -69,7 +69,7 @@ async function loginController(req, res) {
         maxAge: 15 * 60,
         path: "/",
       }),
-      cookie.serialize("refresh_token", refreshToken, {
+      serialize("refresh_token", refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
@@ -113,7 +113,7 @@ async function refreshController(req, res) {
     const data = await updateToken(refreshTokenCookie);
 
     res.setHeader("Set-Cookie", [
-      cookie.serialize("access_token", data.access, {
+      serialize("access_token", data.access, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
@@ -121,7 +121,7 @@ async function refreshController(req, res) {
         maxAge: 15 * 60,
         path: "/",
       }),
-      cookie.serialize("refresh_token", data.refresh, {
+      serialize("refresh_token", data.refresh, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
