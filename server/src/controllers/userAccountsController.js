@@ -1,7 +1,3 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const cookie = require("cookie");
-
 import {
   userRegistration,
   loginUser,
@@ -12,6 +8,23 @@ import {
   addProdToPurchasedGoods,
 } from "../services/userAccountsService.js";
 
+function addPartitioned(res) {
+  const cookies = res.getHeader("Set-Cookie");
+  if (!cookies) return;
+
+  if (Array.isArray(cookies)) {
+    res.setHeader(
+      "Set-Cookie",
+      cookies.map((c) => (c.includes("Partitioned") ? c : c + "; Partitioned")),
+    );
+  } else {
+    res.setHeader(
+      "Set-Cookie",
+      cookies.includes("Partitioned") ? cookies : cookies + "; Partitioned",
+    );
+  }
+}
+
 async function userRegistrationController(req, res) {
   try {
     const { name, surname, email, password } = req.body;
@@ -20,24 +33,23 @@ async function userRegistrationController(req, res) {
     const accessToken = data.access;
     const refreshToken = data.refresh;
 
-    res.setHeader("Set-Cookie", [
-      cookie.serialize("access_token", accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        partitioned: true,
-        maxAge: 15 * 60,
-        path: "/",
-      }),
-      cookie.serialize("refresh_token", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        partitioned: true,
-        maxAge: 20 * 24 * 60 * 60,
-        path: "/userAccount/update-token",
-      }),
-    ]);
+    res.cookie("access_token", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 15 * 60 * 1000,
+      path: "/",
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 20 * 24 * 60 * 60 * 1000,
+      path: "/userAccount/update-token",
+    });
+
+    addPartitioned(res);
 
     res.status(201).json(userData);
   } catch (err) {
@@ -63,24 +75,23 @@ async function loginController(req, res) {
     const accessToken = data.access;
     const refreshToken = data.refresh;
 
-    res.setHeader("Set-Cookie", [
-      cookie.serialize("access_token", accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        partitioned: true,
-        maxAge: 15 * 60,
-        path: "/",
-      }),
-      cookie.serialize("refresh_token", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        partitioned: true,
-        maxAge: 20 * 24 * 60 * 60,
-        path: "/userAccount/update-token",
-      }),
-    ]);
+    res.cookie("access_token", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 15 * 60 * 1000,
+      path: "/",
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 20 * 24 * 60 * 60 * 1000,
+      path: "/userAccount/update-token",
+    });
+
+    addPartitioned(res);
 
     res.status(200).json(userData);
   } catch (err) {
@@ -115,24 +126,23 @@ async function refreshController(req, res) {
     const refreshTokenCookie = req.cookies.refresh_token;
     const data = await updateToken(refreshTokenCookie);
 
-    res.setHeader("Set-Cookie", [
-      cookie.serialize("access_token", data.access, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        partitioned: true,
-        maxAge: 15 * 60,
-        path: "/",
-      }),
-      cookie.serialize("refresh_token", data.refresh, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        partitioned: true,
-        maxAge: 20 * 24 * 60 * 60,
-        path: "/userAccount/update-token",
-      }),
-    ]);
+    res.cookie("access_token", data.access, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 15 * 60 * 1000,
+      path: "/",
+    });
+
+    res.cookie("refresh_token", data.refresh, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 20 * 24 * 60 * 60 * 1000,
+      path: "/userAccount/update-token",
+    });
+
+    addPartitioned(res);
 
     return res.status(200).json({
       success: true,
@@ -142,13 +152,11 @@ async function refreshController(req, res) {
       path: "/",
       secure: true,
       sameSite: "none",
-      partitioned: true,
     });
     res.clearCookie("refresh_token", {
       path: "/userAccount/update-token",
       secure: true,
       sameSite: "none",
-      partitioned: true,
     });
 
     return res.status(err.code || 500).json({ message: err.message });
