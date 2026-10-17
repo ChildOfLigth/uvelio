@@ -1,4 +1,4 @@
-import { productsDB } from "../../database/initDB.js";
+import { pool } from "../../database/initDB.js";
 import { STANDART_FILTERS } from "../config.js";
 
 function normalizeFilters(selectedFilters) {
@@ -13,25 +13,27 @@ function normalizeFilters(selectedFilters) {
 
 function searchCommandItemByFilters(selectedFilters) {
   const sqlParts = [];
+  const params = [];
 
   const { min, max, inlay, ...filters } = selectedFilters;
 
   if (min != null && max != null) {
-    sqlParts.push(`actualPrice BETWEEN ${min} AND ${max}`);
+    sqlParts.push(
+      `actualPrice BETWEEN $${params.length + 1} AND $${params.length + 2}`,
+    );
+    params.push(min, max);
   }
 
   if (inlay != null && Array.isArray(inlay) && inlay.length > 0) {
     const inlayCommands = inlay.map((item) => {
-      switch (item) {
-        case "Not":
-          return `inlay LIKE '%Not%'`;
-
-        case "Yes":
-          return `inlay IS NOT NULL AND inlay NOT LIKE '%Not%'`;
-
-        default:
-          return `inlay LIKE '%${item}%'`;
+      if (item === "Not") {
+        return `inlay LIKE '%Not%'`;
       }
+      if (item === "Yes") {
+        return `inlay IS NOT NULL AND inlay NOT LIKE '%Not%'`;
+      }
+      params.push(`%${item}%`);
+      return `inlay LIKE $${params.length}`;
     });
 
     sqlParts.push(`(${inlayCommands.join(" OR ")})`);
@@ -40,272 +42,231 @@ function searchCommandItemByFilters(selectedFilters) {
   for (const [key, values] of Object.entries(filters)) {
     if (!Array.isArray(values) || values.length === 0) continue;
 
-    let command;
-
     if (STANDART_FILTERS.includes(key)) {
-      command = values.map((option) => `${key} LIKE '%${option}%'`);
-      sqlParts.push(`(${command.join(" OR ")})`);
+      const commands = values.map((option) => {
+        params.push(`%${option}%`);
+        return `${key} LIKE $${params.length}`;
+      });
+      sqlParts.push(`(${commands.join(" OR ")})`);
     } else {
-      command = values.map(
-        (option) =>
-          `additions LIKE '%"${key}":%' AND additions LIKE '%${option}%'`,
-      );
-      sqlParts.push(`(${command.join(" OR ")})`);
+      const commands = values.map((option) => {
+        params.push(`%"${key}":%`);
+        params.push(`%${option}%`);
+        return `additions LIKE $${params.length - 1} AND additions LIKE $${params.length}`;
+      });
+      sqlParts.push(`(${commands.join(" OR ")})`);
     }
   }
 
-  return sqlParts.join(" AND ");
+  return {
+    sql: sqlParts.join(" AND "),
+    params,
+  };
 }
 
-function getLength(selectedProductsCategory, selectedFilters) {
-  return new Promise((resolve, reject) => {
-    try {
-      let sqlCommand = `
-        SELECT COUNT(*) AS length
-        FROM products
-        WHERE category = ?
-      `;
-
-      const params = [selectedProductsCategory];
-
-      if (selectedFilters !== undefined) {
-        const filters = normalizeFilters(selectedFilters);
-        const filterSQL = searchCommandItemByFilters(filters);
-
-        if (filterSQL) {
-          sqlCommand += ` AND ${filterSQL}`;
-        }
-      }
-
-      productsDB.all(sqlCommand, params, (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res[0].length);
-        }
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
-}
-
-function getProducts(selectedProductsCategory, selectedFilters) {
-  return new Promise((resolve, reject) => {
-    try {
-      let sqlCommand = `
-        SELECT *
-        FROM products
-        WHERE category = ?
-      `;
-
-      const params = [selectedProductsCategory];
-
-      if (selectedFilters !== undefined) {
-        const filters = normalizeFilters(selectedFilters);
-        const filterSQL = searchCommandItemByFilters(filters);
-
-        if (filterSQL) {
-          sqlCommand += ` AND ${filterSQL}`;
-        }
-      }
-
-      sqlCommand += ` LIMIT 10`;
-
-      productsDB.all(sqlCommand, params, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
-}
-
-function getAdditionalData(
-  selectedProductsCategory,
-  totalNumOfProds,
-  selectedFilters,
-) {
-  return new Promise((resolve, reject) => {
+async function getLength(selectedProductsCategory, selectedFilters) {
+  try {
     let sqlCommand = `
-      SELECT *
-      FROM products
-      WHERE category = ?
-    `;
-
-    let sqlCommandForGetLength = `
       SELECT COUNT(*) AS length
       FROM products
-      WHERE category = ?
+      WHERE category = $1
     `;
-
     const params = [selectedProductsCategory];
 
     if (selectedFilters !== undefined) {
       const filters = normalizeFilters(selectedFilters);
-      const filterSQL = searchCommandItemByFilters(filters);
+      const { sql, params: filterParams } = searchCommandItemByFilters(filters);
 
-      if (filterSQL) {
-        sqlCommand += ` AND ${filterSQL}`;
-        sqlCommandForGetLength += ` AND ${filterSQL}`;
+      if (sql) {
+        // сдвигаем номера параметров
+        let shiftedSql = sql;
+        filterParams.forEach((_, index) => {
+          shiftedSql = shiftedSql.replace(
+            `$${index + 1}`,
+            `$${params.length + index + 1}`,
+          );
+        });
+        sqlCommand += ` AND ${shiftedSql}`;
+        params.push(...filterParams);
       }
     }
 
-    sqlCommand += ` LIMIT 10 OFFSET ?`;
-
-    productsDB.all(sqlCommand, [...params, totalNumOfProds], (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        productsDB.all(sqlCommandForGetLength, params, (err, res) => {
-          if (err) {
-            reject(err);
-          } else {
-            const lengthAdditionalData = Number(totalNumOfProds) + rows.length;
-
-            resolve({
-              prodsList: rows,
-              endOfList: res[0].length === lengthAdditionalData,
-            });
-          }
-        });
-      }
-    });
-  });
+    const result = await pool.query(sqlCommand, params);
+    return result.rows[0].length;
+  } catch (err) {
+    throw err;
+  }
 }
 
-function gettingProdsForNewPage(
+async function getProducts(selectedProductsCategory, selectedFilters) {
+  try {
+    let sqlCommand = `
+      SELECT *
+      FROM products
+      WHERE category = $1
+    `;
+    const params = [selectedProductsCategory];
+
+    if (selectedFilters !== undefined) {
+      const filters = normalizeFilters(selectedFilters);
+      const { sql, params: filterParams } = searchCommandItemByFilters(filters);
+
+      if (sql) {
+        let shiftedSql = sql;
+        filterParams.forEach((_, index) => {
+          shiftedSql = shiftedSql.replace(
+            `$${index + 1}`,
+            `$${params.length + index + 1}`,
+          );
+        });
+        sqlCommand += ` AND ${shiftedSql}`;
+        params.push(...filterParams);
+      }
+    }
+
+    sqlCommand += ` LIMIT 10`;
+
+    const result = await pool.query(sqlCommand, params);
+    return result.rows;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getAdditionalData(
   selectedProductsCategory,
   totalNumOfProds,
   selectedFilters,
 ) {
-  return new Promise((resolve, reject) => {
+  try {
     let sqlCommand = `
       SELECT *
       FROM products
-      WHERE category = ?
+      WHERE category = $1
     `;
-
     let sqlCommandForGetLength = `
       SELECT COUNT(*) AS length
       FROM products
-      WHERE category = ?
+      WHERE category = $1
     `;
+    const params = [selectedProductsCategory];
+    const lengthParams = [selectedProductsCategory];
 
     if (selectedFilters !== undefined) {
       const filters = normalizeFilters(selectedFilters);
-      const filterSQL = searchCommandItemByFilters(filters);
+      const { sql, params: filterParams } = searchCommandItemByFilters(filters);
 
-      if (filterSQL) {
-        sqlCommand += ` AND ${filterSQL}`;
-        sqlCommandForGetLength += ` AND ${filterSQL}`;
+      if (sql) {
+        let shiftedSql = sql;
+        filterParams.forEach((_, index) => {
+          shiftedSql = shiftedSql.replace(
+            `$${index + 1}`,
+            `$${params.length + index + 1}`,
+          );
+        });
+        sqlCommand += ` AND ${shiftedSql}`;
+        sqlCommandForGetLength += ` AND ${shiftedSql}`;
+        params.push(...filterParams);
+        lengthParams.push(...filterParams);
       }
     }
 
-    sqlCommand += ` LIMIT 10 OFFSET ?`;
+    sqlCommand += ` LIMIT 10 OFFSET $${params.length + 1}`;
+    params.push(totalNumOfProds);
 
-    productsDB.all(
-      sqlCommand,
-      [selectedProductsCategory, totalNumOfProds],
-      (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          productsDB.all(
-            sqlCommandForGetLength,
-            [selectedProductsCategory],
-            (err, res) => {
-              if (err) {
-                reject(err);
-              } else {
-                const lengthAdditionalData =
-                  Number(totalNumOfProds) + rows.length;
+    const rowsResult = await pool.query(sqlCommand, params);
+    const lengthResult = await pool.query(sqlCommandForGetLength, lengthParams);
 
-                resolve({
-                  prodsList: rows,
-                  endOfList: res[0].length === lengthAdditionalData,
-                });
-              }
-            },
-          );
-        }
-      },
-    );
-  });
+    const lengthAdditionalData =
+      Number(totalNumOfProds) + rowsResult.rows.length;
+
+    return {
+      prodsList: rowsResult.rows,
+      endOfList: lengthResult.rows[0].length === lengthAdditionalData,
+    };
+  } catch (err) {
+    throw err;
+  }
 }
 
-function searchProdsByName(val, category) {
-  return new Promise((resolve, reject) => {
-    try {
-      const parsedVal = val.split(" ");
-      let sqlCommand = `SELECT * FROM products WHERE category = ? AND name LIKE`;
-      const createdSqlForVal = parsedVal.map((i) => `'%${i}%'`).join(" AND ");
-
-      sqlCommand += createdSqlForVal;
-
-      productsDB.all(sqlCommand, [category], (err, rows) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(rows);
-      });
-    } catch (err) {
-      return reject(err);
-    }
-  });
+async function gettingProdsForNewPage(
+  selectedProductsCategory,
+  totalNumOfProds,
+  selectedFilters,
+) {
+  return getAdditionalData(
+    selectedProductsCategory,
+    totalNumOfProds,
+    selectedFilters,
+  );
 }
 
-function getRangePrice(selectedProductsCategory) {
-  return new Promise((resolve, reject) => {
-    productsDB.all(
-      "SELECT * FROM products WHERE category = ?",
+async function searchProdsByName(val, category) {
+  try {
+    const parsedVal = val.split(" ");
+    let sqlCommand = `SELECT * FROM products WHERE category = $1`;
+    const params = [category];
+
+    parsedVal.forEach((word) => {
+      params.push(`%${word}%`);
+      sqlCommand += ` AND name LIKE $${params.length}`;
+    });
+
+    const result = await pool.query(sqlCommand, params);
+    return result.rows;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getRangePrice(selectedProductsCategory) {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM products WHERE category = $1",
       [selectedProductsCategory],
-      (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          const searchMinPrice = [...rows].sort(
-            (a, b) => a.actualPrice - b.actualPrice,
-          );
-
-          const searchMaxPrice = [...rows].sort(
-            (a, b) => b.actualPrice - a.actualPrice,
-          );
-
-          resolve({
-            min: searchMinPrice[0].actualPrice,
-            max: searchMaxPrice[0].actualPrice,
-          });
-        }
-      },
     );
-  });
-}
 
-function getReviewForProduct(prodId) {
-  return new Promise((resolve, reject) => {
-    productsDB.all(
-      "SELECT * FROM product_reviews WHERE product_id = ?",
-      [prodId],
-      (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      },
-    );
-  });
-}
+    const rows = result.rows;
 
-function getProductsById(idsList) {
-  return new Promise((resolve, reject) => {
-    if (idsList?.length === 0) {
-      return resolve([]);
+    if (rows.length === 0) {
+      return { min: 0, max: 0 };
     }
 
-    const placeholders = idsList?.map(() => "?").join(", ");
+    const searchMinPrice = [...rows].sort(
+      (a, b) => a.actualPrice - b.actualPrice,
+    );
+    const searchMaxPrice = [...rows].sort(
+      (a, b) => b.actualPrice - a.actualPrice,
+    );
+
+    return {
+      min: searchMinPrice[0].actualPrice,
+      max: searchMaxPrice[0].actualPrice,
+    };
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getReviewForProduct(prodId) {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM product_reviews WHERE product_id = $1",
+      [prodId],
+    );
+    return result.rows;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getProductsById(idsList) {
+  try {
+    if (!idsList || idsList.length === 0) {
+      return JSON.stringify([]);
+    }
+
+    const placeholders = idsList.map((_, i) => `$${i + 1}`).join(", ");
 
     const query = `
       SELECT *
@@ -313,23 +274,21 @@ function getProductsById(idsList) {
       WHERE id IN (${placeholders})
     `;
 
-    productsDB.all(query, idsList, (err, rows) => {
-      if (err) {
-        return reject(err);
-      }
+    const result = await pool.query(query, idsList);
 
-      const prodsByWishList = rows.map((i) => ({
-        id: i.id,
-        name: i.name,
-        imgsLinks: i.imgsLinks,
-        actualPrice: i.actualPrice,
-        priceWithoutDisc: i.price_without_discount,
-        in_stock: i.in_stock,
-      }));
+    const prodsByWishList = result.rows.map((i) => ({
+      id: i.id,
+      name: i.name,
+      imgsLinks: i.imgsLinks,
+      actualPrice: i.actualPrice,
+      priceWithoutDisc: i.price_without_discount,
+      in_stock: i.in_stock,
+    }));
 
-      resolve(JSON.stringify(prodsByWishList));
-    });
-  });
+    return JSON.stringify(prodsByWishList);
+  } catch (err) {
+    throw err;
+  }
 }
 
 export {

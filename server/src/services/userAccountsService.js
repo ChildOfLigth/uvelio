@@ -1,38 +1,21 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuid } from "uuid";
-import { userAccountDB } from "../../database/initDB.js";
+import { pool } from "../../database/initDB.js";
 import { generateToken } from "../../operationsWithToken.js";
 
 const SALT_ROUNDS = 14;
-
-function dbGet(query, params = []) {
-  return new Promise((resolve, reject) => {
-    userAccountDB.get(query, params, (err, row) => {
-      if (err) reject(err);
-      else resolve(row);
-    });
-  });
-}
-
-function dbRun(query, params = []) {
-  return new Promise((resolve, reject) => {
-    userAccountDB.run(query, params, function (err) {
-      if (err) reject(err);
-      else resolve(this);
-    });
-  });
-}
 
 async function userRegistration({ name, surname, email, password }) {
   const id = uuid();
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-  const existing = await dbGet("SELECT id FROM userAccounts WHERE email = ?", [
-    email,
-  ]);
+  const existing = await pool.query(
+    "SELECT id FROM userAccounts WHERE email = $1",
+    [email],
+  );
 
-  if (existing) {
+  if (existing.rows.length > 0) {
     throw new Error("This email is already registered");
   }
 
@@ -51,10 +34,10 @@ async function userRegistration({ name, surname, email, password }) {
 
   const sql = `
     INSERT INTO userAccounts (id, name, surname, email, password, wish_list, purchased_goods, refresh_token)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
   `;
 
-  await dbRun(sql, [
+  await pool.query(sql, [
     id,
     name,
     surname,
@@ -67,9 +50,9 @@ async function userRegistration({ name, surname, email, password }) {
 
   return {
     userData: {
-      id: id,
+      id,
       username: `${name} ${surname}`,
-      email: email,
+      email,
       wishList: [],
       purchasedGoods: [],
     },
@@ -79,9 +62,12 @@ async function userRegistration({ name, surname, email, password }) {
 }
 
 async function loginUser({ email, password }) {
-  const user = await dbGet("SELECT * FROM userAccounts WHERE email = ?", [
-    email,
-  ]);
+  const result = await pool.query(
+    "SELECT * FROM userAccounts WHERE email = $1",
+    [email],
+  );
+
+  const user = result.rows[0];
   if (!user) throw new Error("User not found");
 
   const isMatch = await bcrypt.compare(password, user.password);
@@ -100,7 +86,7 @@ async function loginUser({ email, password }) {
     "refresh",
   );
 
-  await dbRun("UPDATE userAccounts SET refresh_token = ? WHERE id = ?", [
+  await pool.query("UPDATE userAccounts SET refresh_token = $1 WHERE id = $2", [
     refreshToken,
     user.id,
   ]);
@@ -133,15 +119,17 @@ async function checkAuthStatus(accessToken) {
     throw err;
   }
 
-  const user = await dbGet("SELECT * FROM userAccounts WHERE id = ?", [
+  const result = await pool.query("SELECT * FROM userAccounts WHERE id = $1", [
     decoded.userId,
   ]);
+
+  const user = result.rows[0];
 
   if (!user) {
     const err = new Error("No user with this ID exists.");
     err.code = 401;
     throw err;
-  };
+  }
 
   return {
     userData: {
@@ -160,7 +148,7 @@ async function updateToken(token) {
     const err = new Error("No refresh token");
     err.code = 401;
     throw err;
-  };
+  }
 
   let decoded;
 
@@ -168,12 +156,13 @@ async function updateToken(token) {
     decoded = jwt.verify(token, process.env.REFRESH_SECRET);
   } catch (err) {
     throw err;
-  };
+  }
 
-  const user = await dbGet(
-    "SELECT id, refresh_token FROM userAccounts WHERE id = ?",
-    [decoded.userId],
-  );
+  const result = await pool.query("SELECT * FROM userAccounts WHERE id = $1", [
+    decoded.userId,
+  ]);
+
+  const user = result.rows[0];
 
   if (!user) {
     const err = new Error("User not found");
@@ -201,100 +190,73 @@ async function updateToken(token) {
     "refresh",
   );
 
-  await dbRun("UPDATE userAccounts SET refresh_token = ? WHERE id = ?", [
+  await pool.query("UPDATE userAccounts SET refresh_token = $1 WHERE id = $2", [
     newRefreshToken,
     decoded.userId,
   ]);
 
   return {
-    userData: {
-      id: decoded.userId,
-      username: `${user.name} ${user.surname}`,
-      email: user.email,
-      wishList: JSON.parse(user.wish_list || "[]"),
-      purchasedGoods: JSON.parse(user.purchased_goods || "[]"),
-    },
-    accessToken: newAccessToken,
-    refreshToken: newRefreshToken,
+    access: newAccessToken,
+    refresh: newRefreshToken,
   };
 }
 
-function addProductToWishList(productId, userId) {
-  return new Promise((resolve, reject) => {
-    userAccountDB.get(
-      "SELECT wish_list FROM userAccounts WHERE id = ?",
-      [userId],
-      (err, row) => {
-        if (err) return reject(err);
+async function addProductToWishList(productId, userId) {
+  const result = await pool.query(
+    "SELECT wish_list FROM userAccounts WHERE id = $1",
+    [userId],
+  );
 
-        const currentWishList = JSON.parse(row?.wish_list) || [];
-        const updatedWishList = [...currentWishList, productId];
+  const row = result.rows[0];
+  const currentWishList = JSON.parse(row?.wish_list || "[]");
+  const updatedWishList = [...currentWishList, productId];
 
-        userAccountDB.run(
-          "UPDATE userAccounts SET wish_list = ? WHERE id = ?",
-          [JSON.stringify(updatedWishList), userId],
-          (err) => {
-            if (err) return reject(err);
+  await pool.query("UPDATE userAccounts SET wish_list = $1 WHERE id = $2", [
+    JSON.stringify(updatedWishList),
+    userId,
+  ]);
 
-            resolve(updatedWishList);
-          },
-        );
-      },
-    );
-  });
+  return updatedWishList;
 }
 
-function removeProdToWihsList(prodId, userId) {
-  return new Promise((resolve, reject) => {
-    userAccountDB.get(
-      "SELECT wish_list FROM userAccounts WHERE id = ?",
-      [userId],
-      (err, row) => {
-        if (err) return reject(err.message);
+async function removeProdToWihsList(prodId, userId) {
+  const result = await pool.query(
+    "SELECT wish_list FROM userAccounts WHERE id = $1",
+    [userId],
+  );
 
-        let wishList = JSON.parse(row.wish_list);
-        const index = wishList.indexOf(prodId);
-        if (index > -1) {
-          wishList.splice(index, 1);
-        }
+  const row = result.rows[0];
+  let wishList = JSON.parse(row?.wish_list || "[]");
+  const index = wishList.indexOf(prodId);
 
-        userAccountDB.run(
-          "UPDATE userAccounts SET wish_list = ? WHERE id = ?",
-          [JSON.stringify(wishList), userId],
-          (err) => {
-            if (err) return reject(err);
+  if (index > -1) {
+    wishList.splice(index, 1);
+  }
 
-            resolve(wishList);
-          },
-        );
-      },
-    );
-  });
+  await pool.query("UPDATE userAccounts SET wish_list = $1 WHERE id = $2", [
+    JSON.stringify(wishList),
+    userId,
+  ]);
+
+  return wishList;
 }
 
-function addProdToPurchasedGoods(prodId, userId) {
-  return new Promise((resolve, reject) => {
-    userAccountDB.get(
-      "SELECT purchased_goods FROM userAccounts WHERE id = ?",
-      [userId],
-      (err, row) => {
-        if (err) reject(err.message);
+async function addProdToPurchasedGoods(prodId, userId) {
+  const result = await pool.query(
+    "SELECT purchased_goods FROM userAccounts WHERE id = $1",
+    [userId],
+  );
 
-        const currentPurchasedsArr = JSON.parse(row?.purchased_goods) || [];
-        const updatedPurchasedsArr = [...currentPurchasedsArr, prodId];
+  const row = result.rows[0];
+  const currentPurchasedsArr = JSON.parse(row?.purchased_goods || "[]");
+  const updatedPurchasedsArr = [...currentPurchasedsArr, prodId];
 
-        userAccountDB.run(
-          "UPDATE userAccounts SET purchased_goods = ? WHERE id = ?",
-          [JSON.stringify(updatedPurchasedsArr), userId],
-          (err) => {
-            if (err) reject(err.message);
+  await pool.query(
+    "UPDATE userAccounts SET purchased_goods = $1 WHERE id = $2",
+    [JSON.stringify(updatedPurchasedsArr), userId],
+  );
 
-            resolve(updatedPurchasedsArr);
-          },
-        );
-      },
-    );
-  });
+  return updatedPurchasedsArr;
 }
 
 export {
