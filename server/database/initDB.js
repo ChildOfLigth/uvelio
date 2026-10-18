@@ -7,6 +7,7 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  connectionTimeoutMillis: 60000,
 });
 
 async function initDB() {
@@ -88,7 +89,6 @@ async function initDB() {
     console.log("Database successfully initialized");
   } catch (err) {
     console.error("Error initializing database:", err);
-    process.exit(1);
   } finally {
     client.release();
   }
