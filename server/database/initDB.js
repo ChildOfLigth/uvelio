@@ -28,16 +28,16 @@ async function initDB() {
         weight          NUMERIC,
         style           TEXT,
         type            TEXT,
-        material        TEXT NOT NULL,
+        material        TEXT,
         color_material  TEXT,
-        hallmark        INTEGER NOT NULL,
-        for_whom        TEXT NOT NULL,
+        hallmark        INTEGER,
+        for_whom        TEXT,
         num_of_stones   TEXT,
         inlay           TEXT,
         description     TEXT,
         exclusive       INTEGER DEFAULT 0,
         in_stock        INTEGER DEFAULT 1,
-        who_to_gift     TEXT NOT NULL,
+        who_to_gift     TEXT,
         additions       TEXT
       )
     `);
