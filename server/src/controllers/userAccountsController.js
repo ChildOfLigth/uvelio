@@ -29,7 +29,7 @@ async function userRegistrationController(req, res) {
       secure: true,
       sameSite: "lax",
       maxAge: 20 * 24 * 60 * 60 * 1000,
-      path: "/userAccount/update-token",
+      path: "/api/userAccount/update-token",
     });
 
     res.status(201).json(userData);
@@ -69,7 +69,7 @@ async function loginController(req, res) {
       secure: true,
       sameSite: "lax",
       maxAge: 20 * 24 * 60 * 60 * 1000,
-      path: "/userAccount/update-token",
+      path: "/api/userAccount/update-token",
     });
 
     res.status(200).json(userData);
@@ -118,7 +118,7 @@ async function refreshController(req, res) {
       secure: true,
       sameSite: "lax",
       maxAge: 20 * 24 * 60 * 60 * 1000,
-      path: "/userAccount/update-token",
+      path: "/api/userAccount/update-token",
     });
 
     return res.status(200).json({
@@ -126,7 +126,7 @@ async function refreshController(req, res) {
     });
   } catch (err) {
     res.clearCookie("access_token", { path: "/" });
-    res.clearCookie("refresh_token", { path: "/userAccount/update-token" });
+    res.clearCookie("refresh_token", { path: "/api/userAccount/update-token" });
 
     return res.status(err.code || 500).json({ message: err.message });
   }
