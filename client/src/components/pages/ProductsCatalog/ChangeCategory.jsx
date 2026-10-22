@@ -128,9 +128,9 @@ export default function ChangeCategory() {
 
       <button
         ref={prevBtnRef}
-        className={`${!isEnd && activeIndex === 0 && "hidden opacity-0"} w-[5.35%] h-full flex 
-        min-[1634px]:hidden items-center justify-start bg-linear-to-l 
-        from-transparent to-(--third-primary-с) absolute top-0 left-0 z-10 opacity-100`}
+        className={`${!isEnd && activeIndex === 0 && "hidden opacity-0"} w-[7%] h-full flex 
+        min-[1634px]:hidden items-center justify-start bg-linear-to-l from-transparent to-(--third-primary-с) 
+        absolute -top-3 left-0 z-10 opacity-100`}
       >
         <img src={arrowIco} className="w-2.75 aspect-square rotate-180" />
       </button>
@@ -139,7 +139,7 @@ export default function ChangeCategory() {
         ref={nextBtnRef}
         className={`${isEnd && "hidden opacity-0"} w-[5.35%] h-full flex min-[1634px]:hidden 
       items-center justify-end bg-linear-to-r from-transparent to-(--third-primary-с) 
-      absolute top-0 right-0 z-10 opacity-100`}
+      absolute -top-3 right-0 z-10 opacity-100`}
       >
         <img src={arrowIco} className="w-2.75 aspect-square" />
       </button>
