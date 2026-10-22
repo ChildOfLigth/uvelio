@@ -12,7 +12,7 @@ import { NotFound } from "@pages/NotFound.jsx";
 import "./assets/styles/custom-classes.scss";
 import "./assets/styles/globalStyles.scss";
 import CheckoutPage from "@pages/CheckoutPage";
-import AuthForm from "@pages/AuthForm";
+import AuthForm from "@pages/AuthForm/AuthForm";
 import { ModalWindContext } from "./components/context/ModalWindContext";
 import { checkAuthStatus } from "@redux/userAccount/accountThunk";
 import { updateToken } from "./features/userAccount/accountThunk";
