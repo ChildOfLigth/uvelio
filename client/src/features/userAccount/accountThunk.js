@@ -57,7 +57,7 @@ const updateToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await BASE_API.post(
-        "/userAccount/update-token",
+        "/api/userAccount/update-token",
         {},
         { withCredentials: true },
       );

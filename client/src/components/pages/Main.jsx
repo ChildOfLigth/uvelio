@@ -192,7 +192,7 @@ export default function Main() {
         </section>
 
         <section className="w-full max-w-420 flex flex-col items-start justify-center m-[clamp(30px,6vw,70px)]">
-          {productsList != undefined && productsList.length > 0 ? (
+          {/* {productsList != undefined && productsList.length > 0 ? (
             <SwiperCatalog
               catalog={productsList}
               titleSwiper={t("mainPage.newArrivalsTitle")}
@@ -203,7 +203,7 @@ export default function Main() {
               className="w-5/6 max-w-50 mx-auto aspect-square"
               alt=""
             />
-          )}
+          )} */}
         </section>
 
         <section className="w-full flex flex-col md:flex-row gap-[clamp(5px,3vw,27px)] items-stretch justify-between text-white">
