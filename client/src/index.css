@@ -46,7 +46,10 @@ button {
   cursor: pointer;
 }
 
-input,textarea:focus {
-  border: none;
-  outline: none;
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--color-primary);
+}
+input.error:focus {
+  outline: 2px solid red;
 }
