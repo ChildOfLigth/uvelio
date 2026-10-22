@@ -51,16 +51,18 @@ export default function ProductsList({
   return (
     <div className="w-full flex flex-col items-center justify-center gap-6 md:gap-10 relative">
       {status === "loading" ? (
-        <img
-          src={loader}
-          className="absolute inset-0 my-20 mx-auto w-20 h-20 z-10"
-          alt="Loading"
-        />
+        <div className="w-full h-90 mx-auto">
+          <img
+            src={loader}
+            className="absolute inset-0 my-20 mx-auto w-20 h-20 z-10"
+            alt="Loading"
+          />
+        </div>
       ) : (
         <div className="relative w-full">
           {status === "rejected" || currentVisibleProdList.length === 0 ? (
-            <h2 className="font-bold text-(--color-primary)/40 text-center my-20 mx-auto">
-              {t("productsCatalog.emptyProductsList")} 
+            <h2 className="font-bold text-(--color-primary)/40 text-center my-90 mx-auto">
+              {t("productsCatalog.emptyProductsList")}
             </h2>
           ) : (
             <div className="flex flex-col gap-[clamp(1.5625rem,calc(1.205rem+1.786vw),2.8125rem)] pb-[clamp(2.1875rem,calc(-0.715rem+11.905vw),10rem)]">
