@@ -9,7 +9,7 @@ import {
 } from "@redux/products/productsSlice.js";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables.js";
 import ProductsList from "./ProductsList.jsx";
-import FilteringSideBar from "./FilteringSIdeBar.jsx";
+import FilteringSideBar from "./FilteringSideBar.jsx";
 import ChangeCategory from "./ChangeCategory.jsx";
 import SortingCatalog from "./SortingCatalog.jsx";
 import filterCatalogIcon from "@imgs/icons/productsCatalog/filterCatalog.svg";
