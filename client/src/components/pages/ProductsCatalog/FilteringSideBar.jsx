@@ -76,14 +76,13 @@ export default function FilteringSideBar({
           className={`w-full flex flex-col gap-[clamp(1.25rem,calc(0.893rem+1.786vw),2.5rem)] 
          pl-7 pb-5 relative ${isMobile ? "pt-35" : ""}`}
         >
-          {window.innerWidth < 360 && (
-            <button
-              className="w-4 relative -top-3 left-[84%]"
-              onClick={() => setOpenSideBar(false)}
-            >
-              <img src={closeIcon} className="w-full aspect-square" />
-            </button>
-          )}
+          <button
+            className="w-4 relative -top-3 left-[84%] flex min-[360px]:hidden"
+            onClick={() => setOpenSideBar(false)}
+          >
+            <img src={closeIcon} className="w-full aspect-square" />
+          </button>
+          
           <FilteringByPrice
             currentVisibleProdList={currentVisibleProdList}
             openSideBar={openSideBar}
