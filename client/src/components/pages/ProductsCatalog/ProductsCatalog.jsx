@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getLength, getProducts } from "@redux/products/productsThunk.js";
 import {
   setSelectedProductsCategory,
@@ -30,6 +30,8 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openDropdownList, setOpenDropdownList] = useState(false);
 
+  const prevCategoryRef = useRef(null);
+
   useEffect(() => {
     if (category && category !== selectedProductsCategory) {
       dispatch(setSelectedProductsCategory(category));
@@ -52,19 +54,29 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
   }, [filterParams, dispatch]);
 
   useEffect(() => {
-    if (!selectedProductsCategory) return;
+    if (!category) return;
+
+    if (prevCategoryRef.current !== category) {
+      setCurrentVisibleProdList([]);
+      prevCategoryRef.current = category;
+    }
 
     setTotalNumOfProds(10);
 
-    dispatch(getLength(selectedFilters));
+    dispatch(
+      getLength({
+        selectedFilters,
+        neededCategory: category,
+      }),
+    );
 
     dispatch(
       getProducts({
-        neededCategory: selectedProductsCategory,
+        neededCategory: category,
         selectedFilters,
       }),
     );
-  }, [dispatch, selectedProductsCategory, selectedFilters, setTotalNumOfProds]);
+  }, [dispatch, category, selectedFilters, setTotalNumOfProds]);
 
   useEffect(() => {
     if (productsList.length > 0) {
@@ -72,7 +84,7 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
     } else {
       setCurrentVisibleProdList([]);
     }
-  }, [status, productsList, selectedProductsCategory]);
+  }, [status, productsList]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -80,7 +92,6 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
     };
 
     checkMobile();
-
     window.addEventListener("resize", checkMobile);
 
     return () => {
