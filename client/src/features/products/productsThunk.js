@@ -7,14 +7,25 @@ const returnErrorMessage = (err) => {
 
 const getLength = createAsyncThunk(
   "products/getProdsListLength",
-  async (selectedFilters, { getState, rejectWithValue }) => {
+  async (
+    { selectedFilters, neededCategory } = {},
+    { getState, rejectWithValue },
+  ) => {
     const { selectedProductsCategory } = getState().products;
-    const filterJsonStr = JSON.stringify(selectedFilters);
+
+    const category =
+      neededCategory != undefined ? neededCategory : selectedProductsCategory;
+
+    if (!category) {
+      return rejectWithValue("Category is not set");
+    }
+
+    const filterJsonStr = JSON.stringify(selectedFilters ?? {});
 
     try {
       const res = await BASE_API.get("/products/get-length", {
         params: {
-          selectedProductsCategory,
+          selectedProductsCategory: category,
           selectedFilters: filterJsonStr,
         },
       });
@@ -34,9 +45,15 @@ const getProducts = createAsyncThunk(
   ) => {
     const { selectedProductsCategory } = getState().products;
 
+    const category =
+      neededCategory != undefined ? neededCategory : selectedProductsCategory;
+
+    if (!category) {
+      return rejectWithValue("Category is not set");
+    }
+
     const paramsAxios = {
-      selectedProductsCategory:
-        neededCategory != undefined ? neededCategory : selectedProductsCategory,
+      selectedProductsCategory: category,
     };
 
     if (selectedFilters != undefined) {
@@ -57,7 +74,12 @@ const getProducts = createAsyncThunk(
 const searchProdsByName = createAsyncThunk(
   "products/search-prods-by-name",
   async (value, { rejectWithValue, getState }) => {
-    const { selectedProductsCategory } = getState((state) => state.products);
+    const { selectedProductsCategory } = getState().products;
+
+    if (!selectedProductsCategory) {
+      return rejectWithValue("Category is not set");
+    }
+
     try {
       const res = await BASE_API.get("/products/search-prods-by-name", {
         params: {
@@ -77,6 +99,11 @@ const additionalLoadingOfProds = createAsyncThunk(
   "products/additional-loading-of-prods",
   async (totalNumOfProds, { getState, rejectWithValue }) => {
     const { selectedProductsCategory, selectedFilters } = getState().products;
+
+    if (!selectedProductsCategory) {
+      return rejectWithValue("Category is not set");
+    }
+
     const filterJsonStr = JSON.stringify(selectedFilters);
 
     try {
@@ -99,6 +126,11 @@ const gettingProdsForNewPage = createAsyncThunk(
   "products/getting-prods-for-new-page",
   async (totalNumOfProds, { getState, rejectWithValue }) => {
     const { selectedProductsCategory, selectedFilters } = getState().products;
+
+    if (!selectedProductsCategory) {
+      return rejectWithValue("Category is not set");
+    }
+
     const filterJsonStr = JSON.stringify(selectedFilters);
 
     try {

@@ -68,6 +68,7 @@ export const productsSlice = createSlice({
     builder
       .addCase(getLength.pending, (state) => {
         state.status = "loading";
+        state.productsList = [];
       })
       .addCase(getLength.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -82,6 +83,7 @@ export const productsSlice = createSlice({
     builder
       .addCase(getProducts.pending, (state) => {
         state.status = "loading";
+        state.productsList = [];
       })
       .addCase(getProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
