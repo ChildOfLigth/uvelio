@@ -19,7 +19,7 @@ import "swiper/css/scrollbar";
 export default function ChangeCategory() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
-  const catalogParams = useParams();
+  const { category } = useParams();
   const navigate = useNavigate();
 
   const nextBtnRef = useRef(null);
@@ -28,33 +28,32 @@ export default function ChangeCategory() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
 
-  const savedCategory = localStorage.getItem("selectedCategory");
-
   useEffect(() => {
     swiper?.update();
   }, [i18n, swiper]);
 
   useEffect(() => {
-    if (catalogParams.category != undefined) {
-      dispatch(setSelectedProductsCategory(catalogParams.category));
-      localStorage.setItem("selectedCategory", catalogParams.category);
+    if (category) {
+      dispatch(setSelectedProductsCategory(category));
+      localStorage.setItem("selectedCategory", category);
     }
-  }, [catalogParams]);
+  }, [category, dispatch]);
 
   useEffect(() => {
-    if (savedCategory) {
-      dispatch(setSelectedProductsCategory(savedCategory));
-    } else {
-      localStorage.setItem("selectedCategory", "rings");
-      dispatch(setSelectedProductsCategory("rings"));
+    if (!category) {
+      const saved = localStorage.getItem("selectedCategory") || "rings";
+      dispatch(setSelectedProductsCategory(saved));
+      localStorage.setItem("selectedCategory", saved);
+      navigate(`/catalog/${saved}`, { replace: true });
     }
   }, []);
 
   const handleSelectCategory = (key) => {
-    dispatch(setSelectedProductsCategory(key));
+    if (key === category) return;
+
+    dispatch(setClearAllFilters());
     localStorage.setItem("selectedCategory", key);
     navigate(`/catalog/${key}`);
-    dispatch(setClearAllFilters());
   };
 
   const categories = t(
@@ -95,9 +94,10 @@ export default function ChangeCategory() {
         {categories.map((objData, ind) => {
           const categoryKey = Object.keys(objData)[0];
           const categoryVal = Object.values(objData)[0];
+          const isActive = categoryKey === category;
 
           return (
-            <SwiperSlide key={ind} className="w-auto! shrink-0">
+            <SwiperSlide key={categoryKey} className="w-auto! shrink-0">
               <button
                 onClick={() => handleSelectCategory(categoryKey)}
                 data-category={categoryKey}
@@ -111,7 +111,7 @@ export default function ChangeCategory() {
                   transition-colors duration-300
                   cursor-pointer
                   ${
-                    categoryKey === savedCategory
+                    isActive
                       ? "bg-(--second-primary-c) text-white"
                       : "bg-white text-(--color-primary)"
                   }

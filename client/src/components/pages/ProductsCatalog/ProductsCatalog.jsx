@@ -52,9 +52,7 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
   }, [filterParams, dispatch]);
 
   useEffect(() => {
-    if (!selectedProductsCategory && selectedFilters.length !== 0) {
-      return;
-    }
+    if (!selectedProductsCategory) return;
 
     setTotalNumOfProds(10);
 
