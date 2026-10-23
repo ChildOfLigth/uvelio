@@ -14,8 +14,17 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "src/hooks"),
     },
   },
-   define: {
-    'process.env': {}
+  define: {
+    "process.env": {},
   },
   plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3005",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
