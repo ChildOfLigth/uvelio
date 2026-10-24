@@ -291,7 +291,7 @@ export default function ProductPage() {
                       <p>
                         {t("productPage.sizeSelectedBlock.weight")}:{" "}
                         <span className="text-(--second-primary-c) font-bold">
-                          {productData.weight}g
+                          {Number(productData.weight).toFixed(1)}g
                         </span>
                       </p>
                     </div>
