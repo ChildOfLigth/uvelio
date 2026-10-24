@@ -199,9 +199,8 @@ export default function Main() {
             />
           ) : (
             <img
-              src={spiner}
+              src={spiner} alt="Loading..."
               className="w-5/6 max-w-50 mx-auto aspect-square"
-              alt=""
             />
           )}
         </section>

@@ -334,11 +334,11 @@ export default function FilteringByActualFilters({
                       })
                     ) : (
                       <li className="w-full flex justify-center">
-                        <img src={spiner} alt="" className="w-5 h-5" />
+                        <img src={spiner} alt="Loading..." className="w-5 h-5" />
                       </li>
                     )
                   ) : (
-                    <img src={spiner} alt="" className="w-5 h-5 mx-auto" />
+                    <img src={spiner} alt="Loading..." className="w-5 h-5 mx-auto" />
                   )}
                 </ul>
               )}

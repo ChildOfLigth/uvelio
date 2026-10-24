@@ -9,9 +9,7 @@ import { BASE_API } from "../../../../globalVariables";
 export default function FilteringByPrice({ openSideBar }) {
   const { t } = useTranslation();
 
-  const { selectedProductsCategory } = useSelector(
-    (state) => state.products,
-  );
+  const { selectedProductsCategory } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
   const [filterParams, setFilterParams] = useSearchParams();
@@ -392,8 +390,8 @@ export default function FilteringByPrice({ openSideBar }) {
         {isLoading ? (
           <img
             src={spiner}
+            alt="Loading..."
             className="w-8 md:w-10 aspect-square"
-            alt="Loading"
           />
         ) : (
           <>

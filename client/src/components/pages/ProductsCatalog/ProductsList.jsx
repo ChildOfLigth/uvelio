@@ -6,7 +6,7 @@ import {
   gettingProdsForNewPage,
 } from "@redux/products/productsThunk.js";
 import ProductCard from "@ui/ProductCard";
-import loader from "@imgs/icons/spiner.svg";
+import spiner from "@imgs/icons/spiner.svg";
 
 const PRODUCTS_PER_PAGE = 10;
 
@@ -53,9 +53,9 @@ export default function ProductsList({
       {status === "loading" ? (
         <div className="w-full h-90 mx-auto">
           <img
-            src={loader}
+            src={spiner}
+            alt="Loading..."
             className="absolute inset-0 my-20 mx-auto w-20 h-20 z-10"
-            alt="Loading"
           />
         </div>
       ) : (

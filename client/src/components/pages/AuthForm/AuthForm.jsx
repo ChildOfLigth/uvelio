@@ -2,13 +2,14 @@ import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables";
 import { useState, useEffect, useContext } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
 import { registrationUser, loginUser } from "@redux/userAccount/accountThunk";
 import { ModalWindContext } from "../../context/ModalWindContext";
 import ModalWindow from "@ui/ModalWindow.jsx";
 import Registration from "./Registration";
 import Login from "./Login";
+import spiner from "@imgs/icons/spiner.svg";
 
 const OBJ_ERROR = {
   message: null,
@@ -20,6 +21,7 @@ export default function AuthForm() {
   const dispatch = useDispatch();
 
   const [typeAuth, setAuthType] = useState("login");
+  const { status } = useSelector((state) => state.userAccount);
   const [error, setError] = useState(OBJ_ERROR);
 
   const [_, setSearchParams] = useSearchParams();
@@ -78,12 +80,12 @@ export default function AuthForm() {
       } catch (err) {
         if (err?.status === 401) {
           setError({
-            message: "form.error.messages.loginErrors.userDoesNotExist",
+            message: "form.errorMessages.loginErrors.userDoesNotExist",
             isPresent: true,
           });
         } else {
           setError({
-            message: "form.error.messages.standartErrors.serverError",
+            message: "form.errorMessages.standartErrors.serverError",
             isPresent: true,
           });
         }
@@ -179,7 +181,7 @@ export default function AuthForm() {
             } rounded-(--base-b-radius) text-white text-(length:--text-sm)`}
           >
             {t(`form.${typeAuth}.endButton`)}
-          </button>
+          </button>git 
         </form>
 
         {visibleModalWindow && !error.isPresent && (

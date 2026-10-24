@@ -10,6 +10,7 @@ export default function Login() {
     RETURN_TRANSLATE_FUNC_TYPE,
   );
 
+
   return (
     <>
       <CustomInput
