@@ -8,13 +8,17 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserPage() {
   const { t } = useTranslation();
-  const { status, userData, isAuth } = useSelector(
+  const { status, userData } = useSelector(
     (state) => state.userAccount.accountData,
   );
 
   const [productsFromWishList, setProductsFromWishList] = useState(null);
   const [purchasedProducts, setPurchasedProducts] = useState(null);
-  const naviagate = useNavigate();
+
+  const [isWishListLoading, setIsWishListLoading] = useState(true);
+  const [isPurchasedLoading, setIsPurchasedLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   const userPageTranslation = t("userPage", RETURN_TRANSLATE_FUNC_TYPE);
 
@@ -34,42 +38,80 @@ export default function UserPage() {
   };
 
   useEffect(() => {
-    if (userData?.wishList === undefined || userData?.wishList.length == 0) {
-      setProductsFromWishList([]);
-      return;
-    }
+    let cancelled = false;
 
     const fetchProdsForWishList = async () => {
-      const res = await gettingProdsByIds(userData?.wishList);
+      setIsWishListLoading(true);
 
-      if (res !== undefined) {
-        const parsedVal = JSON.parse(res);
-        setProductsFromWishList(parsedVal);
+      try {
+        if (!userData?.wishList?.length) {
+          setProductsFromWishList([]);
+          return;
+        }
+
+        const res = await gettingProdsByIds(userData.wishList);
+
+        if (cancelled) return;
+
+        setProductsFromWishList(res ? JSON.parse(res) : []);
+      } catch (err) {
+        console.error(err);
+
+        if (!cancelled) {
+          setProductsFromWishList([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsWishListLoading(false);
+        }
       }
     };
 
     fetchProdsForWishList();
-  }, [userData]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [userData?.wishList]);
 
   useEffect(() => {
-    if (!userData?.purchasedGoods?.length) {
-      setPurchasedProducts([]);
-      return;
-    }
+    let cancelled = false;
 
     const fetchProdsForPurchasedProducts = async () => {
-      const res = await gettingProdsByIds(userData?.purchasedGoods);
+      setIsPurchasedLoading(true);
 
-      if (res !== undefined) {
-        const parsedVal = JSON.parse(res);
-        setPurchasedProducts(parsedVal);
+      try {
+        if (!userData?.purchasedGoods?.length) {
+          setPurchasedProducts([]);
+          return;
+        }
+
+        const res = await gettingProdsByIds(userData.purchasedGoods);
+
+        if (cancelled) return;
+
+        setPurchasedProducts(res ? JSON.parse(res) : []);
+      } catch (err) {
+        console.error(err);
+
+        if (!cancelled) {
+          setPurchasedProducts([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsPurchasedLoading(false);
+        }
       }
     };
 
     fetchProdsForPurchasedProducts();
-  }, [userData]);
 
-  if (!userData) {
+    return () => {
+      cancelled = true;
+    };
+  }, [userData?.purchasedGoods]);
+
+  if (status === "loading" || !userData) {
     return (
       <div className="w-full flex justify-center py-20">
         <img src={spiner} alt="Loading..." className="w-20" />
@@ -83,21 +125,22 @@ export default function UserPage() {
     return (
       <div
         className="w-full lg:w-1/2 flex flex-col items-center justify-center gap-10
-        rounded-(--base-b-radius) bg-(--second-primary-c)/40 py-[clamp(1.5625rem,calc(1.228rem+1.603vw),2.5rem)] 
+        rounded-(--base-b-radius) bg-(--second-primary-c)/40 py-[clamp(1.5625rem,calc(1.228rem+1.603vw),2.5rem)]
         text-(--color-primary)"
       >
         <div className="w-5/6 mx-auto flex flex-col items-center justify-center gap-4 text-center">
           <h4 className="font-semibold">{textContent[typeList].title}</h4>
+
           <p className="--base-p-size font-base">
             {textContent[typeList].subText}
           </p>
         </div>
 
         <button
-          className="w-4/5 sm:w-1/2 h-(--btn-h) font-semibold rounded-(--base-b-radius) 
-        bg-(--second-primary-c)/80 hover:bg-(--second-primary-c)/35
-        mx-auto transition-colors duration-300"
-          onClick={() => naviagate("/catalog/rings")}
+          className="w-4/5 sm:w-1/2 h-(--btn-h) font-semibold rounded-(--base-b-radius)
+          bg-(--second-primary-c)/80 hover:bg-(--second-primary-c)/35
+          mx-auto transition-colors duration-300"
+          onClick={() => navigate("/catalog/rings")}
         >
           {textContent[typeList].textBtn}
         </button>
@@ -113,13 +156,14 @@ export default function UserPage() {
     >
       <div className="w-full flex flex-col items-start justify-start gap-3 text-(--color-primary)">
         <h2 className="font-bold">{userData.username}</h2>
+
         <p className="text-(--base-p-size) md:text-xl">{userData.email}</p>
       </div>
 
       <div className="w-full flex flex-col items-center justify-start gap-10">
-        {status === "loading" ? (
-          <img src={spiner} className="w-20" />
-        ) : productsFromWishList.length > 0 ? (
+        {isWishListLoading ? (
+          <img src={spiner} alt="Loading..." className="w-20" />
+        ) : productsFromWishList?.length > 0 ? (
           <SwiperCatalog
             catalog={productsFromWishList}
             titleSwiper={userPageTranslation.titleWishList}
@@ -128,9 +172,9 @@ export default function UserPage() {
           divBlockByEmptyList("wishList")
         )}
 
-        {status === "loading" ? (
-          <img src={spiner} className="w-20" />
-        ) : purchasedProducts.length > 0 ? (
+        {isPurchasedLoading ? (
+          <img src={spiner} alt="Loading..." className="w-20" />
+        ) : purchasedProducts?.length > 0 ? (
           <SwiperCatalog
             catalog={purchasedProducts}
             titleSwiper={userPageTranslation.titlePurchasedGoods}
