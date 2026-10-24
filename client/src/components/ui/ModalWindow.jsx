@@ -28,7 +28,7 @@ export default function ModalWindow({ title, text, btnText }) {
           <button
             onClick={() => {
               setVisibleModalWindow(false);
-              navigate(-1);
+              navigate("/");
             }}
             className="w-1/2 min-w-40 h-(--btn-h) rounded-(--base-b-radius) bg-(--color-primary) text-white 
           text-base md:text-lg"
