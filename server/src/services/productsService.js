@@ -13,55 +13,47 @@ function normalizeFilters(selectedFilters) {
 
 function searchCommandItemByFilters(selectedFilters) {
   const sqlParts = [];
-  const params = [];
 
   const { min, max, inlay, ...filters } = selectedFilters;
 
   if (min != null && max != null) {
-    sqlParts.push(
-      `actualPrice BETWEEN $${params.length + 1} AND $${params.length + 2}`,
-    );
-    params.push(min, max);
+    const minVal = Number(Array.isArray(min) ? min[0] : min);
+    const maxVal = Number(Array.isArray(max) ? max[0] : max);
+    sqlParts.push(`"actualPrice" BETWEEN ${minVal} AND ${maxVal}`);
   }
 
   if (inlay != null && Array.isArray(inlay) && inlay.length > 0) {
     const inlayCommands = inlay.map((item) => {
-      if (item === "Not") {
-        return `inlay LIKE '%Not%'`;
+      switch (item) {
+        case "Not":
+          return `inlay LIKE '%Not%'`;
+        case "Yes":
+          return `inlay IS NOT NULL AND inlay NOT LIKE '%Not%'`;
+        default:
+          return `inlay LIKE '%${item}%'`;
       }
-      if (item === "Yes") {
-        return `inlay IS NOT NULL AND inlay NOT LIKE '%Not%'`;
-      }
-      params.push(`%${item}%`);
-      return `inlay LIKE $${params.length}`;
     });
-
     sqlParts.push(`(${inlayCommands.join(" OR ")})`);
   }
 
   for (const [key, values] of Object.entries(filters)) {
     if (!Array.isArray(values) || values.length === 0) continue;
 
+    let command;
+
     if (STANDART_FILTERS.includes(key)) {
-      const commands = values.map((option) => {
-        params.push(`%${option}%`);
-        return `${key} LIKE $${params.length}`;
-      });
-      sqlParts.push(`(${commands.join(" OR ")})`);
+      command = values.map((option) => `${key}::text LIKE '%${option}%'`);
+      sqlParts.push(`(${command.join(" OR ")})`);
     } else {
-      const commands = values.map((option) => {
-        params.push(`%"${key}":%`);
-        params.push(`%${option}%`);
-        return `additions LIKE $${params.length - 1} AND additions LIKE $${params.length}`;
-      });
-      sqlParts.push(`(${commands.join(" OR ")})`);
+      command = values.map(
+        (option) =>
+          `additions LIKE '%"${key}":%' AND additions LIKE '%${option}%'`,
+      );
+      sqlParts.push(`(${command.join(" OR ")})`);
     }
   }
 
-  return {
-    sql: sqlParts.join(" AND "),
-    params,
-  };
+  return sqlParts.join(" AND ");
 }
 
 async function getLength(selectedProductsCategory, selectedFilters) {
@@ -75,19 +67,10 @@ async function getLength(selectedProductsCategory, selectedFilters) {
 
     if (selectedFilters !== undefined) {
       const filters = normalizeFilters(selectedFilters);
-      const { sql, params: filterParams } = searchCommandItemByFilters(filters);
+      const filterSQL = searchCommandItemByFilters(filters);
 
-      if (sql) {
-        // сдвигаем номера параметров
-        let shiftedSql = sql;
-        filterParams.forEach((_, index) => {
-          shiftedSql = shiftedSql.replace(
-            `$${index + 1}`,
-            `$${params.length + index + 1}`,
-          );
-        });
-        sqlCommand += ` AND ${shiftedSql}`;
-        params.push(...filterParams);
+      if (filterSQL) {
+        sqlCommand += ` AND ${filterSQL}`;
       }
     }
 
@@ -109,18 +92,10 @@ async function getProducts(selectedProductsCategory, selectedFilters) {
 
     if (selectedFilters !== undefined) {
       const filters = normalizeFilters(selectedFilters);
-      const { sql, params: filterParams } = searchCommandItemByFilters(filters);
+      const filterSQL = searchCommandItemByFilters(filters);
 
-      if (sql) {
-        let shiftedSql = sql;
-        filterParams.forEach((_, index) => {
-          shiftedSql = shiftedSql.replace(
-            `$${index + 1}`,
-            `$${params.length + index + 1}`,
-          );
-        });
-        sqlCommand += ` AND ${shiftedSql}`;
-        params.push(...filterParams);
+      if (filterSQL) {
+        sqlCommand += ` AND ${filterSQL}`;
       }
     }
 
@@ -150,32 +125,24 @@ async function getAdditionalData(
       WHERE category = $1
     `;
     const params = [selectedProductsCategory];
-    const lengthParams = [selectedProductsCategory];
 
     if (selectedFilters !== undefined) {
       const filters = normalizeFilters(selectedFilters);
-      const { sql, params: filterParams } = searchCommandItemByFilters(filters);
+      const filterSQL = searchCommandItemByFilters(filters);
 
-      if (sql) {
-        let shiftedSql = sql;
-        filterParams.forEach((_, index) => {
-          shiftedSql = shiftedSql.replace(
-            `$${index + 1}`,
-            `$${params.length + index + 1}`,
-          );
-        });
-        sqlCommand += ` AND ${shiftedSql}`;
-        sqlCommandForGetLength += ` AND ${shiftedSql}`;
-        params.push(...filterParams);
-        lengthParams.push(...filterParams);
+      if (filterSQL) {
+        sqlCommand += ` AND ${filterSQL}`;
+        sqlCommandForGetLength += ` AND ${filterSQL}`;
       }
     }
 
-    sqlCommand += ` LIMIT 10 OFFSET $${params.length + 1}`;
-    params.push(totalNumOfProds);
+    sqlCommand += ` LIMIT 10 OFFSET $2`;
 
-    const rowsResult = await pool.query(sqlCommand, params);
-    const lengthResult = await pool.query(sqlCommandForGetLength, lengthParams);
+    const rowsResult = await pool.query(sqlCommand, [
+      selectedProductsCategory,
+      totalNumOfProds,
+    ]);
+    const lengthResult = await pool.query(sqlCommandForGetLength, params);
 
     const lengthAdditionalData =
       Number(totalNumOfProds) + rowsResult.rows.length;
@@ -222,10 +189,9 @@ async function searchProdsByName(val, category) {
 async function getRangePrice(selectedProductsCategory) {
   try {
     const result = await pool.query(
-      "SELECT * FROM products WHERE category = $1",
+      `SELECT * FROM products WHERE category = $1`,
       [selectedProductsCategory],
     );
-
     const rows = result.rows;
 
     if (rows.length === 0) {
@@ -233,10 +199,10 @@ async function getRangePrice(selectedProductsCategory) {
     }
 
     const searchMinPrice = [...rows].sort(
-      (a, b) => a.actualPrice - b.actualPrice,
+      (a, b) => Number(a.actualPrice) - Number(b.actualPrice),
     );
     const searchMaxPrice = [...rows].sort(
-      (a, b) => b.actualPrice - a.actualPrice,
+      (a, b) => Number(b.actualPrice) - Number(a.actualPrice),
     );
 
     return {
@@ -251,7 +217,7 @@ async function getRangePrice(selectedProductsCategory) {
 async function getReviewForProduct(prodId) {
   try {
     const result = await pool.query(
-      "SELECT * FROM product_reviews WHERE product_id = $1",
+      `SELECT * FROM product_reviews WHERE product_id = $1`,
       [prodId],
     );
     return result.rows;
