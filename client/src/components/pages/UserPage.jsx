@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserPage() {
   const { t } = useTranslation();
-  const { userData, isAuth } = useSelector(
+  const { status, userData, isAuth } = useSelector(
     (state) => state.userAccount.accountData,
   );
 
@@ -111,36 +111,34 @@ export default function UserPage() {
       gap-[clamp(1.875rem,calc(0.804rem+5.357vw),5.625rem)]
       py-(--py-fr-mobile)"
     >
-      {isAuth ? (
-        <>
-          <div className="w-full flex flex-col items-start justify-start gap-3 text-(--color-primary)">
-            <h2 className="font-bold">{userData.username}</h2>
-            <p className="text-(--base-p-size) md:text-xl">{userData.email}</p>
-          </div>
+      <div className="w-full flex flex-col items-start justify-start gap-3 text-(--color-primary)">
+        <h2 className="font-bold">{userData.username}</h2>
+        <p className="text-(--base-p-size) md:text-xl">{userData.email}</p>
+      </div>
 
-          <div className="w-full flex flex-col items-center justify-start gap-10">
-            {productsFromWishList?.length > 0 ? (
-              <SwiperCatalog
-                catalog={productsFromWishList}
-                titleSwiper={userPageTranslation.titleWishList}
-              />
-            ) : (
-              divBlockByEmptyList("wishList")
-            )}
+      <div className="w-full flex flex-col items-center justify-start gap-10">
+        {status === "loading" ? (
+          <img src={spiner} className="w-20" />
+        ) : productsFromWishList.length > 0 ? (
+          <SwiperCatalog
+            catalog={productsFromWishList}
+            titleSwiper={userPageTranslation.titleWishList}
+          />
+        ) : (
+          divBlockByEmptyList("wishList")
+        )}
 
-            {purchasedProducts?.length > 0 ? (
-              <SwiperCatalog
-                catalog={purchasedProducts}
-                titleSwiper={userPageTranslation.titlePurchasedGoods}
-              />
-            ) : (
-              divBlockByEmptyList("purchasedGoods")
-            )}
-          </div>
-        </>
-      ) : (
-        <img src={spiner} className="w-5/12 aspect-square max-w-80" />
-      )}
+        {status === "loading" ? (
+          <img src={spiner} className="w-20" />
+        ) : purchasedProducts.length > 0 ? (
+          <SwiperCatalog
+            catalog={purchasedProducts}
+            titleSwiper={userPageTranslation.titlePurchasedGoods}
+          />
+        ) : (
+          divBlockByEmptyList("purchasedGoods")
+        )}
+      </div>
     </div>
   );
 }
