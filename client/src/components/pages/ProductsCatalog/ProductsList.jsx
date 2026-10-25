@@ -12,7 +12,6 @@ const PRODUCTS_PER_PAGE = 10;
 
 export default function ProductsList({
   currentVisibleProdList,
-  totalNumOfProds,
   setTotalNumOfProds,
 }) {
   const { t } = useTranslation();
@@ -35,6 +34,7 @@ export default function ProductsList({
     const nextOffset = nextPage * PRODUCTS_PER_PAGE;
 
     setActiveProdsListPage(nextPage);
+    setTotalNumOfProds(nextOffset + PRODUCTS_PER_PAGE);
 
     dispatch(additionalLoadingOfProds(nextOffset));
   };
@@ -60,7 +60,8 @@ export default function ProductsList({
         </div>
       ) : (
         <div className="relative w-full">
-          {status === "rejected" || currentVisibleProdList.length === 0 ? (
+          {status === "rejected" ||
+          (status === "succeeded" && currentVisibleProdList.length === 0) ? (
             <h2 className="font-bold text-(--color-primary)/40 text-center my-90 mx-auto">
               {t("productsCatalog.emptyProductsList")}
             </h2>

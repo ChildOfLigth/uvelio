@@ -1,10 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables.js";
-import {
-  setSelectedProductsCategory,
-  setClearAllFilters,
-} from "@redux/products/productsSlice.js";
+import { setSelectedProductsCategory } from "@redux/products/productsSlice.js";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -49,9 +46,7 @@ export default function ChangeCategory() {
   }, []);
 
   const handleSelectCategory = (key) => {
-    if (key === category) return;
-
-    dispatch(setClearAllFilters());
+    dispatch(setSelectedProductsCategory(key));
     localStorage.setItem("selectedCategory", key);
     navigate(`/catalog/${key}`);
   };

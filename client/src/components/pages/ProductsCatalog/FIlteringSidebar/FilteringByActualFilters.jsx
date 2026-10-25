@@ -6,16 +6,11 @@ import {
   setAddFilter,
   setRemoveFilter,
 } from "@redux/products/productsSlice.js";
-
 import CustomCheckbox from "@ui/Form/CustomCheckbox.jsx";
-
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../../globalVariables.js";
-
 import arrowIco from "@imgs/icons/arrowIco.svg";
 import spiner from "@imgs/icons/spiner.svg";
-
 import { searchProdsByName } from "@redux/products/productsThunk.js";
-
 
 export default function FilteringByActualFilters({
   setCurrentVisibleProdList,

@@ -1,12 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getLength, getProducts } from "@redux/products/productsThunk.js";
-import {
-  setSelectedProductsCategory,
-  setSelectedFilters,
-} from "@redux/products/productsSlice.js";
+import { setSelectedFilters } from "@redux/products/productsSlice.js";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables.js";
 import ProductsList from "./ProductsList.jsx";
 import FilteringSideBar from "./FilteringSideBar.jsx";
@@ -22,21 +19,14 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
   const { category } = useParams();
   const [filterParams] = useSearchParams();
 
-  const { status, productsList, selectedProductsCategory, selectedFilters } =
-    useSelector((state) => state.products);
+  const { status, productsList, selectedFilters } = useSelector(
+    (state) => state.products,
+  );
 
   const [isMobile, setIsMobile] = useState(false);
   const [currentVisibleProdList, setCurrentVisibleProdList] = useState([]);
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openDropdownList, setOpenDropdownList] = useState(false);
-
-  const prevCategoryRef = useRef(null);
-
-  useEffect(() => {
-    if (category && category !== selectedProductsCategory) {
-      dispatch(setSelectedProductsCategory(category));
-    }
-  }, [category, selectedProductsCategory, dispatch]);
 
   useEffect(() => {
     const filtersFromUrl = {};
@@ -56,12 +46,7 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
   useEffect(() => {
     if (!category) return;
 
-    if (prevCategoryRef.current !== category) {
-      setCurrentVisibleProdList([]);
-      prevCategoryRef.current = category;
-    }
-
-    setTotalNumOfProds(10);
+    setCurrentVisibleProdList([]);
 
     dispatch(
       getLength({
@@ -76,7 +61,7 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
         selectedFilters,
       }),
     );
-  }, [dispatch, category, selectedFilters, setTotalNumOfProds]);
+  }, [dispatch, category, filterParams]);
 
   useEffect(() => {
     if (productsList.length > 0) {
