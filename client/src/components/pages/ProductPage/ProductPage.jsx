@@ -39,6 +39,7 @@ export default function ProductPage() {
   const multiLanuageName = JSON.parse(productData.name)[i18n.language];
   const imgsProduct = JSON.parse(productData.imgsLinks);
   const additionsData = JSON.parse(productData.additions);
+  const productWeight = String(productData.weight).slice(0, 3);
 
   useEffect(() => {
     if (additionsData?.size != undefined) setSelectedSize(additionsData.size);
@@ -264,9 +265,9 @@ export default function ProductPage() {
                       </p>
                     </div>
 
-                    <ul className="w-full grid grid-cols-[repeat(auto-fit,minmax(64px,1fr))] items-stretch gap-2 my-4">
+                    <ul className="w-full flex flex-wrap gap-2 my-4">
                       {sizeVariant[selectedProductsCategory].map((el, ind) => (
-                        <li key={ind} className="col-span-1">
+                        <li key={ind} className="w-[clamp(4rem,calc(3.057rem+3.619vw),6.25rem)]">
                           <button
                             onClick={() => setSelectedSize(el)}
                             className={`w-full customButton animationButton border-2 border-(--second-primary-c) rounded-(--base-b-radius) 
@@ -291,7 +292,7 @@ export default function ProductPage() {
                       <p>
                         {t("productPage.sizeSelectedBlock.weight")}:{" "}
                         <span className="text-(--second-primary-c) font-bold">
-                          {Number(productData.weight).toFixed(1)}g
+                          {productWeight}g
                         </span>
                       </p>
                     </div>
@@ -300,7 +301,7 @@ export default function ProductPage() {
                   <p>
                     {t("productPage.sizeSelectedBlock.weight")}:{" "}
                     <span className="text-(--second-primary-c) font-bold">
-                      {productData.weight}g
+                      {productWeight}g
                     </span>
                   </p>
                 )}
@@ -343,7 +344,7 @@ export default function ProductPage() {
                             imgSrc: imgsProduct[0],
                             price: cleanBasePrice,
                             size: selectedSize,
-                            weight: productData.weight,
+                            weight: productWeight,
                           },
                         });
                       }
@@ -373,7 +374,7 @@ export default function ProductPage() {
                       className="w-12 aspect-square"
                     />
                     <p>
-                      {productData.weight}
+                      {productWeight}
                       {t(
                         "productPage.characteristicsBlock.mainCharacteristics.weight",
                       )}

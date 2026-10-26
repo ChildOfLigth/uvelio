@@ -53,7 +53,7 @@ export default function ReviewBlock({
         {t("productPage.reviews.reviewBlock.noReviews")}
       </h3>
     ) : (
-      reviewsForProduct.map((item) => {
+      reviewsForProduct.map((item, ind) => {
         const userName = JSON.parse(item.author_name)[i18n.language];
         const responseFromManager = Boolean(item.response_from_manager);
 
@@ -107,7 +107,7 @@ export default function ReviewBlock({
           <li
             className="w-full flex flex-col items-start justify-start gap-5 p-[clamp(1.5625rem,calc(1.294rem+1.339vw),2.5rem)] 
           bg-transparent border border-[--c-for-decorate-el] rounded-(--base-b-radius)"
-            key={item.id}
+            key={ind}
           >
             <div className="w-full flex flex-col items-start justify-center gap-4">
               <div className="w-full flex flex-col md:flex-row justify-between gap-2">

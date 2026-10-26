@@ -49,7 +49,7 @@ export default function ProductsList({
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-6 md:gap-10 relative">
+    <div className="w-full flex flex-col items-center justify-center gap-6 md:gap-10 relative t-0">
       {status === "loading" ? (
         <div className="w-full h-90 mx-auto">
           <img
@@ -60,15 +60,16 @@ export default function ProductsList({
         </div>
       ) : (
         <div className="relative w-full">
-          {status === "rejected" ||
-          (status === "succeeded" && currentVisibleProdList.length === 0) ? (
-            <h2 className="font-bold text-(--color-primary)/40 text-center my-90 mx-auto">
-              {t("productsCatalog.emptyProductsList")}
-            </h2>
-          ) : (
-            <div className="flex flex-col gap-[clamp(1.5625rem,calc(1.205rem+1.786vw),2.8125rem)] pb-[clamp(2.1875rem,calc(-0.715rem+11.905vw),10rem)]">
-              <ul
-                className="
+          <div className="flex flex-col gap-[clamp(1.5625rem,calc(1.205rem+1.786vw),2.8125rem)] pb-[clamp(2.1875rem,calc(-0.715rem+11.905vw),10rem)]">
+            {status === "rejected" ||
+            (status === "succeeded" && currentVisibleProdList.length === 0) ? (
+              <h2 className="font-bold text-(--color-primary)/40 fixed top-0 text-center mx-auto">
+                {t("productsCatalog.emptyProductsList")}
+              </h2>
+            ) : (
+              <>
+                <ul
+                  className="
                   w-full
                   grid
                   grid-cols-2
@@ -82,21 +83,21 @@ export default function ProductsList({
                   overflow-hidden
                   md:overflow-scroll
                 "
-              >
-                {currentVisibleProdList.map((product) => (
-                  <li key={product.id}>
-                    <ProductCard productData={product} />
-                  </li>
-                ))}
-              </ul>
+                >
+                  {currentVisibleProdList.map((product) => (
+                    <li key={product.id}>
+                      <ProductCard productData={product} />
+                    </li>
+                  ))}
+                </ul>
 
-              <div className="w-full flex flex-col items-center justify-center gap-5">
-                {totalLengthOfList > PRODUCTS_PER_PAGE && (
-                  <>
-                    <button
-                      onClick={handleLoadMore}
-                      disabled={endOfProdList}
-                      className={`
+                <div className="w-full flex flex-col items-center justify-center gap-5">
+                  {totalLengthOfList > PRODUCTS_PER_PAGE && (
+                    <>
+                      <button
+                        onClick={handleLoadMore}
+                        disabled={endOfProdList}
+                        className={`
                         w-1/2
                         lg:w-1/3
                         h-(--btn-h)
@@ -116,15 +117,16 @@ export default function ProductsList({
                         transition-all
                         duration-500
                       `}
-                    >
-                      {t("productsCatalog.loadMoreProds")}
-                    </button>
+                      >
+                        {t("productsCatalog.loadMoreProds")}
+                      </button>
 
-                    <ul className="w-5/6 flex items-center justify-center gap-5">
-                      {Array.from({ length: totalNumOfPages }).map((_, ind) => (
-                        <li
-                          key={ind}
-                          className={`
+                      <ul className="w-5/6 flex items-center justify-center gap-5">
+                        {Array.from({ length: totalNumOfPages }).map(
+                          (_, ind) => (
+                            <li
+                              key={ind}
+                              className={`
                               w-[clamp(2.1875rem,calc(1.920rem+1.339vw),3.125rem)]
                               aspect-square
                               flex
@@ -142,22 +144,24 @@ export default function ProductsList({
                               hover:bg-(--second-primary-c)
                               hover:text-white
                             `}
-                        >
-                          <button
-                            onClick={() => handlePageChange(ind)}
-                            disabled={ind === activeProdsListPage}
-                            className="w-full h-full"
-                          >
-                            {ind + 1}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
+                            >
+                              <button
+                                onClick={() => handlePageChange(ind)}
+                                disabled={ind === activeProdsListPage}
+                                className="w-full h-full"
+                              >
+                                {ind + 1}
+                              </button>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>

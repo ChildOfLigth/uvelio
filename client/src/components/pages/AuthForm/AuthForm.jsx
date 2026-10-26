@@ -35,7 +35,7 @@ export default function AuthForm() {
   );
 
   useEffect(() => {
-    setSearchParams(`auth_method=${typeAuth}`);
+    setSearchParams(`auth_method=${typeAuth}`, { replace: true });
   }, [typeAuth, setSearchParams]);
 
   useEffect(() => {}, []);
@@ -180,8 +180,12 @@ export default function AuthForm() {
                 : "bg-(--second-primary-c)"
             } rounded-(--base-b-radius) text-white text-(length:--text-sm)`}
           >
-            {t(`form.${typeAuth}.endButton`)}
-          </button>git 
+            {status === "loading" ? (
+              <img src={spiner} alt="Loading..." className="w-8 aspect-square mx-auto" />
+            ) : (
+              t(`form.${typeAuth}.endButton`)
+            )}
+          </button>
         </form>
 
         {visibleModalWindow && !error.isPresent && (
