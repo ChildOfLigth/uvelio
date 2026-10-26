@@ -152,7 +152,6 @@
           { "filter": "tie_clips", "text": "Защіпки для краваток" },
           { "filter": "crosses", "text": "Хрестики" },
           { "filter": "table_silver", "text": "Столове срібло" },
-          { "filter": "sale", "text": "Розпродаж" },
           { "filter": "gift_certificates", "text": "Подарункові сертифікати" },
           { "filter": "icons", "text": "Ікони" }
         ]

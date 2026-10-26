@@ -157,7 +157,6 @@
           { "filter": "tie_clips", "text": "Tie clips" },
           { "filter": "crosses", "text": "Crosses" },
           { "filter": "table_silver", "text": "Table silver" },
-          { "filter": "sale", "text": "Sale" },
           { "filter": "gift_certificates", "text": "Gift certificates" },
           { "filter": "icons", "text": "Icons" }
         ]
