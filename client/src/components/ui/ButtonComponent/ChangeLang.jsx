@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ALL_TRANSLATION_OPTIONS = [
   { code: "en", fullName: "English" },
@@ -9,14 +9,31 @@ const ALL_TRANSLATION_OPTIONS = [
 export default function ChangeLang() {
   const { i18n } = useTranslation();
   const [dropdownMenuVisibility, setDropdownMenuVisibility] = useState(false);
+  const btnRef = useRef();
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (e.target !== btnRef && dropdownMenuVisibility === true) {
+        setDropdownMenuVisibility(false);
+      } else {
+        setDropdownMenuVisibility(!dropdownMenuVisibility);
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [dropdownMenuVisibility, i18n.language]);
 
   return (
     <div className="w-[39.8%] h-full flex items-center justify-center relative">
       <button
         className={`bg-white w-full min-w-14.5 h-full gap-1.5 customButton animationButton changeFillToWhite relative`}
-        onClick={() => setDropdownMenuVisibility(!dropdownMenuVisibility)}
       >
         <span
+          ref={btnRef}
           className={`bg-(--color-primary) md:bg-(--second-primary-c) ${dropdownMenuVisibility ? "left-0! w-full!" : ""}`}
         ></span>
 
