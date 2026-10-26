@@ -144,12 +144,13 @@ async function getAdditionalData(
     ]);
     const lengthResult = await pool.query(sqlCommandForGetLength, params);
 
+    const totalLength = Number(lengthResult.rows[0].length);
     const lengthAdditionalData =
       Number(totalNumOfProds) + rowsResult.rows.length;
 
     return {
       prodsList: rowsResult.rows,
-      endOfList: lengthResult.rows[0].length === lengthAdditionalData,
+      endOfList: totalLength === lengthAdditionalData,
     };
   } catch (err) {
     throw err;
