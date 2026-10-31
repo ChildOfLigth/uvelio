@@ -114,6 +114,8 @@ export const productsSlice = createSlice({
       })
       .addCase(additionalLoadingOfProds.fulfilled, (state, action) => {
         state.additionalProds = action.payload.prodsList;
+        state.endOfProdList = action.payload.endOfList;
+
         const { additionalProds, productsList } = state;
 
         if (additionalProds && additionalProds != null) {
@@ -121,7 +123,6 @@ export const productsSlice = createSlice({
             productsList.push(...additionalProds);
             state.status = "succeeded";
             state.error = null;
-            state.endOfProdList = action.payload.endOfList;
           }
         }
       })
