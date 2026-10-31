@@ -49,7 +49,7 @@ export default function Header() {
               <div className="flex items-center w-[17%] min-w-50 h-full gap-5 max-md:gap-2.5">
                 <ChangeLang />
                 {status == "loading" ? (
-                  <img ssrc={spiner} alt="Loading..." className="w-8" />
+                  <img src={spiner} alt="Loading..." className="w-8" />
                 ) : !isAuth ? (
                   <AuthButton />
                 ) : (

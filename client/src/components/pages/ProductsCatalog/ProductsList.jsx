@@ -27,7 +27,9 @@ export default function ProductsList({
   useEffect(() => {
     setActiveProdsListPage(0);
     setTotalNumOfProds(PRODUCTS_PER_PAGE);
-  }, [selectedProductsCategory, setTotalNumOfProds]);
+
+    dispatch(gettingProdsForNewPage(0));
+  }, [selectedProductsCategory]);
 
   const handleLoadMore = () => {
     const nextPage = activeProdsListPage + 1;
@@ -44,7 +46,6 @@ export default function ProductsList({
 
     setActiveProdsListPage(page);
     setTotalNumOfProds(offset + PRODUCTS_PER_PAGE);
-
     dispatch(gettingProdsForNewPage(offset));
   };
 

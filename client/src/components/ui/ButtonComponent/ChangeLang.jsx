@@ -9,14 +9,12 @@ const ALL_TRANSLATION_OPTIONS = [
 export default function ChangeLang() {
   const { i18n } = useTranslation();
   const [dropdownMenuVisibility, setDropdownMenuVisibility] = useState(false);
-  const btnRef = useRef();
+  const btnRef = useRef(null);
 
   useEffect(() => {
     const handleClick = (e) => {
-      if (e.target !== btnRef && dropdownMenuVisibility === true) {
+      if (btnRef.current && !btnRef.current.contains(e.target)) {
         setDropdownMenuVisibility(false);
-      } else {
-        setDropdownMenuVisibility(!dropdownMenuVisibility);
       }
     };
 
@@ -25,16 +23,21 @@ export default function ChangeLang() {
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  }, [dropdownMenuVisibility, i18n.language]);
+  }, []);
 
   return (
-    <div className="w-[39.8%] h-full flex items-center justify-center relative">
+    <div
+      ref={btnRef}
+      className="w-[39.8%] h-full flex items-center justify-center relative"
+    >
       <button
-        className={`bg-white w-full min-w-14.5 h-full gap-1.5 customButton animationButton changeFillToWhite relative`}
+        onClick={() => setDropdownMenuVisibility((prev) => !prev)}
+        className="bg-white w-full min-w-14.5 h-full gap-1.5 customButton animationButton changeFillToWhite relative"
       >
         <span
-          ref={btnRef}
-          className={`bg-(--color-primary) md:bg-(--second-primary-c) ${dropdownMenuVisibility ? "left-0! w-full!" : ""}`}
+          className={`bg-(--color-primary) md:bg-(--second-primary-c) ${
+            dropdownMenuVisibility ? "left-0! w-full!" : ""
+          }`}
         ></span>
 
         <svg
@@ -58,7 +61,7 @@ export default function ChangeLang() {
             fill="#372924"
           />
           <path
-            d="M2.235 3.81231L2.905 3.07031C3.01167 3.16631 3.126 3.25998 3.248 3.35131C4.566 4.33931 6.646 4.94131 8.913 4.94131C10.846 4.94131 12.65 4.50431 13.968 3.75131C14.2716 3.57944 14.5586 3.37958 14.825 3.15431L15.475 3.91431C15.1763 4.16965 14.8397 4.40431 14.465 4.61831C12.988 5.46331 11.013 5.94131 8.913 5.94131C6.443 5.94131 4.151 5.27831 2.648 4.15131C2.50535 4.04418 2.36754 3.93173 2.235 3.81231ZM2.235 13.2003L2.905 13.9403C3.01167 13.8436 3.126 13.7503 3.248 13.6603C4.566 12.6723 6.646 12.0703 8.913 12.0703C10.846 12.0703 12.65 12.5063 13.968 13.2603C14.2893 13.445 14.575 13.6436 14.825 13.8563L15.475 13.0963C15.161 12.8307 14.8229 12.595 14.465 12.3923C12.988 11.5483 11.013 11.0703 8.913 11.0703C6.443 11.0703 4.151 11.7333 2.648 12.8593C2.50133 12.9693 2.36367 13.0836 2.235 13.2003ZM0.5 9.00031V8.00031H16.5V9.00031H0.5Z"
+            d="M2.235 3.81231L2.905 3.07031C3.01167 3.16631 3.126 3.25998 3.248 3.35131C4.566 4.33931 6.646 4.94131 8.913 4.94131C10.846 4.94131 12.65 4.50431 13.968 3.75131C14.2716 3.57944 14.5586 3.37958 14.825 3.15431L15.475 3.91431C15.1763 4.16965 14.8397 4.40431 14.465 4.61831C12.988 5.46331 11.013 5.94131 8.913 5.94131C6.443 5.94131 4.151 5.27831 2.648 4.15131C2.50535 4.04418 2.36754 3.93173 2.235 3.81231ZM2.235 13.2003L2.905 13.9403C3.01167 13.8436 3.126 13.7503 3.248 13.6603C4.566 12.6723 6.646 12.0703 8.913 12.0703C10.846 12.0703 12.65 12.506 13.968 13.2603C14.2893 13.445 14.575 13.6436 14.825 13.8563L15.475 13.0963C15.161 12.8307 14.8229 12.595 14.465 12.3923C12.988 11.548 11.013 11.0703 8.913 11.0703C6.443 11.0703 4.151 11.7333 2.648 12.8593C2.50133 12.9693 2.36367 13.0836 2.235 13.2003ZM0.5 9.00031V8.00031H16.5V9.00031H0.5Z"
             fill="#372924"
           />
         </svg>
@@ -83,8 +86,9 @@ export default function ChangeLang() {
       </button>
 
       <div
-        className={`w-48 py-10 ${dropdownMenuVisibility ? "flex" : "hidden"} items-center justify-center 
-        absolute top-20 md:top-14.5 lg:top-18.25 bg-white rounded-b-(--base-b-radius) shadow-md shadow-(color:--color-primary)/30`}
+        className={`w-48 py-10 ${
+          dropdownMenuVisibility ? "flex" : "hidden"
+        } items-center justify-center absolute top-20 md:top-14.5 lg:top-18.25 bg-white rounded-b-(--base-b-radius) shadow-md shadow-(color:--color-primary)/30`}
       >
         <ul className="w-[80%] h-full flex flex-col items-center justify-center m-auto gap-5">
           {ALL_TRANSLATION_OPTIONS.map((lang) => (
@@ -93,9 +97,15 @@ export default function ChangeLang() {
               className="inline-block w-full after:w-full after:h-0.5 after:bg-(--color-primary)"
             >
               <button
-                onClick={() => i18n.changeLanguage(lang.code)}
-                className={`text-lg transition duration-300 hover:text-(--second-primary-c) 
-                  ${i18n.language == lang.code && "text-(--second-primary-c) font-bold"}`}
+                onClick={() => {
+                  i18n.changeLanguage(lang.code);
+                  setDropdownMenuVisibility(false);
+                }}
+                className={`text-lg transition duration-300 hover:text-(--second-primary-c) ${
+                  i18n.language == lang.code
+                    ? "text-(--second-primary-c) font-bold"
+                    : ""
+                }`}
               >
                 {lang.fullName}
               </button>
