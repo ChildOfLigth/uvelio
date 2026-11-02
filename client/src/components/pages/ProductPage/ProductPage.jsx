@@ -26,7 +26,7 @@ export default function ProductPage() {
   const productData = JSON.parse(localStorage.getItem("dataCurrentProduct"));
 
   const { productsList, selectedProductsCategory } = useSelector(
-    (state) => state.products
+    (state) => state.products,
   );
   const { isAuth } = useSelector((state) => state.userAccount.accountData);
   const navigate = useNavigate();
@@ -267,7 +267,10 @@ export default function ProductPage() {
 
                     <ul className="w-full flex flex-wrap gap-2 my-4">
                       {sizeVariant[selectedProductsCategory].map((el, ind) => (
-                        <li key={ind} className="w-[clamp(4rem,calc(3.057rem+3.619vw),6.25rem)]">
+                        <li
+                          key={ind}
+                          className="w-[clamp(4rem,calc(3.057rem+3.619vw),6.25rem)]"
+                        >
                           <button
                             onClick={() => setSelectedSize(el)}
                             className={`w-full customButton animationButton border-2 border-(--second-primary-c) rounded-(--base-b-radius) 
@@ -348,6 +351,7 @@ export default function ProductPage() {
                           },
                         });
                       }
+                      navigate("/auth-form");
                     }}
                     className={`w-full max-w-142 h-(--btn-h) flex items-center justify-center rounded-(--base-b-radius) 
                 ${productData.in_stock ? "bg-(--color-primary)" : "bg-(--spare-color)"} text-white text-[17px]`}
