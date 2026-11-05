@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables.js";
 import {
   setSelectedProductsCategory,
-  setClearAllFilters,
 } from "@redux/products/productsSlice.js";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -50,7 +49,6 @@ export default function ChangeCategory() {
 
   const handleSelectCategory = (key) => {
     dispatch(setSelectedProductsCategory(key));
-    dispatch(setClearAllFilters());
     localStorage.setItem("selectedCategory", key);
     navigate({ pathname: `/catalog/${key}`, search: "" });
   };

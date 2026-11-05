@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import FilteringByActualFilters from "./FIlteringSidebar/FilteringByActualFilters.jsx";
@@ -13,7 +12,6 @@ export default function FilteringSideBar({
   setOpenSideBar,
 }) {
   const i18n = useTranslation();
-  const { selectedFilters } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (isMobile && openSideBar) {
@@ -28,11 +26,6 @@ export default function FilteringSideBar({
   }, [isMobile, openSideBar]);
 
   useEffect(() => {
-    if (selectedFilters.length === 0) {
-      setCurrentVisibleProdList([...productsList]);
-      return;
-    }
-
     if (isMobile && openSideBar) {
       setOpenSideBar(false);
     }
@@ -82,7 +75,7 @@ export default function FilteringSideBar({
           >
             <img src={closeIcon} className="w-full aspect-square" />
           </button>
-          
+
           <FilteringByPrice
             currentVisibleProdList={currentVisibleProdList}
             openSideBar={openSideBar}

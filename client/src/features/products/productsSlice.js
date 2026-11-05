@@ -17,51 +17,14 @@ export const productsSlice = createSlice({
     currentProd: null,
     status: "idle",
     endOfProdList: false,
-    selectedFilters: {},
     error: null,
   },
   reducers: {
     setSelectedProductsCategory(state, action) {
       state.selectedProductsCategory = action.payload;
     },
-    setAddFilter(state, action) {
-      const { key, value } = action.payload;
-
-      if (!state.selectedFilters[key]) {
-        state.selectedFilters[key] = [];
-      }
-
-      if (!state.selectedFilters[key].includes(value)) {
-        state.selectedFilters[key].push(value);
-      }
-    },
-    setRemoveFilter(state, action) {
-      const { key, value } = action.payload;
-      const allFilters = state.selectedFilters;
-
-      if (!allFilters[key]) {
-        return;
-      }
-
-      const updatedFilters = allFilters[key].filter(
-        (filter) => filter != value,
-      );
-
-      if (updatedFilters.length === 0) {
-        delete allFilters[key];
-      } else {
-        allFilters[key] = updatedFilters;
-      }
-    },
-    setReplaceFilter(state, action) {
-      const { key, value } = action.payload;
-      state.selectedFilters[key] = [value];
-    },
     setSelectedFilters(state, action) {
       state.selectedFilters = action.payload;
-    },
-    setClearAllFilters(state) {
-      state.selectedFilters = {};
     },
   },
   extraReducers: (builder) => {
@@ -153,8 +116,6 @@ export const {
   setSelectedProductsCategory,
   setAddFilter,
   setRemoveFilter,
-  setReplaceFilter,
   setSelectedFilters,
-  setClearAllFilters,
 } = productsSlice.actions;
 export default productsSlice.reducer;

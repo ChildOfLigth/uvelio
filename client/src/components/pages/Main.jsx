@@ -26,7 +26,7 @@ import { getProducts } from "@redux/products/productsThunk";
 
 export default function Main() {
   const { t, i18n } = useTranslation();
-  const { productsList, selectedProductsCategory, selectedFilters } = useSelector((state) => state.products);
+  const { productsList, selectedProductsCategory } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const filterLinksToCatalog = t(
@@ -36,7 +36,7 @@ export default function Main() {
 
   useEffect(() => {
     dispatch(getProducts({neededCategory: "rings"}));
-  }, [dispatch, selectedProductsCategory, selectedFilters]);
+  }, [dispatch, selectedProductsCategory]);
 
   const categoryImages = {
     earrings,

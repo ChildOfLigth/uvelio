@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { setReplaceFilter } from "@redux/products/productsSlice";
 
 export default function FormSearchProduct() {
   const { t } = useTranslation();
@@ -17,8 +16,6 @@ export default function FormSearchProduct() {
     const query = form.searchProduct.value.trim();
 
     if (!query) return;
-
-    dispatch(setReplaceFilter({ key: "name", value: query }));
 
     if (!location.pathname.includes("catalog")) {
       navigate(`/catalog?name=${query}`);

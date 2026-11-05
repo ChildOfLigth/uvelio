@@ -17,21 +17,13 @@ import { ModalWindContext } from "./components/context/ModalWindContext";
 import { checkAuthStatus } from "@redux/userAccount/accountThunk";
 import { updateToken } from "./features/userAccount/accountThunk";
 import { AuthContext } from "./components/context/AuthContext";
-import { setClearAllFilters } from "@redux/products/productsSlice.js";
 import ScrollToTop from "./components/ui/ScrollToTop";
 
 function App() {
   const dispatch = useDispatch();
-  const location = useLocation();
   const { isAuth } = useSelector((state) => state.userAccount.accountData);
   const [visibleModalWindow, setVisibleModalWindow] = useState(false);
   const [totalNumOfProds, setTotalNumOfProds] = useState(10);
-
-  useEffect(() => {
-    if (!location.pathname.includes("catalog")) {
-      dispatch(setClearAllFilters());
-    }
-  }, [location.pathname]);
 
   useEffect(() => {
     const handleCheckAuthStatus = async () => {

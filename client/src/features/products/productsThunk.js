@@ -97,8 +97,11 @@ const searchProdsByName = createAsyncThunk(
 
 const additionalLoadingOfProds = createAsyncThunk(
   "products/additional-loading-of-prods",
-  async (totalNumOfProds, { getState, rejectWithValue }) => {
-    const { selectedProductsCategory, selectedFilters } = getState().products;
+  async (
+    { selectedFilters, totalNumOfProds } = {},
+    { getState, rejectWithValue },
+  ) => {
+    const { selectedProductsCategory } = getState().products;
 
     if (!selectedProductsCategory) {
       return rejectWithValue("Category is not set");
@@ -124,9 +127,12 @@ const additionalLoadingOfProds = createAsyncThunk(
 
 const gettingProdsForNewPage = createAsyncThunk(
   "products/getting-prods-for-new-page",
-  async (totalNumOfProds, { getState, rejectWithValue }) => {
-    const { selectedProductsCategory, selectedFilters } = getState().products;
-
+  async (
+    { selectedFilters, totalNumOfProds } = {},
+    { getState, rejectWithValue },
+  ) => {
+    const { selectedProductsCategory } = getState().products;
+    
     if (!selectedProductsCategory) {
       return rejectWithValue("Category is not set");
     }

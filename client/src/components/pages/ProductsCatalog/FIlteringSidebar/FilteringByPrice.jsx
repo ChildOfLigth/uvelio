@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import { setReplaceFilter } from "@redux/products/productsSlice.js";
 import spiner from "@imgs/icons/spiner.svg";
 import { BASE_API } from "../../../../globalVariables";
 
@@ -341,20 +340,6 @@ export default function FilteringByPrice({ openSideBar }) {
         return params;
       },
       { replace: true },
-    );
-
-    dispatch(
-      setReplaceFilter({
-        key: "min",
-        value: String(safeMin),
-      }),
-    );
-
-    dispatch(
-      setReplaceFilter({
-        key: "max",
-        value: String(safeMax),
-      }),
     );
 
     setMinFilterPrice(safeMin);

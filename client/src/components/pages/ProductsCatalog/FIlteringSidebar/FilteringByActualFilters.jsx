@@ -2,30 +2,22 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import {
-  setAddFilter,
-  setRemoveFilter,
-} from "@redux/products/productsSlice.js";
 import CustomCheckbox from "@ui/Form/CustomCheckbox.jsx";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../../globalVariables.js";
 import arrowIco from "@imgs/icons/arrowIco.svg";
 import spiner from "@imgs/icons/spiner.svg";
 import { searchProdsByName } from "@redux/products/productsThunk.js";
+import { useUrlFilters } from "@hooks/useUrlFilters.js";
 
 export default function FilteringByActualFilters({
   setCurrentVisibleProdList,
 }) {
   const { t, i18n } = useTranslation();
-
-  const { selectedProductsCategory, selectedFilters } = useSelector(
-    (state) => state.products,
-  );
-
   const dispatch = useDispatch();
-
+  const selectedFilters = useUrlFilters();
   const [filterParams, setFilterParams] = useSearchParams();
   const [allSelectedFilters, setAllSelectedFilters] = useState([]);
-
+  const { selectedProductsCategory } = useSelector((state) => state.products);
   const searchReqForProdByName = filterParams.get("name");
 
   useEffect(() => {
@@ -166,8 +158,6 @@ export default function FilteringByActualFilters({
     };
 
     if (isSelected) {
-      dispatch(setRemoveFilter(payload));
-
       setFilterParams(
         (prev) => {
           const newParams = new URLSearchParams(prev);
@@ -185,8 +175,6 @@ export default function FilteringByActualFilters({
         { replace: true },
       );
     } else {
-      dispatch(setAddFilter(payload));
-
       setFilterParams(
         (prev) => {
           const newParams = new URLSearchParams(prev);
@@ -329,11 +317,19 @@ export default function FilteringByActualFilters({
                       })
                     ) : (
                       <li className="w-full flex justify-center">
-                        <img src={spiner} alt="Loading..." className="w-5 h-5" />
+                        <img
+                          src={spiner}
+                          alt="Loading..."
+                          className="w-5 h-5"
+                        />
                       </li>
                     )
                   ) : (
-                    <img src={spiner} alt="Loading..." className="w-5 h-5 mx-auto" />
+                    <img
+                      src={spiner}
+                      alt="Loading..."
+                      className="w-5 h-5 mx-auto"
+                    />
                   )}
                 </ul>
               )}

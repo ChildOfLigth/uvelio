@@ -3,7 +3,10 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { getLength, getProducts } from "@redux/products/productsThunk.js";
-import { setSelectedFilters } from "@redux/products/productsSlice.js";
+import {
+  setSelectedFilters,
+  setSelectedProductsCategory,
+} from "@redux/products/productsSlice.js";
 import { RETURN_TRANSLATE_FUNC_TYPE } from "../../../globalVariables.js";
 import ProductsList from "./ProductsList.jsx";
 import FilteringSideBar from "./FilteringSideBar.jsx";
@@ -11,57 +14,38 @@ import ChangeCategory from "./ChangeCategory.jsx";
 import SortingCatalog from "./SortingCatalog.jsx";
 import filterCatalogIcon from "@imgs/icons/productsCatalog/filterCatalog.svg";
 import sortCatalogIcon from "@imgs/icons/productsCatalog/sortCatalog.svg";
+import { useUrlFilters } from "@hooks/useUrlFilters.js";
 
 export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const { category } = useParams();
-  const [filterParams] = useSearchParams();
-
-  const { status, productsList, selectedFilters } = useSelector(
-    (state) => state.products,
-  );
-
+  const selectedFilters = useUrlFilters();
+  const { status, productsList } = useSelector((state) => state.products);
   const [isMobile, setIsMobile] = useState(false);
   const [currentVisibleProdList, setCurrentVisibleProdList] = useState([]);
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openDropdownList, setOpenDropdownList] = useState(false);
 
   useEffect(() => {
-    const filtersFromUrl = {};
+    dispatch(setSelectedFilters(selectedFilters));
 
-    for (const [key, value] of filterParams.entries()) {
-      if (!filtersFromUrl[key]) {
-        filtersFromUrl[key] = [];
-      }
-      if (!filtersFromUrl[key].includes(value)) {
-        filtersFromUrl[key].push(value);
-      }
-    }
-
-    dispatch(setSelectedFilters(filtersFromUrl));
-  }, [filterParams, dispatch]);
-
-  useEffect(() => {
     if (!category) return;
 
+    dispatch(setSelectedProductsCategory(category));
     setCurrentVisibleProdList([]);
 
     dispatch(
-      getLength({
-        selectedFilters,
-        neededCategory: category,
-      }),
+      getLength({ selectedFilters, neededCategory: category }),
     );
 
     dispatch(
       getProducts({
-        neededCategory: category,
         selectedFilters,
+        neededCategory: category,
       }),
     );
-  }, [dispatch, category, filterParams]);
+  }, [dispatch, category, selectedFilters]);
 
   useEffect(() => {
     if (productsList.length > 0) {
@@ -77,6 +61,7 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
     };
 
     checkMobile();
+
     window.addEventListener("resize", checkMobile);
 
     return () => {
