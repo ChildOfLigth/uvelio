@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { getLength, getProducts } from "@redux/products/productsThunk.js";
 import {
   setSelectedFilters,
@@ -23,7 +23,7 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
   const selectedFilters = useUrlFilters();
   const { status, productsList } = useSelector((state) => state.products);
   const [isMobile, setIsMobile] = useState(false);
-  const [currentVisibleProdList, setCurrentVisibleProdList] = useState([]);
+  const [currentVisibleProdList, setCurrentVisibleProdList] = useState(null);
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openDropdownList, setOpenDropdownList] = useState(false);
 
@@ -33,11 +33,9 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
     if (!category) return;
 
     dispatch(setSelectedProductsCategory(category));
-    setCurrentVisibleProdList([]);
+    setCurrentVisibleProdList(null);
 
-    dispatch(
-      getLength({ selectedFilters, neededCategory: category }),
-    );
+    dispatch(getLength({ selectedFilters, neededCategory: category }));
 
     dispatch(
       getProducts({
@@ -47,11 +45,9 @@ export function ProductsCatalog({ totalNumOfProds, setTotalNumOfProds }) {
     );
   }, [dispatch, category, selectedFilters]);
 
-  useEffect(() => {
-    if (productsList.length > 0) {
-      setCurrentVisibleProdList([...productsList]);
-    } else {
-      setCurrentVisibleProdList([]);
+  useLayoutEffect(() => {
+    if (status === "succeeded") {
+      setCurrentVisibleProdList([...(productsList ?? [])]);
     }
   }, [status, productsList]);
 

@@ -22,6 +22,7 @@ export default function SortingCatalog({
   );
 
   useEffect(() => {
+    if(productsList === null) return;
     const copy = [...productsList];
 
     const sorteringCatalog = () => {

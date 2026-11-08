@@ -9,7 +9,7 @@ import {
 import ProductCard from "@ui/ProductCard";
 import spiner from "@imgs/icons/spiner.svg";
 
-const PRODUCTS_PER_PAGE = 10;
+const PRODUCTS_PER_PAGE = 15;
 
 export default function ProductsList({
   currentVisibleProdList,
@@ -20,9 +20,17 @@ export default function ProductsList({
   const { status, endOfProdList, totalLengthOfList, selectedProductsCategory } =
     useSelector((state) => state.products);
   const selectedFilters = useUrlFilters();
-
   const [activeProdsListPage, setActiveProdsListPage] = useState(0);
   const totalNumOfPages = Math.ceil(totalLengthOfList / PRODUCTS_PER_PAGE);
+
+  const isLoading =
+    status === "loading" ||
+    status === "idle" ||
+    (status !== "rejected" && currentVisibleProdList === null);
+
+  const isEmpty =
+    status === "rejected" ||
+    (status === "succeeded" && currentVisibleProdList?.length === 0);
 
   useEffect(() => {
     setActiveProdsListPage(0);
@@ -59,7 +67,7 @@ export default function ProductsList({
 
   return (
     <div className="w-full flex flex-col items-center justify-center gap-6 md:gap-10 relative t-0">
-      {status === "loading" ? (
+      {isLoading ? (
         <div className="w-full h-90 mx-auto">
           <img
             src={spiner}
@@ -70,8 +78,7 @@ export default function ProductsList({
       ) : (
         <div className="relative w-full">
           <div className="relative flex flex-col gap-[clamp(1.5625rem,calc(1.205rem+1.786vw),2.8125rem)] pb-[clamp(2.1875rem,calc(-0.715rem+11.905vw),10rem)]">
-            {status === "rejected" ||
-            (status === "succeeded" && currentVisibleProdList.length === 0) ? (
+            {isEmpty ? (
               <h2 className="font-bold text-(--color-primary)/40 text-center mx-auto sticky top-0 z-20 py-4">
                 {t("productsCatalog.emptyProductsList")}
               </h2>
@@ -93,7 +100,7 @@ export default function ProductsList({
                 md:overflow-scroll
               "
                 >
-                  {currentVisibleProdList.map((product) => (
+                  {currentVisibleProdList?.map((product) => (
                     <li key={product.id}>
                       <ProductCard productData={product} />
                     </li>

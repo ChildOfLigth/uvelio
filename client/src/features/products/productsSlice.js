@@ -29,14 +29,8 @@ export const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getLength.pending, (state) => {
-        state.status = "loading";
-        state.productsList = [];
-      })
       .addCase(getLength.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.totalLengthOfList = action.payload;
-        state.error = null;
       })
       .addCase(getLength.rejected, (state, action) => {
         state.status = "rejected";
@@ -49,8 +43,8 @@ export const productsSlice = createSlice({
         state.productsList = [];
       })
       .addCase(getProducts.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.productsList = action.payload;
+        state.status = "succeeded";
         state.error = null;
       })
       .addCase(getProducts.rejected, (state, action) => {

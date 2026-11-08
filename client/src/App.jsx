@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Header from "@ui/Header/Header.jsx";
@@ -23,7 +23,7 @@ function App() {
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state) => state.userAccount.accountData);
   const [visibleModalWindow, setVisibleModalWindow] = useState(false);
-  const [totalNumOfProds, setTotalNumOfProds] = useState(10);
+  const [totalNumOfProds, setTotalNumOfProds] = useState(15);
 
   useEffect(() => {
     const handleCheckAuthStatus = async () => {

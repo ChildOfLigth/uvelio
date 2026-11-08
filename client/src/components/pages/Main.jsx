@@ -192,7 +192,7 @@ export default function Main() {
         </section>
 
         <section className="w-full max-w-420 flex flex-col items-start justify-center m-[clamp(30px,6vw,70px)]">
-          {productsList != undefined && productsList.length > 0 ? (
+          {productsList !== null && productsList.length > 0 ? (
             <SwiperCatalog
               catalog={productsList}
               titleSwiper={t("mainPage.newArrivalsTitle")}
@@ -200,7 +200,7 @@ export default function Main() {
           ) : (
             <img
               src={spiner} alt="Loading..."
-              className="w-5/6 max-w-50 mx-auto aspect-square"
+              className="w-3/4 max-w-50 my-10 mx-auto aspect-square"
             />
           )}
         </section>
