@@ -1,6 +1,8 @@
 import { pool } from "../../database/initDB.js";
 import { STANDART_FILTERS } from "../config.js";
 
+const TOTAL_NUM_OF_PAGES = 15;
+
 function normalizeFilters(selectedFilters) {
   if (!selectedFilters) return;
 
@@ -99,7 +101,7 @@ async function getProducts(selectedProductsCategory, selectedFilters) {
       }
     }
 
-    sqlCommand += ` LIMIT 10`;
+    sqlCommand += ` LIMIT ${TOTAL_NUM_OF_PAGES}`;
 
     const result = await pool.query(sqlCommand, params);
     return result.rows;
@@ -136,7 +138,7 @@ async function getAdditionalData(
       }
     }
 
-    sqlCommand += ` LIMIT 10 OFFSET $2`;
+    sqlCommand += ` LIMIT ${TOTAL_NUM_OF_PAGES} OFFSET $2`;
 
     const rowsResult = await pool.query(sqlCommand, [
       selectedProductsCategory,
