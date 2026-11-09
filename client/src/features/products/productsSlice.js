@@ -30,7 +30,9 @@ export const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getLength.fulfilled, (state, action) => {
-        state.totalLengthOfList = action.payload;
+        state.totalLengthOfList = Number(action.payload);
+        state.endOfProdList =
+          state.productsList.length >= state.totalLengthOfList;
       })
       .addCase(getLength.rejected, (state, action) => {
         state.status = "rejected";
@@ -41,11 +43,19 @@ export const productsSlice = createSlice({
       .addCase(getProducts.pending, (state) => {
         state.status = "loading";
         state.productsList = [];
+        state.additionalProds = [];
+        state.totalLengthOfList = null;
+        state.endOfProdList = false;
       })
       .addCase(getProducts.fulfilled, (state, action) => {
         state.productsList = action.payload;
         state.status = "succeeded";
         state.error = null;
+
+        if (state.totalLengthOfList !== null) {
+          state.endOfProdList =
+            state.productsList.length >= state.totalLengthOfList;
+        }
       })
       .addCase(getProducts.rejected, (state, action) => {
         state.status = "rejected";
@@ -59,6 +69,9 @@ export const productsSlice = createSlice({
       .addCase(searchProdsByName.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.productsList = action.payload;
+        state.additionalProds = [];
+        state.error = null;
+        state.endOfProdList = true;
       })
       .addCase(searchProdsByName.rejected, (state, action) => {
         state.status = "rejected";
@@ -70,18 +83,17 @@ export const productsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(additionalLoadingOfProds.fulfilled, (state, action) => {
-        state.additionalProds = action.payload.prodsList;
-        state.endOfProdList = action.payload.endOfList;
+        const { prodsList, endOfList } = action.payload;
 
-        const { additionalProds, productsList } = state;
+        state.additionalProds = prodsList;
+        state.endOfProdList = endOfList;
 
-        if (additionalProds && additionalProds != null) {
-          if (additionalProds.length != 0) {
-            productsList.push(...additionalProds);
-            state.status = "succeeded";
-            state.error = null;
-          }
+        if (prodsList?.length > 0) {
+          state.productsList.push(...prodsList);
         }
+
+        state.status = "succeeded";
+        state.error = null;
       })
       .addCase(additionalLoadingOfProds.rejected, (state, action) => {
         state.status = "rejected";
@@ -94,8 +106,8 @@ export const productsSlice = createSlice({
       })
       .addCase(gettingProdsForNewPage.fulfilled, (state, action) => {
         state.status = "succeeded";
-
         state.productsList = [...action.payload.prodsList];
+        state.additionalProds = [];
         state.endOfProdList = action.payload.endOfList;
         state.error = null;
       })
